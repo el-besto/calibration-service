@@ -22,6 +22,7 @@ _[Read full project overview][overview]_
 
 - **Python** 3.12 or higher, [link][python]
 - **uv** for python runtime and dependency management, [link][uv]
+- **nodejs** for Pyright pre-commit hook execution, [link][pyright]
 
 ---
 
@@ -50,3 +51,5 @@ TODO: (docs): add running tests
 [python]: https://www.python.org/downloads/
 
 [uv]: https://docs.astral.sh/uv/
+
+[pyright]: https://microsoft.github.io/pyright/#/installation
