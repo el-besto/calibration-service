@@ -18,6 +18,20 @@ dev = [
     "ruff>=0.11.2",
 ]
 
+[tool.pyright]
+include = ["app"]
+exclude = [
+    "**/__pycache__"
+]
+ignore = []
+pythonVersion = "3.12"
+typeCheckingMode = "strict"
+venvPath = "./"
+venv = ".venv"
+defineConstant = { DEBUG = true }
+reportMissingImports = "error"
+reportMissingTypeStubs = "error"
+
 [tool.ruff]
 # Exclude a variety of commonly ignored directories.
 exclude = [

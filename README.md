@@ -14,6 +14,8 @@ from calibrations, and the tagging history is preserved.
 
 _[Read full project overview][overview]_
 
+[![Checked with pyright](https://microsoft.github.io/pyright/img/pyright_badge.svg)](https://microsoft.github.io/pyright/)
+
 ---
 
 ## Pre-requisites
