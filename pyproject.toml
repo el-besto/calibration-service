@@ -1,7 +1,10 @@
 [project]
 name = "calibration-service"
 version = "0.1.0"
-description = "Add your description here"
+description = "This backend service is designed to manage calibrations of a hardware device."
+authors = [
+    { name = "Angelo Cisneros", email = "el-besto@users.noreply.github.com" }
+]
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = []
