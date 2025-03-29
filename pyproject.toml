@@ -26,7 +26,7 @@ exclude = [
 ignore = []
 pythonVersion = "3.12"
 typeCheckingMode = "strict"
-venvPath = "./"
+venvPath = "."
 venv = ".venv"
 defineConstant = { DEBUG = true }
 reportMissingImports = "error"
