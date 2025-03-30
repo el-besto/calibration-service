@@ -12,9 +12,10 @@ This backend service is designed to manage calibrations of a hardware device. Ea
 Calibrations can be tagged with arbitrary strings to describe different states of a device. Tags can be added or removed
 from calibrations, and the tagging history is preserved.
 
-_[Read full project overview][overview]_
+_[Read full project overview](docs/PROJECT.md)
 
 [![Checked with pyright](https://microsoft.github.io/pyright/img/pyright_badge.svg)](https://microsoft.github.io/pyright/)
+[![Python Tests](https://github.com/el-besto/calibration-service/actions/workflows/pytest.yaml/badge.svg)](https://github.com/el-besto/calibration-service/actions/workflows/pytest.yaml)
 
 ---
 
@@ -32,21 +33,22 @@ TODO: (docs): add getting started
 
 ---
 
-## Running Tests
+### Test Documentation
 
-TODO: (docs): add running tests
+This repository includes a comprehensive test harness following Clean Architecture principles.
+The testing infrastructure is designed to be expandable and maintainable.
+
+_For detailed information about the testing approach, see [docs/TESTS.md](docs/TESTS.md)._
 
 ---
 
 ## Additional Documentation
 
-- [Full Project Overview][overview]
+- [Full Project Overview](docs/PROJECT.md)
 
 ---
 
 <!-- link helpers below -->
-
-[overview]: ../calibration-service/docs/PROJECT.md
 
 [python]: https://www.python.org/downloads/
 
