@@ -39,7 +39,10 @@ FROM python:3.12-slim-bookworm
 
 # Update the package list and upgrade installed packages
 RUN apt-get update && apt-get upgrade -y \
+    # install curl for Healthcheck
     && apt-get install -y --no-install-recommends curl \
+    # install postgresql-client for troubleshooting/validating
+    && apt-get install -y --no-install-recommends postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy the application from the builder
@@ -57,4 +60,4 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
 
 # Uses `fastapi dev` to enable hot-reloading when the `watch` sync occurs
 # Uses `--host 0.0.0.0` to allow access from outside the container
-CMD ["fastapi", "dev", "--host", "0.0.0.0"]
+CMD ["fastapi", "dev","src/drivers/rest/main.py", "--host", "0.0.0.0"]

@@ -7,16 +7,17 @@ This document outlines the testing strategy for the Calibration Service, followi
 The test suite is organized into the following categories:
 
 - **Unit Tests**: Testing individual components in isolation
-  - `tests/unit/entities`: Tests for entity models and validation
-  - `tests/unit/application`: Tests for use cases and business logic
-  - `tests/unit/infrastructure`: Tests for repositories and services
-  - `tests/unit/interface_adapters`: Tests for controllers
+    - `tests/unit/entities`: Tests for entity models and validation
+    - `tests/unit/application`: Tests for use cases and business logic
+    - `tests/unit/infrastructure`: Tests for repositories and services
+    - `tests/unit/interface_adapters`: Tests for controllers
+    - `tests/unit/use_cases`: Tests for use cases
 
 - **Integration Tests**: Testing the interaction between components
-  - `tests/integration`: API endpoint testing with in-memory repositories
+    - `tests/integration`: API endpoint testing with in-memory repositories
 
 - **End-to-End Tests**: Testing the entire system (future implementation)
-  - `tests/e2e`: Full system tests with external dependencies
+    - `tests/e2e`: Full system tests with external dependencies
 
 ## Test Dependencies
 
@@ -32,7 +33,7 @@ The test suite uses the following dependencies:
 Tests can be run using the `run_tests.sh` script:
 
   ```bash
-  ./run_tests.sh
+  ./scripts/run_tests.sh
   ```
 
 > [!NOTE]
@@ -41,7 +42,7 @@ Tests can be run using the `run_tests.sh` script:
 Generate coverage reports using the `run_tests_with_coverage.sh` script:
 
   ```bash
-  ./run_tests_with_coverage.sh
+  ./scripts/run_tests_with_coverage.sh
   ```
 
 Or, run manually:
@@ -75,5 +76,5 @@ Our testing follows Clean Architecture principles:
 3. **Interface Adapter Tests**: Validate controllers and presenters
 4. **Framework Tests**: Test the FastAPI endpoints
 
-By following this approach, we can ensure that our business logic remains independent of frameworks and external concerns,
-making our tests more robust and our code more maintainable.
+By following this approach, we can ensure that our business logic remains independent of frameworks and external
+concerns, making our tests more robust and our code more maintainable.

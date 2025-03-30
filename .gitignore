@@ -1,3 +1,7 @@
+# Environment variables
+.env.local
+.env.*.local
+
 # Python-generated files
 __pycache__/
 *.py[oc]

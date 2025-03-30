@@ -16,13 +16,15 @@ from calibrations, and the tagging history is preserved.
 
 - **Language:** Python
 - **Database:** PostgreSQL or SQLite
-- **Libraries:** To be specified by the developer
+- **Libraries:** See: `pyproject.toml`
 
 ---
 
 ## Use Cases & API Endpoints
 
 ### 1. Create a New Calibration
+
+**Use Case:** `AddCalibrationUseCase`  [application.use_cases.calibrations.add_calibration.py](src/application/use_cases/calibrations/add_calibration_use_case.py)
 
 **Endpoint:** `POST /calibrations`
 
@@ -47,7 +49,9 @@ from calibrations, and the tagging history is preserved.
 
 ---
 
-### 2. Query Calibrations by Filter
+### 2. Query Calibrations by Filter `list_calibrations_use_case`
+
+**Use Case:** `ListCalibrationsUseCase`  [application.use_cases.calibrations.list_calibrations.py](src/application/use_cases/calibrations/list_calibrations.py)
 
 **Endpoint:** `GET /calibrations`
 
@@ -75,6 +79,10 @@ from calibrations, and the tagging history is preserved.
 
 ### 3. Tagging Support
 
+#### 3a. Add a tag to a Calibration
+
+**Use Case:** `AddTagToCalibrationUseCase`  [application.use_cases.tags.add_tag_to_calibration.py](src/application/use_cases/tags/add_tag_to_calibration.py)
+
 **Endpoint:** `POST /calibrations/{calibration_id}/tags`
 
 **Input:**
@@ -87,29 +95,31 @@ from calibrations, and the tagging history is preserved.
 
 **Output:**
 
-```json
-{
-  "message": "Tag added successfully"
-}
-```
+- body
+  ```json
+  {
+    "message": "Tag added successfully"
+  }
+  ```
 
-**Endpoint:** `DELETE /calibrations/{calibration_id}/tags`
+#### 3b. Removing a tag
+
+**Use Case:** `RemoveTagFromCalibrationUseCase` [application.use_cases.tags.remove_tag_from_calibration.py](src/application/use_cases/tags/remove_tag_from_calibration.py)
+
+**Endpoint:** `DELETE /calibrations/{calibration_id}/tags/{tag_name}` [application.use_cases.tags.remove_tag_from_calibration](src/application/use_cases/tags/remove_tag_from_calibration.py)
 
 **Input:**
 
-```json
-{
-  "tag": "string"
-}
-```
+- path: `tag`
 
 **Output:**
 
-```json
-{
-  "message": "Tag removed successfully"
-}
-```
+- body:
+  ```json
+  {
+    "message": "Tag removed successfully"
+  }
+  ```
 
 **Notes:**
 
@@ -121,6 +131,8 @@ from calibrations, and the tagging history is preserved.
 
 ### 4. Retrieve Calibrations by Tag
 
+**Use Case**: `GetCalibrationsByTagUseCase` - [application.use_cases.tags.get_calibrations_by_tag.py](src/application/use_cases/tags/get_calibrations_by_tag.py)
+
 **Endpoint:** `GET /tags/{tag}/calibrations`
 
 **Query Parameters:**
@@ -130,17 +142,8 @@ from calibrations, and the tagging history is preserved.
 
 **Output:**
 
-```json
-[
-  {
-    "calibration_id": "integer",
-    "calibration_type": "string",
-    "value": "float",
-    "timestamp": "string (ISO 8601)",
-    "username": "string"
-  }
-]
-```
+- body
+  - # TODO: (docs): add Response Schema
 
 **Notes:**
 
@@ -150,6 +153,8 @@ from calibrations, and the tagging history is preserved.
 ---
 
 ### 5. Query Tags Associated with a Calibration
+
+**Use Case**: `GetTagsForCalibrationUseCase` - [application.use_cases.calibrations.get_tags_for_calibration.py](application/use_cases/calibrations/get_tags_for_calibration.py)
 
 **Endpoint:** `GET /calibrations/{calibration_id}/tags`
 
