@@ -3,7 +3,23 @@ name: CI
 on:
   push:
     branches: [main]
+    paths:
+      - "**.py"
+      - "pyproject.toml"
+      - "pytest.ini"
+      - "Dockerfile"
+      - "compose.yaml"
+      - "run.sh"
+      - ".github/workflows/ci.yaml"
   pull_request:
+    paths:
+      - "**.py"
+      - "pyproject.toml"
+      - "pytest.ini"
+      - "Dockerfile"
+      - "compose.yaml"
+      - "run.sh"
+      - ".github/workflows/ci.yaml"
   workflow_dispatch:
 
 concurrency:
@@ -13,9 +29,42 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  python-tests:
+    name: "Run python tests"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install uv (and Python)
+        id: setup-uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+          pyproject-file: "pyproject.toml"
+
+      # Create venv and install deps via uv
+      - name: Set up virtualenv and install deps
+        run: |
+          uv venv .venv
+          source .venv/bin/activate
+          uv sync --frozen --group dev
+
+      - name: Run tests with coverage
+        run: ./run_tests_with_coverage.sh
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: coverage_html/index.html
+
   build:
     name: "build image"
     runs-on: ubuntu-latest
+    # Only build on main branch or when Dockerfile changes
+    if: github.ref == 'refs/heads/main' || contains(github.event.pull_request.changed_files, 'Dockerfile')
     steps:
       - uses: actions/checkout@v4
 
@@ -36,10 +85,12 @@ jobs:
           name: calibration-service
           path: /tmp/calibration-service.tar
 
-  test:
+  container-tests:
     name: "test image"
     runs-on: ubuntu-latest
-    needs: build
+    needs: [build, python-tests]
+    # Only run container tests on main branch or when Dockerfile/compose changes
+    if: github.ref == 'refs/heads/main' || contains(github.event.pull_request.changed_files, 'Dockerfile') || contains(github.event.pull_request.changed_files, 'compose.yaml')
     steps:
       - uses: actions/checkout@v4
 
@@ -65,7 +116,7 @@ jobs:
         run: |
           echo "Waiting for application to start..."
           for i in {1..10}; do
-            if curl --fail http://localhost:8000\?token\=angelo; then
+            if curl --fail http://localhost:8000; then
               echo "Application is running!"
               exit 0
             fi
@@ -78,7 +129,7 @@ jobs:
       - name: Test Application Health
         run: |
           docker logs $container_id
-          curl --fail http://localhost:8000\?token\=angelo
+          curl --fail http://localhost:8000
 
       - name: Stop Running Container
         run: |

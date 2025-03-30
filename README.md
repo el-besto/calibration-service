@@ -12,9 +12,7 @@ This backend service is designed to manage calibrations of a hardware device. Ea
 Calibrations can be tagged with arbitrary strings to describe different states of a device. Tags can be added or removed
 from calibrations, and the tagging history is preserved.
 
-_[Read full project overview][overview]_
-
-[![Checked with pyright](https://microsoft.github.io/pyright/img/pyright_badge.svg)](https://microsoft.github.io/pyright/)
+_[Read full project overview](docs/PROJECT.md)_
 
 ---
 
@@ -22,7 +20,7 @@ _[Read full project overview][overview]_
 
 - **Python** 3.12 or higher, [link][python]
 - **uv** for python runtime and dependency management, [link][uv]
-- **nodejs** for Pyright pre-commit hook execution, [link][pyright]
+- **Node.js** for Pyright pre-commit hook execution, [link][pyright]
 
 ---
 
@@ -32,21 +30,42 @@ TODO: (docs): add getting started
 
 ---
 
-## Running Tests
+### Test Documentation
 
-TODO: (docs): add running tests
+This repository includes a comprehensive test harness following Clean Architecture principles.
+The testing infrastructure is designed to be expandable and maintainable.
 
----
-
-## Additional Documentation
-
-- [Full Project Overview][overview]
+🧠 _For detailed information about the testing approach, see [docs/TESTS.md](docs/TESTS.md)._
 
 ---
+
+### Continuous Integration
+
+This project uses GitHub Actions for continuous integration and code quality checks.
+All workflows use [`uv`][uv] for fast dependency resolution.
+
+| Workflow                           | Status Badge                         | Description                                                          |
+|------------------------------------|--------------------------------------|----------------------------------------------------------------------|
+| **CI** (`ci.yaml`)                 | ![ci-badge]                          | Full pipeline: Docker build, integration tests, and coverage reports |
+| **Python Tests** (`pytest.yaml`)   | ![pytest-badge]                      | Unit/integration tests and coverage reports                          |
+| **Type Checking** (`pyright.yaml`) | ![pyright-badge] ![pyright-official] | Ensures type safety with Pyright                                     |
+| **Lint & Format** (`ruff.yaml`)    | ![ruff-badge]                        | Enforces consistent style and detects common issues using Ruff       |
+
+🧠 _For details, see [.github/WORKFLOWS.md](.github/WORKFLOWS.md)._
+
+<!-- Badge references -->
+
+[ci-badge]: https://github.com/el-besto/calibration-service/actions/workflows/ci.yaml/badge.svg
+
+[pytest-badge]: https://github.com/el-besto/calibration-service/actions/workflows/pytest.yaml/badge.svg
+
+[pyright-badge]: https://github.com/el-besto/calibration-service/actions/workflows/pyright.yaml/badge.svg
+
+[pyright-official]: https://microsoft.github.io/pyright/img/pyright_badge.svg
+
+[ruff-badge]: https://github.com/el-besto/calibration-service/actions/workflows/ruff.yaml/badge.svg
 
 <!-- link helpers below -->
-
-[overview]: ../calibration-service/docs/PROJECT.md
 
 [python]: https://www.python.org/downloads/
 

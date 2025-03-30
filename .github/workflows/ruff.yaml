@@ -1,5 +1,17 @@
 name: Ruff
-on: [ push, pull_request ]
+on:
+  push:
+    paths:
+      - "**.py"
+      - "pyproject.toml"
+      - ".github/workflows/ruff.yaml"
+  pull_request:
+    paths:
+      - "**.py"
+      - "pyproject.toml"
+      - ".github/workflows/ruff.yaml"
+  workflow_dispatch:
+
 jobs:
   ruff:
     runs-on: ubuntu-latest

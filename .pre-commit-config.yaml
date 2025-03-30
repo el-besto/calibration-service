@@ -10,6 +10,15 @@ repos:
         stages: [ commit-msg ]
         args: [ --verbose, --strict, feat, fix, chore, style, test, build, ci, docs, wip ]
         fail_fast: true
+  - repo: local
+    hooks:
+      - id: run_tests
+        name: run_tests
+        files: \.py$
+        language: script
+        entry: ./run_tests.sh
+        stages: [ pre-commit ]
+        fail_fast: true
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.2.0
     hooks:
