@@ -18,7 +18,6 @@ eggs/
 lib/
 lib64/
 parts/
-sdist/
 var/
 wheels/
 share/python-wheels/
@@ -38,13 +37,10 @@ pip-log.txt
 pip-delete-this-directory.txt
 
 # Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
+coverage_html/
 .coverage
 .coverage.*
 .cache
-nosetests.xml
 coverage.xml
 *.cover
 *.py,cover
