@@ -3,7 +3,17 @@ name: Pyright
 on:
   push:
     branches: [main]
+    paths:
+      - "**.py"
+      - "pyproject.toml"
+      - "pyrightconfig.json"
+      - ".github/workflows/pyright.yaml"
   pull_request:
+    paths:
+      - "**.py"
+      - "pyproject.toml"
+      - "pyrightconfig.json"
+      - ".github/workflows/pyright.yaml"
   workflow_dispatch:
 
 jobs:
@@ -17,6 +27,7 @@ jobs:
         uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true
+          cache-dependency-glob: "uv.lock"
           pyproject-file: "pyproject.toml"
 
       # Create venv and install deps via uv

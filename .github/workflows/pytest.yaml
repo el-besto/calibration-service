@@ -1,0 +1,58 @@
+name: Python Tests
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "**.py"
+      - "pyproject.toml"
+      - "pytest.ini"
+      - ".github/workflows/pytest.yaml"
+      - "run_tests_with_coverage.sh"
+  pull_request:
+    paths:
+      - "**.py"
+      - "pyproject.toml"
+      - "pytest.ini"
+      - ".github/workflows/pytest.yaml"
+      - "run_tests_with_coverage.sh"
+  workflow_dispatch:
+
+concurrency:
+  group:
+    ${{ github.workflow }}-${{ github.ref_name }}-${{
+    github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: "Run Python Tests"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install uv (and Python)
+        id: setup-uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+          pyproject-file: "pyproject.toml"
+
+      # Create venv and install deps via uv
+      - name: Set up virtualenv and install deps
+        run: |
+          uv venv .venv
+          source .venv/bin/activate
+          uv sync --frozen --group dev
+
+      - name: Run tests with coverage
+        run: ./run_tests_with_coverage.sh
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: coverage_html/index.html
