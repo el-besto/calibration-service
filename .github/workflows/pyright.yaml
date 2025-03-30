@@ -6,18 +6,16 @@ on:
     paths:
       - "**.py"
       - "pyproject.toml"
-      - "pyrightconfig.json"
       - ".github/workflows/pyright.yaml"
   pull_request:
     paths:
       - "**.py"
       - "pyproject.toml"
-      - "pyrightconfig.json"
       - ".github/workflows/pyright.yaml"
   workflow_dispatch:
 
 jobs:
-  pyright:
+  typecheck:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -36,13 +34,6 @@ jobs:
           uv venv .venv
           source .venv/bin/activate
           uv sync --frozen
-
-      - name: 'Debug: Show .venv contents'
-        run: ls -la .venv
-      - name: 'Debug: Show folder contents'
-        run: ls -la
-      - name: 'Debug: Show working directory'
-        run: pwd
 
       # Run pyright
       - name: Run Pyright

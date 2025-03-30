@@ -85,7 +85,7 @@ jobs:
           name: calibration-service
           path: /tmp/calibration-service.tar
 
-  test:
+  container-tests:
     name: "test image"
     runs-on: ubuntu-latest
     needs: [build, python-tests]

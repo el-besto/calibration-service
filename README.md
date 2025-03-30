@@ -12,10 +12,7 @@ This backend service is designed to manage calibrations of a hardware device. Ea
 Calibrations can be tagged with arbitrary strings to describe different states of a device. Tags can be added or removed
 from calibrations, and the tagging history is preserved.
 
-_[Read full project overview](docs/PROJECT.md)
-
-[![Checked with pyright](https://microsoft.github.io/pyright/img/pyright_badge.svg)](https://microsoft.github.io/pyright/)
-[![Python Tests](https://github.com/el-besto/calibration-service/actions/workflows/pytest.yaml/badge.svg)](https://github.com/el-besto/calibration-service/actions/workflows/pytest.yaml)
+_[Read full project overview](docs/PROJECT.md)_
 
 ---
 
@@ -23,7 +20,7 @@ _[Read full project overview](docs/PROJECT.md)
 
 - **Python** 3.12 or higher, [link][python]
 - **uv** for python runtime and dependency management, [link][uv]
-- **nodejs** for Pyright pre-commit hook execution, [link][pyright]
+- **Node.js** for Pyright pre-commit hook execution, [link][pyright]
 
 ---
 
@@ -38,15 +35,35 @@ TODO: (docs): add getting started
 This repository includes a comprehensive test harness following Clean Architecture principles.
 The testing infrastructure is designed to be expandable and maintainable.
 
-_For detailed information about the testing approach, see [docs/TESTS.md](docs/TESTS.md)._
+🧠 _For detailed information about the testing approach, see [docs/TESTS.md](docs/TESTS.md)._
 
 ---
 
-## Additional Documentation
+### Continuous Integration
 
-- [Full Project Overview](docs/PROJECT.md)
+This project uses GitHub Actions for continuous integration and code quality checks.
+All workflows use [`uv`][uv] for fast dependency resolution.
 
----
+| Workflow                           | Status Badge                         | Description                                                          |
+|------------------------------------|--------------------------------------|----------------------------------------------------------------------|
+| **CI** (`ci.yaml`)                 | ![ci-badge]                          | Full pipeline: Docker build, integration tests, and coverage reports |
+| **Python Tests** (`pytest.yaml`)   | ![pytest-badge]                      | Unit/integration tests and coverage reports                          |
+| **Type Checking** (`pyright.yaml`) | ![pyright-badge] ![pyright-official] | Ensures type safety with Pyright                                     |
+| **Lint & Format** (`ruff.yaml`)    | ![ruff-badge]                        | Enforces consistent style and detects common issues using Ruff       |
+
+🧠 _For details, see [.github/WORKFLOWS.md](.github/WORKFLOWS.md)._
+
+<!-- Badge references -->
+
+[ci-badge]: https://github.com/el-besto/calibration-service/actions/workflows/ci.yaml/badge.svg
+
+[pytest-badge]: https://github.com/el-besto/calibration-service/actions/workflows/pytest.yaml/badge.svg
+
+[pyright-badge]: https://github.com/el-besto/calibration-service/actions/workflows/pyright.yaml/badge.svg
+
+[pyright-official]: https://microsoft.github.io/pyright/img/pyright_badge.svg
+
+[ruff-badge]: https://github.com/el-besto/calibration-service/actions/workflows/ruff.yaml/badge.svg
 
 <!-- link helpers below -->
 
