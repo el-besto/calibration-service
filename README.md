@@ -14,12 +14,15 @@ from calibrations, and the tagging history is preserved.
 
 _[Read full project overview][overview]_
 
+[![Checked with pyright](https://microsoft.github.io/pyright/img/pyright_badge.svg)](https://microsoft.github.io/pyright/)
+
 ---
 
 ## Pre-requisites
 
 - **Python** 3.12 or higher, [link][python]
 - **uv** for python runtime and dependency management, [link][uv]
+- **nodejs** for Pyright pre-commit hook execution, [link][pyright]
 
 ---
 
@@ -33,13 +36,13 @@ TODO: (docs): add getting started
 
 TODO: (docs): add running tests
 
---- 
+---
 
 ## Additional Documentation
 
 - [Full Project Overview][overview]
 
---- 
+---
 
 <!-- link helpers below -->
 
@@ -48,3 +51,5 @@ TODO: (docs): add running tests
 [python]: https://www.python.org/downloads/
 
 [uv]: https://docs.astral.sh/uv/
+
+[pyright]: https://microsoft.github.io/pyright/#/installation
