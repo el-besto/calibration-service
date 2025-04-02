@@ -31,6 +31,9 @@ commands = {
     "typecheck": "uv tool run pyright src",
     "format": "uv tool run ruff format src",
     "precommit": "uv tool run pre-commit",
+    "docs_build": "uv tool run mkdocs build",
+    "docs_serve": "uv tool run mkdocs serve",
+    "docs_deploy": "uv tool run mkdocs gh-deploy",
 }
 
 
@@ -250,6 +253,22 @@ def copy_ulid() -> None:
 def copy_uuid() -> None:
     """Copy UUID to clipboard."""
     _run_script("copy_uuid.sh")
+
+
+# documentation
+def docs_build() -> None:
+    """Build docs"""
+    _run_command(commands["docs_build"])
+
+
+def docs_serve() -> None:
+    """Serve docs."""
+    _run_command(commands["docs_serve"])
+
+
+def docs_deploy() -> None:
+    """Deploy docs to hithub pages."""
+    _run_command(commands["docs_deploy"])
 
 
 # Main execution block (if needed)

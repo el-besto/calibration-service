@@ -1,4 +1,6 @@
-## Grounding & Inspiration
+# Architecture
+
+### Grounding & Inspiration
 
 This project uses Clean Architecture patterns. Hereafter "CA" will be used for "Clean Architecture".
 
@@ -22,7 +24,7 @@ This project uses Clean Architecture patterns. Hereafter "CA" will be used for "
     - [Screaming Architecture](https://blog.cleancoder.com/uncle-bob/2011/09/30/Screaming-Architecture.html) - by Uncle
       Bob (the same guy behind Clean Architecture)
 
-## CA in brief
+### CA in brief
 
 Clean Architecture is a _set of rules_ that help us structure our applications
 in such way that they're easier to maintain and test, and their codebases are
@@ -56,7 +58,7 @@ together. The "layering" helps us achieve important aspects in our codebase:
 Clean Architecture achieves this through defining a _dependency hierarchy_ -
 layers depend only on layers **below them**, but not above.
 
-## Project structure (only the important parts)
+### Project structure (only the important parts)
 
 - `app` - **Frameworks & Drivers Layer** - basically everything Next.js (pages,
   server actions, components, styles etc...) or whatever "consumes" the app's
@@ -81,13 +83,13 @@ layers depend only on layers **below them**, but not above.
 - `docs` - project documentation
 - `.github/workflows` - project cicd files
 
-### Project structure (Developer Tooling)
+#### Project structure (Developer Tooling)
 
 - `.pre-commit-config.yaml` - rules triggered to run via got hooks
 - `cspell.config.yaml` - custom dictionary to keep IDE's inspection pane "clean"
 - `.run` - shared run configurations for JetBrains PyCharm IDE
 
-## Layers explanation
+### Layers explanation
 
 - **Frameworks & Drivers**: keeps all the UI framework functionality, and
   everything else that interacts with the system (eg AWS Lambdas, Stripe

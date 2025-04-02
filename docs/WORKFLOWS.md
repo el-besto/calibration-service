@@ -89,7 +89,7 @@ downloaded from the workflow run page.
 
 Before submitting a pull request, it's recommended to run the tests locally, or rely on the pre-commit git hook.
 
-_For detailed information on how to run tests on localhost, see [docs/TESTS.md](../docs/TESTS.md)._
+_For detailed information on how to run tests on localhost, see [./TESTS.md](TESTS.md)._
 
 ## CI/CD Pipeline Flow
 

@@ -40,6 +40,15 @@ dev = [
     "pyperclip>=1.9.0",
     "pytest-mock>=3.14.0",
 ]
+docs = [
+    "eralchemy>=1.5.0",
+    "mkdocs>=1.6.1",
+    "mkdocs-include-markdown-plugin>=7.1.5",
+    "mkdocs-material>=9.6.11",
+    "mkdocstrings[python]>=0.29.1",
+    "pygments>=2.19.1",
+    "pymdown-extensions>=10.14.3",
+]
 
 [project.scripts]
 ## dev workflow scripts
@@ -63,6 +72,10 @@ setup = "scripts.bash_runner:run_setup"
 cp_iso = "scripts.bash_runner:copy_iso"
 cp_ulid = "scripts.bash_runner:copy_ulid"
 cp_uuid = "scripts.bash_runner:copy_uuid"
+## documentation
+docs_build = "scripts.bash_runner:docs_build"
+docs_serve = "scripts.bash_runner:docs_serve"
+docs_deploy = "scripts.bash_runner:docs_deploy"
 
 [build-system]
 requires = ["hatchling"]

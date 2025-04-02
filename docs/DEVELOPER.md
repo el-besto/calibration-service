@@ -1,7 +1,7 @@
 # Developer Guide
 
 This guide covers day-to-day development workflows and commands. For initial setup instructions, see
-the [README.md](../README.md).
+the [README.md](https://github.com/el-besto/calibration-service/blob/main/README.md).
 
 ## Environment Configuration
 
