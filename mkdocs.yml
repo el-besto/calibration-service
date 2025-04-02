@@ -1,0 +1,50 @@
+site_name: Calibration Service Documentation
+theme:
+  name: readthedocs
+
+nav:
+  - Project: PROJECT.md
+  - Architecture: ARCHITECTURE.md
+  - Developers: DEVELOPER.md
+  - Testing: TESTS.md
+  - CICD: WORKFLOWS.md
+
+plugins:
+  - search
+#  - include-markdown
+#  - mkdocstrings:
+#      handlers:
+#        python:
+#          setup_commands:
+#            - import sys
+#            - sys.path.append('path_to_your_project')
+#          options:
+#            docstring_style: google
+#            show_source: false
+
+#markdown_extensions:
+#  - pymdownx.superfences
+#  - pymdownx.tabbed
+#  - pymdownx.snippets
+#  - pymdownx.details
+#  - pymdownx.mark
+#  - pymdownx.tilde
+#  - pymdownx.critic
+#  - pymdownx.caret
+#  - pymdownx.keys
+#  - pymdownx.smartsymbols
+#  - pymdownx.magiclink
+#  - pymdownx.tasklist
+#  - pymdownx.betterem
+#  - pymdownx.inlinehilite
+#  - pymdownx.highlight
+#  - pymdownx.escapeall
+#  - pymdownx.pathconverter
+#  - pymdownx.progressbar
+#  - pymdownx.striphtml
+#  - pymdownx.snippets
+#  - pymdownx.superfences:
+#      custom_fences:
+#        - name: mermaid
+#          class: mermaid
+#          format: !!python/name:pymdownx.superfences.fence_code_format

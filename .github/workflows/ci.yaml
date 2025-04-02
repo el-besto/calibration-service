@@ -8,8 +8,8 @@ on:
       - "pyproject.toml"
       - "pytest.ini"
       - "Dockerfile"
-      - "compose.yaml"
-      - "run.sh"
+      - "docker-docker-compose.yaml"
+      - "scripts/run.sh"
       - ".github/workflows/ci.yaml"
   pull_request:
     paths:
@@ -17,8 +17,8 @@ on:
       - "pyproject.toml"
       - "pytest.ini"
       - "Dockerfile"
-      - "compose.yaml"
-      - "run.sh"
+      - "docker-docker-compose.yaml"
+      - "scripts/run.sh"
       - ".github/workflows/ci.yaml"
   workflow_dispatch:
 
@@ -52,7 +52,7 @@ jobs:
           uv sync --frozen --group dev
 
       - name: Run tests with coverage
-        run: ./run_tests_with_coverage.sh
+        run: ./scripts/run_tests_with_coverage.sh
 
       - name: Upload test report
         uses: actions/upload-artifact@v4
@@ -90,7 +90,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build, python-tests]
     # Only run container tests on main branch or when Dockerfile/compose changes
-    if: github.ref == 'refs/heads/main' || contains(github.event.pull_request.changed_files, 'Dockerfile') || contains(github.event.pull_request.changed_files, 'compose.yaml')
+    if: github.ref == 'refs/heads/main' || contains(github.event.pull_request.changed_files, 'Dockerfile') || contains(github.event.pull_request.changed_files, 'docker-docker-compose.yaml')
     steps:
       - uses: actions/checkout@v4
 

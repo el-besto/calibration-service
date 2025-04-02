@@ -1,0 +1,65 @@
+services:
+  web:
+    # Build the image from the Dockerfile in the current directory
+    build: .
+
+    environment:
+      PYTHONPATH: .
+      DATABASE_URL: "postgresql+asyncpg://dev-user:password@postgres:5432/dev_db"
+
+    stdin_open: true  # Keep stdin open for interaction
+    tty: true         # Allocate a pseudo-TTY
+
+    # Host the FastAPI application on port 8000
+    ports:
+      - "8000:8000"
+
+    develop:
+      # Create a `watch` configuration to update the app
+      # https://docs.docker.com/compose/file-watch/#compose-watch-versus-bind-mounts
+      watch:
+        # Sync the working directory with the `/app` directory in the container
+        - action: sync
+          path: .
+          target: /app
+          # Exclude the project virtual environment — it could be for a
+          # different platform in the container
+          ignore:
+            - .venv/
+
+        # Rebuild the image if dependencies change by checking uv.lock
+        - action: rebuild
+          path: ./uv.lock
+
+#  source: https://medium.com/@tclaitken/setting-up-a-fastapi-app-with-async-sqlalchemy-2-0-pydantic-v2-e6c540be4308
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: dev-user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: dev_db
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data:cached
+
+  test-postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: test-user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: test_db
+    ports:
+      - "5434:5432" # Use a different port to avoid conflicts with the main database
+    expose:
+      - "5434" # Exposing the different port for clarity
+    volumes:
+      - test-db-data:/var/lib/postgresql/data:cached
+
+volumes:
+  db-data:
+  test-db-data:

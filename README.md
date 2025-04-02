@@ -1,74 +1,62 @@
 # calibration-service
 
-## Overview
+[Live Site](https://calibration-service.fly.dev/docs)
+[Live Documentation](https://el-besto.github.io/calibration-service)
 
-This backend service is designed to manage calibrations of a hardware device. Each calibration includes:
+## Quick Start (container)
 
-- `calibration_type`
-- `value`
-- `timestamp`
-- `username`
+1. Start Docker Desktop
+2. Pull images, build, and start container
+   ```bash
+   docker compose up
+   ```
+3. Go to [localhost:8000/docs](http://localhost:8000/docs)
 
-Calibrations can be tagged with arbitrary strings to describe different states of a device. Tags can be added or removed
-from calibrations, and the tagging history is preserved.
+## Quick Start (local)
 
-_[Read full project overview](docs/PROJECT.md)_
+1. Clone the repository
+2. Install python runtime and package manager [uv](https://docs.astral.sh/uv/getting-started/installation/#homebrew)
+   ```
+   brew install uv
+   ```
+3. Start containers, initialize database, and run migrations
+   ```bash
+   uv run db_init"
+   ```
+4. (optional) Seed db:
+   ```bash
+   uv run seed
+   ```
+5. Start the development server:
+   ```bash
+   uv run fastapi dev src/drivers/rest/main.py
+   ```
 
----
+## Database Management
 
-## Pre-requisites
+The service uses PostgreSQL for data storage and Alembic for database migrations. Key commands:
 
-- **Python** 3.12 or higher, [link][python]
-- **uv** for python runtime and dependency management, [link][uv]
-- **Node.js** for Pyright pre-commit hook execution, [link][pyright]
+```bash
+# Initialize database and run migrations
+uv run db_init
 
----
+# Apply pending migrations
+uv run db_migrate
 
-## Getting started
+# Create a new migration
+uv run db_create "Description of changes"
+```
 
-TODO: (docs): add getting started
+For detailed information about database operations and migrations, see:
+- [Developer Guide](docs/DEVELOPER.md) - Day-to-day development workflows
+- [Database Migrations](alembic/README.md) - Detailed Alembic usage and best practices
 
----
+## Documentation
 
-### Test Documentation
+- [Developer Guide](docs/DEVELOPER.md) - Development workflows and commands
+- [Architecture](docs/ARCHITECTURE.md) - System design and patterns
+- [Database Migrations](alembic/README.md) - Database management details
 
-This repository includes a comprehensive test harness following Clean Architecture principles.
-The testing infrastructure is designed to be expandable and maintainable.
+## License
 
-🧠 _For detailed information about the testing approach, see [docs/TESTS.md](docs/TESTS.md)._
-
----
-
-### Continuous Integration
-
-This project uses GitHub Actions for continuous integration and code quality checks.
-All workflows use [`uv`][uv] for fast dependency resolution.
-
-| Workflow                           | Status Badge                         | Description                                                          |
-|------------------------------------|--------------------------------------|----------------------------------------------------------------------|
-| **CI** (`ci.yaml`)                 | ![ci-badge]                          | Full pipeline: Docker build, integration tests, and coverage reports |
-| **Python Tests** (`pytest.yaml`)   | ![pytest-badge]                      | Unit/integration tests and coverage reports                          |
-| **Type Checking** (`pyright.yaml`) | ![pyright-badge] ![pyright-official] | Ensures type safety with Pyright                                     |
-| **Lint & Format** (`ruff.yaml`)    | ![ruff-badge]                        | Enforces consistent style and detects common issues using Ruff       |
-
-🧠 _For details, see [.github/WORKFLOWS.md](.github/WORKFLOWS.md)._
-
-<!-- Badge references -->
-
-[ci-badge]: https://github.com/el-besto/calibration-service/actions/workflows/ci.yaml/badge.svg
-
-[pytest-badge]: https://github.com/el-besto/calibration-service/actions/workflows/pytest.yaml/badge.svg
-
-[pyright-badge]: https://github.com/el-besto/calibration-service/actions/workflows/pyright.yaml/badge.svg
-
-[pyright-official]: https://microsoft.github.io/pyright/img/pyright_badge.svg
-
-[ruff-badge]: https://github.com/el-besto/calibration-service/actions/workflows/ruff.yaml/badge.svg
-
-<!-- link helpers below -->
-
-[python]: https://www.python.org/downloads/
-
-[uv]: https://docs.astral.sh/uv/
-
-[pyright]: https://microsoft.github.io/pyright/#/installation
+[License details here]

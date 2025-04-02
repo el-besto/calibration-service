@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="FastAPI - local" type="Python.FastAPI">
-    <option name="file" value="$PROJECT_DIR$/app/main.py" />
+    <option name="file" value="$PROJECT_DIR$/src/drivers/rest/main.py" />
     <module name="calibration-service" />
     <option name="ENV_FILES" value="" />
     <option name="INTERPRETER_OPTIONS" value="" />
