@@ -66,7 +66,7 @@ def mock_list_calibrations_use_case(mocker: MockerFixture) -> AsyncMock:
     # Create an AsyncMock that is itself awaitable
     mock_instance = AsyncMock(spec=ListCalibrationsUseCase)
     # No need to mock __call__ separately if the instance itself handles the call.
-    return mock_instance
+    return mock_instance  # noqa: RET504
 
 
 # --- Tests for POST /calibrations/{id}/tags ---

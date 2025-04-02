@@ -1,6 +1,6 @@
+from datetime import UTC, datetime
 from unittest.mock import AsyncMock
 from uuid import uuid4
-from datetime import UTC, datetime
 
 import pytest
 from httpx import AsyncClient
@@ -28,7 +28,9 @@ from src.drivers.rest.dependencies import (
 )
 from src.drivers.rest.main import app  # Import the FastAPI app instance
 from src.entities.exceptions import DatabaseOperationError
-from src.entities.models.calibration import Calibration  # Add Calibration import
+from src.entities.models.calibration import (
+    Calibration,  # noqa: F811 # Add Calibration import
+)
 
 # Mark all tests in this module as async and use the anyio backend
 pytestmark = [pytest.mark.asyncio, pytest.mark.anyio]
@@ -41,7 +43,7 @@ def mock_add_calibration_use_case() -> AsyncMock:
     mock = AsyncMock(spec=AddCalibrationUseCase)
     # If __call__ is the execution method, mocking the instance directly works.
     # If execute exists, we might need mock.execute = AsyncMock()
-    return mock
+    return mock  # noqa: RET504
 
 
 @pytest.fixture
@@ -52,7 +54,7 @@ def sample_created_calibration() -> Calibration:
         measurement=Measurement(value=1.23, type=CalibrationType.offset),
         timestamp=Iso8601Timestamp(datetime.now(UTC).isoformat()),
         username="test.user",
-        tags=[], # Assuming no tags initially
+        tags=[],  # Assuming no tags initially
     )
 
 
@@ -340,7 +342,7 @@ async def test_get_tags_for_calibration_invalid_timestamp(
     )
 
     # --- Assert ---
-    assert response.status_code == 422 # Correct status code to 422
+    assert response.status_code == 422  # Correct status code to 422
     response_data = response.json()
     assert "detail" in response_data
     # Check for specific validation error message from Pydantic/FastAPI

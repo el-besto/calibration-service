@@ -68,7 +68,7 @@ async def test_get_tags_for_calibration_success(
         CalibrationPresenter,
         "present_calibration_tags",
         return_value=expected_response,
-    ) as mock_present_method: # This context manager yields the mock replacement
+    ) as mock_present_method:  # This context manager yields the mock replacement
         # Act
         response = await get_tags_controller.get_tags_for_calibration(
             calibration_id=sample_calibration_id, timestamp=sample_timestamp
@@ -88,7 +88,7 @@ async def test_get_tags_for_calibration_success(
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "error_type, expected_exception",
+    ("error_type", "expected_exception"),
     [
         (CalibrationNotFoundError("Calibration not found"), NotFoundError),
         (DatabaseOperationError("DB connection failed"), DatabaseOperationError),

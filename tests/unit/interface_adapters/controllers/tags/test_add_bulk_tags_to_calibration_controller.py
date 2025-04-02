@@ -135,7 +135,7 @@ async def test_add_bulk_tags_success(
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "error_type, expected_exception",
+    ("error_type", "expected_exception"),
     [
         (ValidationError("Empty list provided"), InputParseError),
         (CalibrationNotFoundError("Cal not found"), NotFoundError),

@@ -220,6 +220,7 @@ ignore = [
     "PLR0912", # too many branches
 ]
 
+
 # Ignore specific rules for test files
 "tests/**/*" = [
     "S101",    # Use of assert detected
@@ -243,6 +244,7 @@ ignore = [
 ]
 "alembic/**/*" = [
     "T201",    # Allow print statements in scripts
+    "RUF100"
 ]
 "scripts/**/*" = [
     "T201",    # Allow print statements in scripts

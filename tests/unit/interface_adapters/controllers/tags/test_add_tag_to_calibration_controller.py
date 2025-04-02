@@ -192,7 +192,7 @@ async def test_add_tag_get_or_create_race_condition(
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "error_origin, error_type, expected_exception",
+    ("error_origin", "error_type", "expected_exception"),
     [
         # Errors from _get_or_create_tag part
         (

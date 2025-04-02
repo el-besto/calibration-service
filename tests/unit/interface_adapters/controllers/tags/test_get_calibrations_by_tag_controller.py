@@ -139,7 +139,7 @@ async def test_get_calibrations_by_tag_success(
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "error_type, expected_exception",
+    ("error_type", "expected_exception"),
     [
         (TagNotFoundError("Tag 'target-tag' not found"), NotFoundError),
         (DatabaseOperationError("DB connection failed"), DatabaseOperationError),
