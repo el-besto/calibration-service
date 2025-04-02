@@ -4,10 +4,14 @@ import os
 import signal
 import subprocess
 import sys
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import IO
+from uuid import uuid4
 
 from dotenv import load_dotenv
+from pyperclip import copy
+from ulid import ULID
 
 
 def ensure_pythonpath() -> dict[str, str]:
@@ -158,7 +162,8 @@ def _run_script(script_name: str, *args: str) -> None:
 # Development workflow commands
 def run_dev() -> None:
     """Run the development server."""
-    _run_command(commands["dev"], *sys.argv[1:], wait=False)
+    _load_env()
+    _run_command(commands["dev"], *sys.argv[1:])
 
 
 def run_format() -> None:
@@ -241,19 +246,29 @@ def run_setup() -> None:
 
 
 # Utility commands
-def copy_iso() -> None:
-    """Copy ISO timestamp to clipboard."""
-    _run_script("")
+def _copy_output(name: str, output: str):
+    print(output)
+    copy(output)
+    print(f"The '{name}' has been copied to your clipboard!")
 
 
-def copy_ulid() -> None:
-    """Copy ULID to clipboard."""
-    _run_script("copy_ulid.sh")
+def copy_iso():
+    """copy current ISO8601 timestamp to clipboard"""
+    local_timestamp = datetime.now(UTC)
+    formatted_timestamp = local_timestamp.isoformat(sep=" ", timespec="seconds")
+    _copy_output("Timestamp", formatted_timestamp)
 
 
-def copy_uuid() -> None:
-    """Copy UUID to clipboard."""
-    _run_script("copy_uuid.sh")
+def copy_uuid():
+    """copy a UUID (v4) to clipboard"""
+    uuid = uuid4()
+    _copy_output("UUID", str(uuid))
+
+
+def copy_ulid():
+    """copy ULID to clipboard, using local time to clipboard"""
+    ulid = ULID()
+    _copy_output("ULID", str(ulid))
 
 
 # documentation
