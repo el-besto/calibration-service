@@ -2,6 +2,13 @@ services:
   web:
     # Build the image from the Dockerfile in the current directory
     build: .
+    container_name: calibration_web
+    command: >
+      sh -ce "echo 'Waiting for DB...' &&
+             uv run alembic upgrade head &&
+             python scripts/seed_database.py &&
+             echo 'Starting app...' &&
+             uv run fastapi dev src/drivers/rest/main.py --host '0.0.0.0'"
 
     environment:
       PYTHONPATH: .
@@ -13,6 +20,9 @@ services:
     # Host the FastAPI application on port 8777
     ports:
       - "8777:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
 
     develop:
       # Create a `watch` configuration to update the app
@@ -34,6 +44,7 @@ services:
 #  source: https://medium.com/@tclaitken/setting-up-a-fastapi-app-with-async-sqlalchemy-2-0-pydantic-v2-e6c540be4308
   postgres:
     image: postgres:16-alpine
+    container_name: calibration_db
     restart: unless-stopped
     environment:
       POSTGRES_USER: dev-user
@@ -45,6 +56,12 @@ services:
       - "5777"
     volumes:
       - db-data:/var/lib/postgresql/data:cached
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER:-dev-user} -d $${POSTGRES_DB:-dev_db} -q"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   test-postgres:
     image: postgres:16-alpine
