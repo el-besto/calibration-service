@@ -18,6 +18,13 @@ ENV UV_PYTHON_DOWNLOADS=0
 # Install the project into `/app`
 WORKDIR /app
 
+# Install system dependencies required for building packages like psutil
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    build-essential \
+    python3-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install the project's dependencies using the lockfile and settings
 RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=uv.lock,target=uv.lock \
