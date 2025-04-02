@@ -10,12 +10,12 @@
    ```bash
    docker compose up
    ```
-3. Go to [localhost:8000/docs](localhost:8000/docs)
+3. Go to [localhost:8000/docs](http://localhost:8000/docs)
 
 ## Quick Start (local)
 
 1. Clone the repository
-2. Install python runtime and package manager
+2. Install python runtime and package manager [uv](https://docs.astral.sh/uv/getting-started/installation/#homebrew)
    ```
    brew install uv
    ```
