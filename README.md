@@ -1,94 +1,35 @@
 # calibration-service
 
-## Overview
+[Live Site](https://calibration-service.fly.dev/docs)
+[Live Documentation](https://el-besto.github.io/calibration-service)
 
-This backend service is designed to manage calibrations of a hardware device. Each calibration includes:
+## Quick Start (container)
 
-- `calibration_type`
-- `value`
-- `timestamp`
-- `username`
+1. Start Docker Desktop
+2. Pull images, build, and start container
+   ```bash
+   docker compose up
+   ```
+3. Go to [localhost:8000/docs](localhost:8000/docs)
 
-Calibrations can be tagged with arbitrary strings to describe different states of a device. Tags can be added or removed
-from calibrations, and the tagging history is preserved.
-
-_[Read full project overview](docs/PROJECT.md)_
-
----
-
-## Pre-requisites
-
-- **Python** 3.12 or higher, [link][python]
-- **uv** for python runtime and dependency management, [link][uv]
-- **Node.js** for Pyright pre-commit hook execution, [link][pyright]
-
----
-
-## Getting started
-
-TODO: (docs): add getting started
-
----
-
-### Test Documentation
-
-This repository includes a comprehensive test harness following Clean Architecture principles.
-The testing infrastructure is designed to be expandable and maintainable.
-
-🧠 _For detailed information about the testing approach, see [docs/TESTS.md](docs/TESTS.md)._
-
----
-
-### Continuous Integration
-
-This project uses GitHub Actions for continuous integration and code quality checks.
-All workflows use [`uv`][uv] for fast dependency resolution.
-
-| Workflow                           | Status Badge                         | Description                                                          |
-|------------------------------------|--------------------------------------|----------------------------------------------------------------------|
-| **CI** (`ci.yaml`)                 | ![ci-badge]                          | Full pipeline: Docker build, integration tests, and coverage reports |
-| **Python Tests** (`pytest.yaml`)   | ![pytest-badge]                      | Unit/integration tests and coverage reports                          |
-| **Type Checking** (`pyright.yaml`) | ![pyright-badge] ![pyright-official] | Ensures type safety with Pyright                                     |
-| **Lint & Format** (`ruff.yaml`)    | ![ruff-badge]                        | Enforces consistent style and detects common issues using Ruff       |
-
-🧠 _For details, see [.github/WORKFLOWS.md](.github/WORKFLOWS.md)._
-
-<!-- Badge references -->
-
-[ci-badge]: https://github.com/el-besto/calibration-service/actions/workflows/ci.yaml/badge.svg
-
-[pytest-badge]: https://github.com/el-besto/calibration-service/actions/workflows/pytest.yaml/badge.svg
-
-[pyright-badge]: https://github.com/el-besto/calibration-service/actions/workflows/pyright.yaml/badge.svg
-
-[pyright-official]: https://microsoft.github.io/pyright/img/pyright_badge.svg
-
-[ruff-badge]: https://github.com/el-besto/calibration-service/actions/workflows/ruff.yaml/badge.svg
-
-<!-- link helpers below -->
-
-[python]: https://www.python.org/downloads/
-
-[uv]: https://docs.astral.sh/uv/
-
-[pyright]: https://microsoft.github.io/pyright/#/installation
-
-## Quick Start
+## Quick Start (local)
 
 1. Clone the repository
-2. Install dependencies:
-   ```bash
-   uv venv
-   source .venv/bin/activate
-   uv pip install -e ".[dev]"
+2. Install python runtime and package manager
    ```
-3. Set up the database:
-   ```bash
-   uv run db_init
+   brew install uv
    ```
-4. Start the development server:
+3. Start containers, initialize database, and run migrations
    ```bash
-   uv run dev
+   uv run db_init"
+   ```
+4. (optional) Seed db:
+   ```bash
+   uv run seed
+   ```
+5. Start the development server:
+   ```bash
+   uv run fastapi dev src/drivers/rest/main.py
    ```
 
 ## Database Management
