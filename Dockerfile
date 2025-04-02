@@ -62,7 +62,7 @@ WORKDIR /app
 
 # Add health check to verify the API is running
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD curl --fail http://localhost:8000 || exit 1
+  CMD curl --fail http://localhost:8777 || exit 1
 
 
 # Uses `fastapi dev` to enable hot-reloading when the `watch` sync occurs

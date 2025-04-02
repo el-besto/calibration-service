@@ -10,9 +10,9 @@ services:
     stdin_open: true  # Keep stdin open for interaction
     tty: true         # Allocate a pseudo-TTY
 
-    # Host the FastAPI application on port 8000
+    # Host the FastAPI application on port 8777
     ports:
-      - "8000:8000"
+      - "8777:8000"
 
     develop:
       # Create a `watch` configuration to update the app
@@ -40,9 +40,9 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: dev_db
     ports:
-      - "5432:5432"
+      - "5455:5432"
     expose:
-      - "5432"
+      - "5455"
     volumes:
       - db-data:/var/lib/postgresql/data:cached
 
@@ -54,9 +54,9 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: test_db
     ports:
-      - "5434:5432" # Use a different port to avoid conflicts with the main database
+      - "5456:5432" # Use a different port to avoid conflicts with the main database
     expose:
-      - "5434" # Exposing the different port for clarity
+      - "5456" # Exposing the different port for clarity
     volumes:
       - test-db-data:/var/lib/postgresql/data:cached
 
