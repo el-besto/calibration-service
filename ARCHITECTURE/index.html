@@ -57,10 +57,8 @@
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#layers-explanation">Layers explanation</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#folder-hierarchy-with-descriptions">Folder hierarchy with descriptions</a>
     </li>
-        </ul>
+    <li class="toctree-l2"><a class="reference internal" href="#folder-hierarchy-with-descriptions">Folder hierarchy with descriptions</a>
     </li>
     </ul>
                 </li>
@@ -93,7 +91,7 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="architecture">Architecture</h1>
-<h2 id="grounding-inspiration">Grounding &amp; Inspiration</h2>
+<h3 id="grounding-inspiration">Grounding &amp; Inspiration</h3>
 <p>This project uses Clean Architecture patterns. Hereafter "CA" will be used for "Clean Architecture".</p>
 <ul>
 <li>Background article by Bob Martin https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html</li>
@@ -126,7 +124,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="ca-in-brief">CA in brief</h2>
+<h3 id="ca-in-brief">CA in brief</h3>
 <p>Clean Architecture is a <em>set of rules</em> that help us structure our applications
 in such way that they're easier to maintain and test, and their codebases are
 predictable. It's like a common language that developers understand, regardless
@@ -157,7 +155,7 @@ together. The "layering" helps us achieve important aspects in our codebase:</p>
 </ul>
 <p>Clean Architecture achieves this through defining a <em>dependency hierarchy</em> -
 layers depend only on layers <strong>below them</strong>, but not above.</p>
-<h2 id="project-structure-only-the-important-parts">Project structure (only the important parts)</h2>
+<h3 id="project-structure-only-the-important-parts">Project structure (only the important parts)</h3>
 <ul>
 <li><code>app</code> - <strong>Frameworks &amp; Drivers Layer</strong> - basically everything Next.js (pages,
   server actions, components, styles etc...) or whatever "consumes" the app's
@@ -186,13 +184,13 @@ layers depend only on layers <strong>below them</strong>, but not above.</p>
 <li><code>docs</code> - project documentation</li>
 <li><code>.github/workflows</code> - project cicd files</li>
 </ul>
-<h3 id="project-structure-developer-tooling">Project structure (Developer Tooling)</h3>
+<h4 id="project-structure-developer-tooling">Project structure (Developer Tooling)</h4>
 <ul>
 <li><code>.pre-commit-config.yaml</code> - rules triggered to run via got hooks</li>
 <li><code>cspell.config.yaml</code> - custom dictionary to keep IDE's inspection pane "clean"</li>
 <li><code>.run</code> - shared run configurations for JetBrains PyCharm IDE</li>
 </ul>
-<h2 id="layers-explanation">Layers explanation</h2>
+<h3 id="layers-explanation">Layers explanation</h3>
 <ul>
 <li><strong>Frameworks &amp; Drivers</strong>: keeps all the UI framework functionality, and
   everything else that interacts with the system (eg AWS Lambdas, Stripe
