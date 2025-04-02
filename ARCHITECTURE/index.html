@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>ARCHITECTURE - Calibration Service Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">Calibration Service Documentation</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href=".." class="nav-link">Welcome to MkDocs</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./" class="nav-link active" aria-current="page">ARCHITECTURE</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../DATABASE/" class="nav-link">Database Management</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../DEVELOPER/" class="nav-link">Developer Guide</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../PROJECT/" class="nav-link">Senior Backend Engineer - ISW | Take Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../TESTS/" class="nav-link">Testing Strategy for Calibration Service</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href=".." class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../DATABASE/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="2"><a href="#grounding-inspiration" class="nav-link">Grounding &amp; Inspiration</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#ca-in-brief" class="nav-link">CA in brief</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#project-structure-only-the-important-parts" class="nav-link">Project structure (only the important parts)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#layers-explanation" class="nav-link">Layers explanation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h2 id="grounding-inspiration">Grounding &amp; Inspiration</h2>
+<p>This project uses Clean Architecture patterns. Hereafter "CA" will be used for "Clean Architecture".</p>
+<ul>
+<li>Background article by Bob Martin https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html</li>
+<li>Diagrams<ul>
+<li><a href="https://blog.cleancoder.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg">The CA Diagram (sphere) - by Uncle Bob</a> -
+  by Uncle Bob</li>
+<li><a href="https://github.com/nikolovlazar/nextjs-clean-architecture/blob/main/assets/clean-architecture-diagram.jpg?raw=true">The CA Diagram (simplified) - by nikolovlazar</a></li>
+</ul>
+</li>
+<li>Inspiration from existing CA implementations<ul>
+<li><a href="https://medium.com/@shaliamekh/clean-architecture-with-python-d62712fd8d4f">CA with Python</a> - by R. Shaliamekh.<ul>
+<li><a href="https://github.com/shaliamekh/clean-architecture-fastapi/tree/main">clean-architecture-fastapi - by shaliamekh</a> -
+  associated repo for blog post</li>
+</ul>
+</li>
+<li><a href="https://img.youtube.com/vi/jJVAla0dWJo/0.jpg">CA in Next.js</a>](https://www.youtube.com/watch?v=jJVAla0dWJo) -
+  video describing CA<ul>
+<li><a href="https://github.com/nikolovlazar/nextjs-clean-architecture/tree/main">nextjs-clean-architecture - by nikolovlazar</a> -
+  associated repo for video</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Other similar architectures to Clean Architecture<ul>
+<li><a href="https://alistair.cockburn.us/hexagonal-architecture/">Hexagonal Architecture</a> - (a.k.a. Ports and Adapters) by
+  Alistair Cockburn</li>
+<li><a href="https://jeffreypalermo.com/2008/07/the-onion-architecture-part-1/">Onion Architecture</a> - by Jeffrey Palermo</li>
+<li><a href="https://blog.cleancoder.com/uncle-bob/2011/09/30/Screaming-Architecture.html">Screaming Architecture</a> - by Uncle
+  Bob (the same guy behind Clean Architecture)</li>
+</ul>
+</li>
+</ul>
+<h2 id="ca-in-brief">CA in brief</h2>
+<p>Clean Architecture is a <em>set of rules</em> that help us structure our applications
+in such way that they're easier to maintain and test, and their codebases are
+predictable. It's like a common language that developers understand, regardless
+of their technical backgrounds and programming language preferences.</p>
+<p>Clean Architecture, and similar/derived architectures, all have the same goal -
+<em>separation of concerns</em>. They introduce <strong>layers</strong> that bundle similar code
+together. The "layering" helps us achieve important aspects in our codebase:</p>
+<ul>
+<li><strong>Independent of UI</strong> - the business logic is not coupled with the UI
+  framework that's being used (in this case Next.js). The same system can be
+  used in a CLI application, without having to change the business logic or
+  rules.</li>
+<li><strong>Independent of Database</strong> - the database implementation/operations are
+  isolated in their own layer, so the rest of the app does not care about which
+  database is being used, but communicates using <em>Models</em>.</li>
+<li><strong>Independent of Frameworks</strong> - the business rules and logic simply don't know
+  anything about the outside world. They receive data defined with plain
+  objects/dictionaries, <em>Services</em> and <em>Repositories</em> to define
+  their own logic and functionality. This allows us to use frameworks as tools,
+  instead of having to "mold" our system into their implementations and
+  limitations. If we use Route Handlers in our app's <em>Drivers</em>, and want to refactor some of
+  them to use a different framework implementation all we need to do is just invoke the specific
+  <em>controllers</em> in the new framework's manner, but the <em>core</em>
+  business logic remains unchanged.</li>
+<li><strong>Testable</strong> - the business logic and rules can easily be tested because it
+  does not depend on the UI framework, or the database, or the web server, or
+  any other external element that builds up our system.</li>
+</ul>
+<p>Clean Architecture achieves this through defining a <em>dependency hierarchy</em> -
+layers depend only on layers <strong>below them</strong>, but not above.</p>
+<h2 id="project-structure-only-the-important-parts">Project structure (only the important parts)</h2>
+<ul>
+<li><code>app</code> - <strong>Frameworks &amp; Drivers Layer</strong> - basically everything Next.js (pages,
+  server actions, components, styles etc...) or whatever "consumes" the app's
+  logic</li>
+<li>~~<code>di</code> - Dependency Injection - a folder where we setup the DI container and the
+  modules~~ # TODO: (future implementation)</li>
+<li>~~<code>db</code> - Everything DB - initializing the DB client, defining schema, migrations~~ # TODO: (future implementation)</li>
+<li><code>src</code> - The "root" of the system<ul>
+<li><code>application</code> - <strong>Application Layer</strong> - holds use cases and interfaces for repositories and services</li>
+<li><code>entities</code> - <strong>Entities Layer</strong> - holds models, value objects and custom errors/exceptions</li>
+<li><code>infrastructure</code> - <strong>Infrastructure Layer</strong> - holds implementations of repositories and services,
+  and pulls in the interfaces from <code>application</code></li>
+<li><code>interface-adapters</code> - <strong>Interface Adapters Layer</strong> - holds controllers that serve as an entry point to the system
+  (used in Frameworks &amp; Drivers layer to interact with the system)</li>
+<li><code>drivers</code> - <strong>Frameworks &amp; Drivers layer</strong> - holds implementation-specific details for a given framework (e.g.
+  FastAPI routes)</li>
+</ul>
+</li>
+<li><code>tests</code> - Unit tests live here - the <code>unit</code> subfolder's structure matches <code>src</code></li>
+<li><code>pyproject.toml</code> - list of deps &amp; configuration for python tools (linters, formatters, )<ul>
+<li>~~Where the <code>pylint-module-boundaries</code> plugin is defined - <em>this stops you from breaking the dependency rule</em>~~ #
+  TODO: (future implementation)</li>
+</ul>
+</li>
+<li><code>scripts</code> - manual scripts to run project-wide actions (e.g. run tests) from bash terminal</li>
+<li><code>docs</code> - project documentation</li>
+<li><code>.github/workflows</code> - project cicd files</li>
+</ul>
+<h3 id="project-structure-developer-tooling">Project structure (Developer Tooling)</h3>
+<ul>
+<li><code>.pre-commit-config.yaml</code> - rules triggered to run via got hooks</li>
+<li><code>cspell.config.yaml</code> - custom dictionary to keep IDE's inspection pane "clean"</li>
+<li><code>.run</code> - shared run configurations for JetBrains PyCharm IDE</li>
+</ul>
+<h2 id="layers-explanation">Layers explanation</h2>
+<ul>
+<li><strong>Frameworks &amp; Drivers</strong>: keeps all the UI framework functionality, and
+  everything else that interacts with the system (eg AWS Lambdas, Stripe
+  webhooks etc...). In this scenario, that's FastAPI Route Handlers<ul>
+<li>This layer should only use <em>Controllers</em>, <em>Models</em>, and <em>Errors</em>, and
+  <strong>must not</strong> import <em>Use Cases</em>, <em>Repositories</em>, and <em>Services</em>.</li>
+</ul>
+</li>
+<li><strong>Interface Adapters</strong>: defines <em>Controllers</em> and <em>Presenters</em>:<ul>
+<li>Controllers perform <strong>authentication checks</strong> and <strong>input validation</strong>
+  before passing the input to the specific use cases.</li>
+<li>Controllers <em>orchestrate</em> Use Cases. They don't implement any logic, but
+  define the whole operations using the use cases. In short, they use <em>"Use Case"</em> input ports.</li>
+<li>Errors from deeper layers are bubbled up and being handled where controllers
+  are being used.</li>
+<li>Controllers use <em>Presenters</em> to convert the data to a UI-friendly format
+  just before returning it to the "consumer". This helps
+  prevent leaking any sensitive properties, like emails or hashed passwords,
+  and also helps us slim down the amount of data we're sending back to the
+  client. In short, they implement <em>Use Case</em> output ports.</li>
+</ul>
+</li>
+<li><strong>Application</strong>: where the business logic lives. Sometimes called <em>core</em>. This
+  layer defines the Use Cases and interfaces for the services and repositories.<ul>
+<li><strong>Use Cases</strong>:<ul>
+<li>Represent individual operations, like "Create Calibration" or "Sign In"</li>
+<li>Accept pre-validated input (from controllers) and <em>handle authorization checks</em>.</li>
+<li>Use <em>Repositories</em> and <em>Services</em> to access data sources and communicate
+  with external systems.</li>
+<li><strong>Use cases should not use other use cases</strong>. That's a code smell. It
+  means the use case does multiple things and should be broken down into
+  multiple use cases.</li>
+</ul>
+</li>
+<li>Interfaces for Repositories and Services:<ul>
+<li>These are defined in this layer because we want to break out the
+  dependency of their tools and frameworks (database drivers, email services
+  etc...), so we'll implement them in the <em>Infrastructure</em> layer.</li>
+<li>Since the interfaces live in this layer, use cases (and transitively the
+  upper layers) can access them through <em>Dependency Injection</em>.</li>
+<li><em>Dependency Injection</em> allows us to split up the <strong>definitions</strong>
+  (interfaces) from the <strong>implementations</strong> (classes) and keep them in a
+  separate layer (infrastructure), but still allow their usage.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Entities</strong>: where the <em>Models</em> and <em>Exceptions</em> are defined.<ul>
+<li><strong>Models</strong>:<ul>
+<li>Define "domain" data shapes with plain JavaScript, without using
+  "database" technologies.</li>
+<li>Models are not always tied to the database - sending emails require an
+  external email service, not a database, but we still need to have a data
+  shape that will help other layers communicate "sending an email".</li>
+<li>Models also define their own validation rules, which are called
+  "Enterprise Business Rules". Rules that don't usually change, or are least
+  likely to change when something <em>external</em> changes (page navigation,
+  security, etc...). An example is a <code>User</code> model that defines a username
+  field that must be <em>at least 6 characters long and not include special
+  characters</em>.</li>
+</ul>
+</li>
+<li><strong>Exceptions</strong>:<ul>
+<li>We want our own errors because we don't want to be bubbling up
+  database-specific errors, or any type of errors that are specific to a
+  library or framework.</li>
+<li>We <code>catch</code> errors that are coming from other libraries (for example
+  SQAlchemy), and convert those errors to our own errors.</li>
+<li>That's how we can keep our <em>core</em> independent of any frameworks,
+  libraries, and technologies - one of the most important aspects of Clean
+  Architecture.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Infrastructure</strong>: where <em>Repositories</em> and <em>Services</em> are being defined.<ul>
+<li>This layer pulls in the interfaces of repositories and services from the
+  <em>Application Layer</em> and implements them in their own classes.</li>
+<li><em>Repositories</em> are how we implement the database operations. They are
+  classes that expose methods that perform a single database operation - like
+  <code>get_calibration</code>, or <code>create_calibration</code>, or <code>update_calibration</code>. This means that we use the
+  database library / driver in these classes only. They don't perform any data
+  validation, just execute queries and mutations against the database and
+  either throw our custom defined <em>Errors</em> or return results.</li>
+<li><em>Services</em> are shared services that are being used across the application -
+  like an authentication service, or email service, or implement external
+  systems like Stripe (create payments, validate receipts etc...). These
+  services also use and depend on other frameworks and libraries. That's why
+  their implementation is kept here alongside the repositories.</li>
+<li>~~Since we don't want any layer to depend on this one (and transitively depend
+  on the database and all the services), we use the
+  <a href="https://en.wikipedia.org/wiki/Dependency_inversion_principle"><em>Dependency Inversion principle</em></a>.
+  This allows us to depend only on the interfaces defined in the <em>Application
+  Layer</em>, instead of the implementations in the <em>Infrastructure Layer</em>. We use
+  an <a href="https://en.wikipedia.org/wiki/Inversion_of_control"><em>Inversion of Control</em></a>
+  library like <a href="https://github.com/Evyweb/ioctopus">ioctopus</a> to abstract the
+  implementation behind the interfaces and "inject" it whenever we need it. We
+  create the abstraction in the <code>di</code> directory. We "bind" the repositories,
+  services, controllers, and use cases to Symbols, and we "resolve" them using
+  those symbols when we need the actual implementation. That's how we can use
+  the implementation, without needing to explicitly depend on it (import it).~~ # TODO: future implementation</li>
+</ul>
+</li>
+</ul>
+<h3 id="folder-hierarchy-with-descriptions">Folder hierarchy with descriptions</h3>
+<pre><code class="language-text">src/
+├── config/                  # singleton configuration
+│   ├── database.py             # returns SQLAlchemy SessionLocal instance or Engine
+│   └── environment.py          # loads env variables, etc.
+├── entities/                # &quot;Entities&quot; or &quot;core&quot; layer
+│   ├── exceptions.py           # Core &quot;custom&quot; exceptions, decorates base exception w/&quot;cause&quot; and &quot;messages&quot;
+│   ├── models/
+│   └── value_objects/
+├── application/             # &quot;Application&quot; layer
+│   ├── repositories/           # (interfaces only)
+│   ├── services/               # (interfaces only)
+│   └── use_cases/              # implementation of CA &quot;Use Cases&quot;
+│       └── exceptions.py          # exceptions that are specific to a given &quot;Use Case&quot;
+├── interface_adapters/      # &quot;Interface&quot; adapters layer from CA
+│   ├── controllers/            # &quot;Controllers&quot; from CA
+│   └── presenters/             # &quot;Presenters&quot; from CA
+├── drivers/                 # &quot;Frameworks &amp; Drivers&quot; layer
+│   └── rest/                     # FastAPI framework
+│       ├── routers/              # FastAPI request handlers
+│       ├── schemas/              # FastAPI input and output schemas
+│       ├── dependencies.py       # FastAPI middleware
+│       ├── exception_handlers.py # FastAPI exception wrappers
+│       └── main.py               # FastAPI entrypoint
+└── infrastructure/          # &quot;Infrastructure&quot; layer: implementation of interface from &quot;Application&quot; layer
+    ├── repositories/
+    │   ├── calibration_repository/
+    │   │   ├── mock_repository.py     # implements in-memory
+    │   │   ├── mongodb_repository.py  # implements mongodb
+    │   │   └── postgres_repository.py # implements postgres
+    │   └── orm_models.py       # sqlalchemy-specific orm &lt;-&gt; system entity mapper
+    └── services/
+</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

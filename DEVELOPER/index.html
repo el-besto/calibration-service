@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Developer Guide - Calibration Service Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">Calibration Service Documentation</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href=".." class="nav-link">Welcome to MkDocs</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../ARCHITECTURE/" class="nav-link">ARCHITECTURE</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../DATABASE/" class="nav-link">Database Management</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./" class="nav-link active" aria-current="page">Developer Guide</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../PROJECT/" class="nav-link">Senior Backend Engineer - ISW | Take Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../TESTS/" class="nav-link">Testing Strategy for Calibration Service</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../DATABASE/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../PROJECT/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#developer-guide" class="nav-link">Developer Guide</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#environment-configuration" class="nav-link">Environment Configuration</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#pre-commit-hooks" class="nav-link">Pre-commit Hooks</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#available-commands" class="nav-link">Available Commands</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#common-development-workflows" class="nav-link">Common Development Workflows</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#best-practices" class="nav-link">Best Practices</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#troubleshooting" class="nav-link">Troubleshooting</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="developer-guide">Developer Guide</h1>
+<p>This guide covers day-to-day development workflows and commands. For initial setup instructions, see
+the <a href="../README.md">README.md</a>.</p>
+<h2 id="environment-configuration">Environment Configuration</h2>
+<p>The project uses layered environment files for configuration:</p>
+<ol>
+<li><code>.env</code> - Base defaults (in git)</li>
+<li><code>.env.local</code> - Local overrides (git-ignored)</li>
+<li><code>.env.{ENV}</code> - Environment specific (in git)</li>
+<li><code>.env.{ENV}.local</code> - Environment specific local overrides (git-ignored)</li>
+</ol>
+<p>Environment files are loaded in the order above, with later files overriding earlier ones. The <code>{ENV}</code> placeholder is
+replaced with the value of <code>PYTHON_ENV</code> (defaults to "development").</p>
+<p>Example: To run in test environment:</p>
+<pre><code class="language-bash">PYTHON_ENV=test uv run db_init  # Will use .env → .env.local → .env.test → .env.test.local
+</code></pre>
+<h2 id="pre-commit-hooks">Pre-commit Hooks</h2>
+<p>The project uses pre-commit hooks to ensure code quality. These are configured in <code>.pre-commit-config.yaml</code>.</p>
+<h3 id="installed-hooks">Installed Hooks</h3>
+<table>
+<thead>
+<tr>
+<th>Hook</th>
+<th>Description</th>
+<th>When it Runs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>conventional-pre-commit</code></td>
+<td>Enforces <a href="https://www.conventionalcommits.org/">Conventional Commits</a> format</td>
+<td>On commit message</td>
+</tr>
+<tr>
+<td><code>run_tests</code></td>
+<td>Runs project tests</td>
+<td>Before commit</td>
+</tr>
+<tr>
+<td><code>trailing-whitespace</code></td>
+<td>Removes trailing whitespace</td>
+<td>Before commit</td>
+</tr>
+<tr>
+<td><code>end-of-file-fixer</code></td>
+<td>Ensures files end with newline</td>
+<td>Before commit</td>
+</tr>
+<tr>
+<td><code>check-toml</code></td>
+<td>Validates TOML files</td>
+<td>Before commit</td>
+</tr>
+<tr>
+<td><code>check-yaml</code></td>
+<td>Validates YAML files</td>
+<td>Before commit</td>
+</tr>
+<tr>
+<td><code>check-added-large-files</code></td>
+<td>Prevents large file commits</td>
+<td>Before commit</td>
+</tr>
+<tr>
+<td><code>ruff</code></td>
+<td>Lints Python code</td>
+<td>Before commit</td>
+</tr>
+<tr>
+<td><code>ruff-format</code></td>
+<td>Formats Python code</td>
+<td>Before commit</td>
+</tr>
+<tr>
+<td><code>pyright</code></td>
+<td>Type checks Python code</td>
+<td>Before commit</td>
+</tr>
+<tr>
+<td><code>uv-lock</code></td>
+<td>Updates dependency lock file</td>
+<td>Before commit</td>
+</tr>
+</tbody>
+</table>
+<h3 id="using-pre-commit">Using Pre-commit</h3>
+<pre><code class="language-bash"># Install the hooks
+pre-commit install --install-hooks
+
+# Run all hooks manually. Note: errors in alembic directory should be ignored.
+pre-commit run --all-files
+
+# Run specific hook
+pre-commit run ruff --all-files
+</code></pre>
+<h3 id="commit-message-format">Commit Message Format</h3>
+<p>We use conventional commits with the following types:</p>
+<ul>
+<li><code>feat</code>: New feature</li>
+<li><code>fix</code>: Bug fix</li>
+<li><code>refactor</code>: Code change that neither fixes a bug nor adds a feature</li>
+<li><code>test</code>: Adding missing tests or correcting existing tests</li>
+<li><code>style</code>: Changes that do not affect the meaning of the code</li>
+<li><code>chore</code>: Other changes that don't modify src or test files</li>
+<li><code>build</code>: Changes that affect the build system or external dependencies</li>
+<li><code>ci</code>: Changes to CI configuration files and scripts</li>
+<li><code>docs</code>: Documentation only changes</li>
+<li><code>wip</code>: Work in progress</li>
+</ul>
+<p>Example:</p>
+<pre><code class="language-bash">git commit -m &quot;feat: add user authentication&quot;
+</code></pre>
+<h2 id="available-commands">Available Commands</h2>
+<p>All commands are run using <code>uv run &lt;command&gt;</code>. Here's a complete list:</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+<th>Common Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dev</code></td>
+<td>Start the development server</td>
+<td>Local development</td>
+</tr>
+<tr>
+<td><code>check</code></td>
+<td>Runs all "before committing" cmds</td>
+<td>Local development</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>Run code formatters</td>
+<td>Before committing</td>
+</tr>
+<tr>
+<td><code>lint</code></td>
+<td>Run linters</td>
+<td>Before committing</td>
+</tr>
+<tr>
+<td><code>test</code></td>
+<td>Run unit and integration tests</td>
+<td>Before committing</td>
+</tr>
+<tr>
+<td><code>test_debug</code></td>
+<td>Run <code>test</code> and prints <code>log_test_step</code> output</td>
+<td>Debugging failed tests</td>
+</tr>
+<tr>
+<td><code>test_cov</code></td>
+<td>Run tests with coverage report</td>
+<td>CI/CD, coverage checks</td>
+</tr>
+<tr>
+<td><code>typecheck</code></td>
+<td>Run type checker</td>
+<td>Before committing</td>
+</tr>
+<tr>
+<td><code>db_init</code></td>
+<td>Initialize database and run migrations</td>
+<td>First-time setup, reset DB</td>
+</tr>
+<tr>
+<td><code>db_migrate</code></td>
+<td>Apply pending migrations</td>
+<td>After pulling new migrations</td>
+</tr>
+<tr>
+<td><code>db_create</code></td>
+<td>Create a new migration</td>
+<td>After model changes</td>
+</tr>
+<tr>
+<td><code>setup</code></td>
+<td>Full setup (init DB and run tests)</td>
+<td>First-time setup, CI/CD</td>
+</tr>
+<tr>
+<td><code>cp_iso</code></td>
+<td>Copy ISO timestamp to clipboard</td>
+<td>Creating timestamps</td>
+</tr>
+<tr>
+<td><code>cp_ulid</code></td>
+<td>Copy ULID to clipboard</td>
+<td>Creating unique IDs</td>
+</tr>
+<tr>
+<td><code>cp_uuid</code></td>
+<td>Copy UUID to clipboard</td>
+<td>Creating unique IDs</td>
+</tr>
+</tbody>
+</table>
+<h2 id="common-development-workflows">Common Development Workflows</h2>
+<h3 id="1-daily-development">1. Daily Development</h3>
+<p>Start your day with:</p>
+<pre><code class="language-bash"># Pull latest changes
+git pull
+
+# Apply any new migrations
+uv run db_migrate
+
+# Start the development server
+uv run dev
+</code></pre>
+<h3 id="2-making-changes">2. Making Changes</h3>
+<p>When modifying code:</p>
+<pre><code class="language-bash"># Format and lint code, check types, run tests
+uv run check
+</code></pre>
+<h3 id="3-database-changes">3. Database Changes</h3>
+<p>When modifying models:</p>
+<pre><code class="language-bash"># Create a new migration
+uv run db_create &quot;Description of your changes&quot;
+
+# Apply the migration
+uv run db_migrate
+
+# Run tests to ensure everything works
+uv run test
+</code></pre>
+<h3 id="4-pre-commit-checklist">4. Pre-commit Checklist</h3>
+<p>The pre-commit hooks will run automatically, but you can also run them manually:</p>
+<pre><code class="language-bash"># Run all pre-commit hooks
+uv run pre-commit run --all-files
+
+# If all pass, commit your changes
+git add .
+git commit -m &quot;feat: your feature description&quot;
+</code></pre>
+<h3 id="5-running-tests">5. Running Tests</h3>
+<p>Different test scenarios:</p>
+<pre><code class="language-bash"># Run all tests
+uv run test
+
+# Run with coverage
+uv run test_cov
+
+# Run in test environment
+PYTHON_ENV=test uv run test
+</code></pre>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li>
+<p><strong>Environment Variables</strong></p>
+<ul>
+<li>Never commit sensitive values to git</li>
+<li>Use <code>.env.local</code> for local development overrides</li>
+<li>Use environment-specific files for different configurations</li>
+</ul>
+</li>
+<li>
+<p><strong>Database Migrations</strong></p>
+<ul>
+<li>One migration per model change</li>
+<li>Write meaningful migration messages</li>
+<li>Always run tests after applying migrations</li>
+</ul>
+</li>
+<li>
+<p><strong>Code Quality</strong></p>
+<ul>
+<li>Let pre-commit hooks run automatically</li>
+<li>Fix issues before committing</li>
+<li>Keep test coverage high</li>
+</ul>
+</li>
+<li>
+<p><strong>Testing</strong></p>
+<ul>
+<li>Write tests before fixing bugs</li>
+<li>Update tests when changing features</li>
+<li>Use appropriate test environment</li>
+</ul>
+</li>
+</ol>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>Common issues and solutions:</p>
+<ol>
+<li>
+<p><strong>Database Connection Issues</strong>
+   <code>bash
+   # Reset database and migrations
+   uv run db_init</code></p>
+</li>
+<li>
+<p><strong>Environment Issues</strong>
+   <code>bash
+   # Verify environment
+   cat .env
+   cat .env.local  # If it exists</code></p>
+</li>
+<li>
+<p><strong>Pre-commit Hook Issues</strong>
+   <code>bash
+   # Update hooks to latest version
+   pre-commit clean
+   pre-commit install --install-hooks</code></p>
+</li>
+<li>
+<p><strong>Test Database Issues</strong>
+   <code>bash
+   # Run with test environment
+   PYTHON_ENV=test uv run db_init
+   PYTHON_ENV=test uv run test</code></p>
+</li>
+</ol>
+<p>For more detailed information about the architecture and design decisions, see <a href="../ARCHITECTURE/">ARCHITECTURE.md</a>.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
