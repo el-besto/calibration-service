@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>GitHub Actions Workflows - Calibration Service Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "GitHub Actions Workflows";
+        var mkdocs_page_input_path = "WORKFLOWS.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Calibration Service Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../PROJECT/">Project</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ARCHITECTURE/">Architecture</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DEVELOPER/">DEVELOPER</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Calibration Service Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">GitHub Actions Workflows</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="github-actions-workflows">GitHub Actions Workflows</h1>
+<p>This document explains the GitHub Actions workflows used in the calibration-service project.</p>
+<h2 id="overview">Overview</h2>
+<p>The project uses GitHub Actions for continuous integration and testing. The workflows are designed to validate code
+changes, run tests, and ensure the application behaves as expected.</p>
+<p>All workflows use <a href="https://github.com/astral-sh/uv">uv</a> for Python dependency management and virtual environment
+creation, providing fast and reliable dependency resolution.</p>
+<h2 id="workflows">Workflows</h2>
+<h3 id="1-ci-workflow-ciyaml">1. CI Workflow (<code>ci.yaml</code>)</h3>
+<p>This is the main CI workflow that runs on pushes to main, pull requests, and manual triggers.</p>
+<p><strong>Jobs:</strong></p>
+<ul>
+<li><strong>python-tests</strong>: Runs Python unit and integration tests with coverage</li>
+<li><strong>build</strong>: Builds the Docker image and uploads it as an artifact</li>
+<li><strong>container-tests</strong>: Tests the Docker image functionality</li>
+</ul>
+<p><strong>Features:</strong></p>
+<ul>
+<li>Complete end-to-end testing (in future)</li>
+<li>Docker image validation</li>
+<li>Test report generation</li>
+<li>Code coverage analysis</li>
+</ul>
+<h3 id="2-python-tests-workflow-pytestyaml">2. Python Tests Workflow (<code>pytest.yaml</code>)</h3>
+<p>This workflow focuses specifically on Python testing and runs when Python files or related configurations change.</p>
+<p><strong>Jobs:</strong></p>
+<ul>
+<li><strong>test</strong>: Runs Python unit and integration tests with coverage</li>
+</ul>
+<p><strong>Features:</strong></p>
+<ul>
+<li>Faster feedback for Python code changes</li>
+<li>Test report generation</li>
+<li>Code coverage analysis</li>
+<li>Path-specific triggering to avoid unnecessary runs</li>
+</ul>
+<h3 id="3-pyright-workflow-pyrightyaml">3. Pyright Workflow (<code>pyright.yaml</code>)</h3>
+<p>This workflow performs static type checking with <a href="https://microsoft.github.io/pyright">Pyright</a> to ensure type safety
+and catch issues early in development.</p>
+<p>Configuration is managed in <a href="../pyproject.toml">pyproject.toml</a>.</p>
+<p><strong>Jobs:</strong></p>
+<ul>
+<li><strong>typecheck</strong>: Sets up Python environment with uv, then runs Pyright to check types across the codebase</li>
+</ul>
+<p><strong>Features:</strong></p>
+<ul>
+<li>Fast dependency resolution using uv</li>
+<li>Enforces type-safety/correctness and detects mismatches</li>
+<li>Catches potential runtime issues during development</li>
+</ul>
+<h3 id="4-ruff-workflow-ruffyaml">4. Ruff Workflow (<code>ruff.yaml</code>)</h3>
+<p>This workflow uses the <a href="https://docs.astral.sh/ruff/linter/">ruff linter</a>
+and <a href="https://docs.astral.sh/ruff/formatter/">ruff formatter</a>
+to automatically enforce code quality standards.</p>
+<p>Ruff is configured via <a href="../pyproject.toml">pyproject.toml</a> and runs as a CI job to maintain a clean, consistent
+codebase.</p>
+<p><strong>Jobs:</strong></p>
+<ul>
+<li><strong>ruff</strong>: Runs static analysis to enforce formatting, code style, and detect common issues</li>
+</ul>
+<p><strong>Features:</strong></p>
+<ul>
+<li>Enforces consistent formatting and PEP 8-style conventions</li>
+<li>Detects unused code, logic errors, and security concerns</li>
+<li>Helps catch issues early, before code is merged</li>
+</ul>
+<h2 id="test-reports">Test Reports</h2>
+<p>Both the CI Workflow and the Python Tests Workflow generate and upload test reports as artifacts, which can be
+downloaded from the workflow run page.</p>
+<h2 id="running-tests-locally">Running Tests Locally</h2>
+<p>Before submitting a pull request, it's recommended to run the tests locally, or rely on the pre-commit git hook.</p>
+<p><em>For detailed information on how to run tests on localhost, see <a href="../TESTS/">./TESTS.md</a>.</em></p>
+<h2 id="cicd-pipeline-flow">CI/CD Pipeline Flow</h2>
+<ol>
+<li>Code is pushed to GitHub</li>
+<li>GitHub Actions workflows are triggered:<ul>
+<li>Ruff for linting and formatting</li>
+<li>Pyright for type checking</li>
+<li>Python Tests for unit and integration testing</li>
+<li>CI for complete validation including Docker builds</li>
+</ul>
+</li>
+<li>Tests are run and reports are generated</li>
+<li>If all tests pass, the workflow succeeds</li>
+<li>Test reports and coverage information are available for review</li>
+</ol>
+<h2 id="future-enhancements">Future Enhancements</h2>
+<p>Planned enhancements to the CI/CD pipeline include:</p>
+<ul>
+<li>Integration with deployment workflows</li>
+<li>Performance testing</li>
+<li>Security scanning</li>
+<li>End-to-end testing with ephemeral containers and/or external services</li>
+</ul>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

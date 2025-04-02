@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Testing Strategy for Calibration Service - Calibration Service Documentation</title>
+    <title>HOME - Calibration Service Documentation</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Testing Strategy for Calibration Service";
-        var mkdocs_page_input_path = "TESTS.md";
+        var mkdocs_page_name = "HOME";
+        var mkdocs_page_input_path = "HOME.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -65,7 +65,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">Testing Strategy for Calibration Service</li>
+      <li class="breadcrumb-item active">HOME</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -74,80 +74,71 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="testing-strategy-for-calibration-service">Testing Strategy for Calibration Service</h1>
-<p>This document outlines the testing strategy for the Calibration Service, following Clean Architecture principles.</p>
-<h2 id="test-structure">Test Structure</h2>
-<p>The test suite is organized into the following categories:</p>
+                <h2 id="overview">Overview</h2>
+<p>This backend service is designed to manage calibrations of a hardware device. Each calibration includes:</p>
 <ul>
-<li>
-<p><strong>Unit Tests</strong>: Testing individual components in isolation</p>
+<li><code>calibration_type</code></li>
+<li><code>value</code></li>
+<li><code>timestamp</code></li>
+<li><code>username</code></li>
+</ul>
+<p>Calibrations can be tagged with arbitrary strings to describe different states of a device. Tags can be added or removed
+from calibrations, and the tagging history is preserved.</p>
+<p><em><a href="../PROJECT/">Read full project overview</a></em></p>
+<hr />
+<h2 id="pre-requisites">Pre-requisites</h2>
 <ul>
-<li><code>tests/unit/entities</code>: Tests for entity models and validation</li>
-<li><code>tests/unit/application</code>: Tests for use cases and business logic</li>
-<li><code>tests/unit/infrastructure</code>: Tests for repositories and services</li>
-<li><code>tests/unit/interface_adapters</code>: Tests for controllers</li>
-<li><code>tests/unit/use_cases</code>: Tests for use cases</li>
+<li><strong>Python</strong> 3.12 or higher, <a href="https://www.python.org/downloads/">link</a></li>
+<li><strong>uv</strong> for python runtime and dependency management, <a href="https://docs.astral.sh/uv/">link</a></li>
+<li><strong>Node.js</strong> for Pyright pre-commit hook execution, <a href="https://microsoft.github.io/pyright/#/installation">link</a></li>
 </ul>
-</li>
-<li>
-<p><strong>Integration Tests</strong>: Testing the interaction between components</p>
-<ul>
-<li><code>tests/integration</code>: API endpoint testing with in-memory repositories</li>
-</ul>
-</li>
-<li>
-<p><strong>End-to-End Tests</strong>: Testing the entire system (future implementation)</p>
-<ul>
-<li><code>tests/e2e</code>: Full system tests with external dependencies</li>
-</ul>
-</li>
-</ul>
-<h2 id="test-dependencies">Test Dependencies</h2>
-<p>The test suite uses the following dependencies:</p>
-<ul>
-<li><strong>pytest</strong>: The core testing framework</li>
-<li><strong>httpx</strong>: HTTP client for testing FastAPI endpoints</li>
-<li><strong>pytest-asyncio</strong>: Support for asynchronous tests</li>
-<li><strong>pytest-cov</strong>: Code coverage reporting</li>
-</ul>
-<h2 id="running-tests">Running Tests</h2>
-<p>Tests can be run using the <code>run_tests.sh</code> script:</p>
-<p><code>bash
-  ./scripts/run_tests.sh</code></p>
-<blockquote>
-<p>[!NOTE]
-run_tests is executed by pre-commit as a pre-commit hook.</p>
-</blockquote>
-<p>Generate coverage reports using the <code>run_tests_with_coverage.sh</code> script:</p>
-<p><code>bash
-  ./scripts/run_tests_with_coverage.sh</code></p>
-<p>Or, run manually:</p>
-<p>```bash
-  # Run all tests
-  python -m pytest -v --no-cov</p>
-<p># Run unit tests only
-  python -m pytest tests/unit -v --no-cov</p>
-<p># Run integration tests only
-  python -m pytest tests/integration -v --no-cov</p>
-<p># Run with coverage (pytest.ini passes coverage flags by default)
-  python -m pytest
-  ```</p>
-<h2 id="test-data">Test Data</h2>
-<ul>
-<li><strong>Unit Tests</strong>: Use mock objects and in-memory repositories</li>
-<li><strong>Integration Tests</strong>: Use in-memory repositories for isolation</li>
-<li><strong>E2E Tests</strong>: Will use test databases or containerized services</li>
-</ul>
-<h2 id="clean-architecture-testing-approach">Clean Architecture Testing Approach</h2>
-<p>Our testing follows Clean Architecture principles:</p>
-<ol>
-<li><strong>Entities Tests</strong>: Verify that our core models work correctly</li>
-<li><strong>Use Case Tests</strong>: Ensure business rules are correctly implemented</li>
-<li><strong>Interface Adapter Tests</strong>: Validate controllers and presenters</li>
-<li><strong>Framework Tests</strong>: Test the FastAPI endpoints</li>
-</ol>
-<p>By following this approach, we can ensure that our business logic remains independent of frameworks and external
-concerns, making our tests more robust and our code more maintainable.</p>
+<hr />
+<h2 id="getting-started">Getting started</h2>
+<p>TODO: (docs): add getting started</p>
+<hr />
+<h3 id="test-documentation">Test Documentation</h3>
+<p>This repository includes a comprehensive test harness following Clean Architecture principles.
+The testing infrastructure is designed to be expandable and maintainable.</p>
+<p>🧠 <em>For detailed information about the testing approach, see <a href="../TESTS/">docs/TESTS.md</a>.</em></p>
+<hr />
+<h3 id="continuous-integration">Continuous Integration</h3>
+<p>This project uses GitHub Actions for continuous integration and code quality checks.
+All workflows use <a href="https://docs.astral.sh/uv/"><code>uv</code></a> for fast dependency resolution.</p>
+<table>
+<thead>
+<tr>
+<th>Workflow</th>
+<th>Status Badge</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CI</strong> (<code>ci.yaml</code>)</td>
+<td><img alt="ci-badge" src="https://github.com/el-besto/calibration-service/actions/workflows/ci.yaml/badge.svg" /></td>
+<td>Full pipeline: Docker build, integration tests, and coverage reports</td>
+</tr>
+<tr>
+<td><strong>Python Tests</strong> (<code>pytest.yaml</code>)</td>
+<td><img alt="pytest-badge" src="https://github.com/el-besto/calibration-service/actions/workflows/pytest.yaml/badge.svg" /></td>
+<td>Unit/integration tests and coverage reports</td>
+</tr>
+<tr>
+<td><strong>Type Checking</strong> (<code>pyright.yaml</code>)</td>
+<td><img alt="pyright-badge" src="https://github.com/el-besto/calibration-service/actions/workflows/pyright.yaml/badge.svg" /> <img alt="pyright-official" src="https://microsoft.github.io/pyright/img/pyright_badge.svg" /></td>
+<td>Ensures type safety with Pyright</td>
+</tr>
+<tr>
+<td><strong>Lint &amp; Format</strong> (<code>ruff.yaml</code>)</td>
+<td><img alt="ruff-badge" src="https://github.com/el-besto/calibration-service/actions/workflows/ruff.yaml/badge.svg" /></td>
+<td>Enforces consistent style and detects common issues using Ruff</td>
+</tr>
+</tbody>
+</table>
+<p>🧠 <em>For details, see <a href="../WORKFLOWS/">WORKFLOWS.md</a>.</em></p>
+<!-- Badge references -->
+
+<!-- link helpers below -->
               
             </div>
           </div><footer>
