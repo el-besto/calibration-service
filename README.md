@@ -1,62 +1,114 @@
 # calibration-service
 
-[Live Site](https://calibration-service.fly.dev/docs)
-[Live Documentation](https://el-besto.github.io/calibration-service)
+## Pre-requisites
 
-## Quick Start (container)
+- **Python** 3.12 or higher
+- **PostgreSQL** or **SQLite** for database management
+- **Docker Desktop** or Docker Compose capable tool (e.g. [podman desktop][podman] or [rancher desktop][rancher])
+
+## Quick Start
+
+### A) Online Deployment
+
+- [Live Site][live-site] - deployed application
+- [Live Docs][live-docs] - GitHub pages hosted site
+
+### (B) Offline Deployment Options
+
+#### Prepare
+
+**Download source_:**
+
+- Clone the repository, and go into the project directory `calibration-service`
+
+**Avoid port conflicts:**
+
+- `5455` - port of dev db
+- `5456` - port of test db
+- `8777` - port of FastAPI web driver
+
+_Troubleshooting: Verify if a local service is listening by run `lsof -i :<port>` to see binding. If
+found, `pkill -9 <PID>` to stop_
+
+#### Containerized Deployment
 
 1. Start Docker Desktop
 2. Pull images, build, and start container
    ```bash
    docker compose up
    ```
-3. Go to [localhost:8000/docs](http://localhost:8000/docs)
+3. Go to [localhost:8777/docs](http://localhost:8777/docs) - OpenAPI spec
+4. (Optional) Open online documentation
 
-## Quick Start (local)
+### C) Local
 
-1. Clone the repository
-2. Install python runtime and package manager [uv](https://docs.astral.sh/uv/getting-started/installation/#homebrew)
+**Install python runtime and package manager [uv](https://docs.astral.sh/uv/getting-started/installation/#homebrew)**
+
    ```
    brew install uv
    ```
-3. Start containers, initialize database, and run migrations
+
+**Verify executable is found in `$PATH`**
+
    ```bash
-   uv run db_init"
+   which uv
    ```
-4. (optional) Seed db:
+
+_Troubleshooting: open a new terminal if a directory is not sent to stdout_
+
+**Start db container, initialize database, and run migrations**
+
    ```bash
-   uv run seed
+   uv run setup
    ```
-5. Start the development server:
+
+**(optional) Seed db:**
+
+   ```bash
+   uv run db_seed
+   ```
+
+_Troubleshooting: run alembic directly using uv_
+
+   ```bash
+   PYTHONPATH=${PYTHONPATH:-./src} uv run alembic upgrade head
+   ```
+
+**Start the development server:**
+
    ```bash
    uv run fastapi dev src/drivers/rest/main.py
    ```
 
-## Database Management
+## Cleanup
 
-The service uses PostgreSQL for data storage and Alembic for database migrations. Key commands:
-
-```bash
-# Initialize database and run migrations
-uv run db_init
-
-# Apply pending migrations
-uv run db_migrate
-
-# Create a new migration
-uv run db_create "Description of changes"
+```
+docker compose down -vv
 ```
 
-For detailed information about database operations and migrations, see:
+## ERD
+![ERD](docs/assets/ERD.md)
+
+
+## Additional Documentation
+
 - [Developer Guide](docs/DEVELOPER.md) - Day-to-day development workflows
-- [Database Migrations](alembic/README.md) - Detailed Alembic usage and best practices
-
-## Documentation
-
-- [Developer Guide](docs/DEVELOPER.md) - Development workflows and commands
-- [Architecture](docs/ARCHITECTURE.md) - System design and patterns
-- [Database Migrations](alembic/README.md) - Database management details
+- [Database Management](docs/DATABASE.md) - Detailed information about database management operations
+- [Architecture Inspiration](docs/ARCHITECTURE.md) - System design and software architecture inspiration
+- [Testing Approach](docs/TESTS.md) - How to execute project tests and the packages used
+- [CI/CD](docs/WORKFLOWS.md) - Description of CI/CD workflows
 
 ## License
 
 [License details here]
+
+
+<!-- link helpers below -->
+
+[podman]: https://podman-desktop.io/
+
+[rancher]: https://rancherdesktop.io/
+
+[live-docs]: https://el-besto.github.io/calibration-service/welcome
+
+[live-site]: https://calibration-service.fly.dev/docs
