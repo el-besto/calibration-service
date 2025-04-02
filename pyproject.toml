@@ -64,8 +64,7 @@ check = "scripts.bash_runner:run_check"
 db_init = "scripts.bash_runner:run_db_init"
 db_migrate = "scripts.bash_runner:run_db_migrate"
 db_create = "scripts.bash_runner:run_db_create_migration"
-## Add the seed script runner here
-seed = "scripts.bash_runner:run_seed"
+db_seed = "scripts.bash_runner:run_db_seed"
 ## setup scripts
 setup = "scripts.bash_runner:run_setup"
 ## dev util scripts

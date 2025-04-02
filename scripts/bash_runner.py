@@ -227,7 +227,7 @@ def run_db_create_migration():
     _run_command(f'alembic revision --autogenerate -m "{message}"')
 
 
-def run_seed():
+def run_db_seed():
     """Run the database seeding script."""
     _run_command("python scripts/seed_database.py")
 
@@ -237,12 +237,13 @@ def run_setup() -> None:
     """Run full setup (initialize DB and run tests)."""
     run_db_init()  # Initialize database first
     run_test()  # Then run tests
+    run_db_seed()  # Then run seed
 
 
 # Utility commands
 def copy_iso() -> None:
     """Copy ISO timestamp to clipboard."""
-    _run_script("copy_iso.sh")
+    _run_script("")
 
 
 def copy_ulid() -> None:
