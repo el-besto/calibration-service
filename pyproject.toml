@@ -222,7 +222,7 @@ ignore = [
 
 
 # Ignore specific rules for test files
-"tests/**/*" = [
+"**/tests/**/*" = [
     "S101",    # Use of assert detected
     "ARG001",  # Unused function argument
     "ARG002",  # Unused method argument
@@ -242,7 +242,7 @@ ignore = [
     "ARG002",  # Allow unused method arguments in tests
     "PLR0913"  # Allow too many arguments in function definition
 ]
-"alembic/**/*" = [
+"**/alembic/**/*" = [
     "T201",    # Allow print statements in scripts
     "RUF100"
 ]
