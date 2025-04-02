@@ -40,9 +40,9 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: dev_db
     ports:
-      - "5455:5432"
+      - "5777:5432"
     expose:
-      - "5455"
+      - "5777"
     volumes:
       - db-data:/var/lib/postgresql/data:cached
 
@@ -54,9 +54,9 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: test_db
     ports:
-      - "5456:5432" # Use a different port to avoid conflicts with the main database
+      - "5778:5432" # Use a different port to avoid conflicts with the main database
     expose:
-      - "5456" # Exposing the different port for clarity
+      - "5778" # Exposing the different port for clarity
     volumes:
       - test-db-data:/var/lib/postgresql/data:cached
 

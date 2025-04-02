@@ -135,10 +135,10 @@ Example configurations:
 
 ```bash
 # .env (base defaults)
-DATABASE_URL=postgresql+asyncpg://dev-user:password@localhost:5455/dev_db
+DATABASE_URL=postgresql+asyncpg://dev-user:password@localhost:5777/dev_db
 
 # .env.test
-DATABASE_URL=postgresql+asyncpg://test-user:password@localhost:5456/test_db
+DATABASE_URL=postgresql+asyncpg://test-user:password@localhost:5778/test_db
 ```
 
 ## Troubleshooting

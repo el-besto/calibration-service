@@ -23,8 +23,8 @@
 
 **Avoid port conflicts:**
 
-- `5455` - port of dev db
-- `5456` - port of test db
+- `5777` - port of dev db
+- `5778` - port of test db
 - `8777` - port of FastAPI web driver
 
 _Troubleshooting: Verify if a local service is listening by run `lsof -i :<port>` to see binding. If
