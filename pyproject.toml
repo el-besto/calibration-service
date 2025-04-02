@@ -235,7 +235,7 @@ ignore = [
 
 
 # Ignore specific rules for test files
-"**/tests/**/*" = [
+"tests/**/*" = [
     "S101",    # Use of assert detected
     "ARG001",  # Unused function argument
     "ARG002",  # Unused method argument
