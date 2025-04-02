@@ -8,9 +8,9 @@ from loguru import logger
 from src.application.use_cases.exceptions import UseCaseError
 from src.drivers.rest.dependencies import (
     get_add_calibration_controller,
+    get_add_tag_to_calibration_controller,
     get_get_tags_for_calibration_controller,
     get_list_calibrations_controller,
-    get_add_tag_to_calibration_controller,
     get_remove_tag_from_calibration_controller,
 )
 from src.drivers.rest.schemas.calibration_schemas import (

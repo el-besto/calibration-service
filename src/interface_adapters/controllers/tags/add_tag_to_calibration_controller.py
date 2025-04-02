@@ -44,7 +44,7 @@ class AddTagToCalibrationController:
             input_dto = CreateTagInput(name=tag_name)
             output_dto = await self._create_tag_use_case.execute(input_dto)
             logger.info(f"Created new tag '{tag_name}' with ID {output_dto.tag.id}")
-            return output_dto.tag  # noqa: TRY300
+            return output_dto.tag
         except DatabaseOperationError as e:
             # Handle potential race condition if tag created between get and create attempt
             if "already exists" in str(e).lower():
