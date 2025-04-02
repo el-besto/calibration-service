@@ -22,7 +22,7 @@ class InMemoryCalibrationRepository(CalibrationRepository):
         return c.timestamp.to_datetime()
 
     async def get(self, **filters: Any) -> Calibration | None:
-        calibration_id = filters.get("id")
+        calibration_id = filters.get("calibration_id")
         if calibration_id:
             calibration = self._calibrations.get(calibration_id)
             if calibration:

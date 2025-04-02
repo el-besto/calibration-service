@@ -83,8 +83,8 @@ def expected_success_response(
     # Assume presenter formats correctly
     return [
         CalibrationReadResponse(
-            id=cal.id,
-            type=cal.measurement.type,
+            calibration_id=cal.id,
+            calibration_type=cal.measurement.type,
             value=cal.measurement.value,
             timestamp=cal.timestamp.to_datetime(),
             username=cal.username,

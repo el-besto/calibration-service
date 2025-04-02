@@ -36,8 +36,8 @@ class SqlAlchemyCalibrationRepository(CalibrationRepository):
                 )
             )
 
-            if "id" in filters:
-                stmt = stmt.where(CalibrationORM.id == filters["id"])
+            if "calibration_id" in filters:
+                stmt = stmt.where(CalibrationORM.id == filters["calibration_id"])
             # Add other potential filters if needed, e.g., by username/user_id
             # if "username" in filters: # Will change to user_id
             #     stmt = stmt.where(CalibrationORM.username == filters["username"])

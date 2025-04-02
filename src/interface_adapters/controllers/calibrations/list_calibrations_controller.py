@@ -1,6 +1,5 @@
 from typing import TYPE_CHECKING
 
-from fastapi import Query
 from loguru import logger
 
 from src.application.use_cases.calibrations.list_calibrations import (
@@ -28,7 +27,7 @@ class ListCalibrationsController:
         username: str | None = None,
         timestamp: str | None = None,
         calibration_type: str | None = None,
-        tags: list[str] | None = Query(None),
+        tags: list[str] | None = None,
     ) -> CalibrationListResponse:
         """Handles the request to list calibrations based on filters."""
         try:

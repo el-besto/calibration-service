@@ -1,7 +1,7 @@
 from datetime import datetime
 from uuid import UUID
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 # === Request Schemas ===
 
@@ -9,7 +9,7 @@ from pydantic import BaseModel
 class TagCreateRequest(BaseModel):
     """Request schema for creating a new tag."""
 
-    name: str
+    name: str = Field(examples=["foo", "bar", "baz"], description="Tag name.")
 
 
 class BulkAddTagsRequest(BaseModel):
@@ -21,7 +21,7 @@ class BulkAddTagsRequest(BaseModel):
 class TagOperationRequest(BaseModel):
     """Request schema for adding/removing a tag by name."""
 
-    tag: str  # The name of the tag
+    tag: str = Field(examples=["foo", "bar", "baz"], description="Tag name.")
 
 
 # Note: The paths for adding/removing tags often include IDs in the path itself,
@@ -37,7 +37,7 @@ class TagResponse(BaseModel):
     """Response schema for a single tag."""
 
     id: UUID
-    name: str
+    name: str = Field(examples=["foo", "bar", "baz"], description="Tag name.")
 
     # Allow conversion from ORM or other objects
     model_config = {"from_attributes": True}

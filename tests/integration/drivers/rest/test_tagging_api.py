@@ -310,15 +310,13 @@ async def test_list_calibrations_by_tag(
 
     # Assertions on the first calibration object in the list
     first_calibration = calibrations_list[0]
-    assert first_calibration["id"] == str(calibration_id)  # Use 'id'
-    assert first_calibration["type"] == CalibrationType.gain.value  # Use 'type'
+    assert first_calibration["calibration_id"] == str(calibration_id)
+    assert first_calibration["calibration_type"] == CalibrationType.gain.value
     assert first_calibration["value"] == test_value
     assert first_calibration["username"] == test_user
     assert first_calibration["tags"] == [tag_to_query]
     # Verify the mock instance was awaited correctly
     mock_list_calibrations_use_case.assert_awaited_once()  # Re-enable assertion
-    # call_args, _ = mock_list_calibrations_use_case.call_args
-    # assert call_args[0].tags == [tag_to_query]
 
     # Cleanup
     del app.dependency_overrides[get_list_calibrations_use_case]

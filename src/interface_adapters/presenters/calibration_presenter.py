@@ -30,12 +30,12 @@ class CalibrationPresenter:
     def present_calibration(calibration: Calibration) -> CalibrationReadResponse:
         """Converts a Calibration entity to a CalibrationReadResponse schema."""
         return CalibrationReadResponse(
-            id=calibration.id,
-            value=calibration.measurement.value,  # Get value from measurement
-            type=calibration.measurement.type,  # Get type from measurement
-            timestamp=calibration.timestamp.to_datetime(),  # Convert Iso8601Timestamp to datetime
+            calibration_id=calibration.id,
+            value=calibration.measurement.value,
+            calibration_type=calibration.measurement.type,
+            timestamp=calibration.timestamp.to_datetime(),
             username=calibration.username,
-            tags=[tag.name for tag in calibration.tags],  # Extract tag names
+            tags=[tag.name for tag in calibration.tags],
         )
 
     @staticmethod

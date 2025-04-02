@@ -124,7 +124,7 @@ class MongoCalibrationRepository(CalibrationRepository):
             dict[str, Binary]: The MongoDB filters.
         """
         filters = {}
-        if f := filters_args.get("id"):
+        if f := filters_args.get("calibration_id"):
             filters["_id"] = Binary.from_uuid(f)
         return filters  # pyright: ignore [reportUnknownVariableType]
 
