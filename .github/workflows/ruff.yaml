@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: astral-sh/ruff-action@v3
         with:
-          args: check --config pyproject.toml src
+          args: check --extend-exclude alembic/**/* --config pyproject.toml src
       - uses: astral-sh/ruff-action@v3
         with:
           args: format --config pyproject.toml src
