@@ -23,6 +23,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     build-essential \
     python3-dev \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Install the project's dependencies using the lockfile and settings
@@ -38,8 +39,8 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-dev
 
 
-# Then, use a final image without uv
-FROM python:3.12-slim-bookworm
+## Then, use a final image without uv
+#FROM python:3.12-slim-bookworm
 # It is important to use the image that matches the builder, as the path to the
 # Python executable must be the same, e.g., using `python:3.11-slim-bookworm`
 # will fail.
@@ -53,7 +54,7 @@ RUN apt-get update && apt-get upgrade -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy the application from the builder
-COPY --from=builder --chown=app:app /app /app
+#COPY --from=builder --chown=app:app /app /app
 
 # Place executables in the environment at the front of the path
 ENV PATH="/app/.venv/bin:$PATH"
@@ -62,7 +63,7 @@ WORKDIR /app
 
 # Add health check to verify the API is running
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD curl --fail http://localhost:8000 || exit 1
+  CMD curl --fail http://localhost:8777 || exit 1
 
 
 # Uses `fastapi dev` to enable hot-reloading when the `watch` sync occurs

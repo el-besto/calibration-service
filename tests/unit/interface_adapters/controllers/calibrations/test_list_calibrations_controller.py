@@ -75,8 +75,8 @@ async def test_list_calibrations_success_no_filters(
     expected_response = CalibrationListResponse(
         calibrations=[
             CalibrationReadResponse(
-                id=cal.id,
-                type=cal.measurement.type,
+                calibration_id=cal.id,
+                calibration_type=cal.measurement.type,
                 value=cal.measurement.value,
                 timestamp=cal.timestamp.to_datetime(),
                 username=cal.username,
@@ -131,8 +131,8 @@ async def test_list_calibrations_success_with_filters(
     expected_response = CalibrationListResponse(
         calibrations=[
             CalibrationReadResponse(
-                id=cal.id,
-                type=cal.measurement.type,
+                calibration_id=cal.id,
+                calibration_type=cal.measurement.type,
                 value=cal.measurement.value,
                 timestamp=cal.timestamp.to_datetime(),
                 username=cal.username,
@@ -143,7 +143,7 @@ async def test_list_calibrations_success_with_filters(
     mock_presenter.return_value = expected_response
 
     # Act
-    response = await list_calibrations_controller.list_calibrations(**filters)
+    response = await list_calibrations_controller.list_calibrations(**filters)  # type: ignore[arg-type]
 
     # Assert
     mock_list_calibrations_use_case.assert_awaited_once()
@@ -199,7 +199,7 @@ async def test_list_calibrations_exceptions(
     # Act & Assert
     with pytest.raises(expected_exception):
         # InputParseError is raised during DTO __post_init__ within the controller method
-        await list_calibrations_controller.list_calibrations(**filters)
+        await list_calibrations_controller.list_calibrations(**filters)  # type: ignore[arg-type]
 
     # Check mock calls based on expected error origin
     if isinstance(error_type, InputParseError):

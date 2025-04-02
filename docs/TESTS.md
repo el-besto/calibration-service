@@ -30,16 +30,29 @@ The test suite uses the following dependencies:
 
 ## Running Tests
 
-Tests can be run using the `run_tests.sh` script:
+Different test scenarios:
+
+```bash
+# Run all tests
+uv run test
+
+# Run with coverage
+uv run test_cov
+
+# Run in test environment
+PYTHON_ENV=test uv run test
+```
+
+Tests can also be run using the `run_tests.sh` script:
 
   ```bash
   ./scripts/run_tests.sh
   ```
 
 > [!NOTE]
-> run_tests is executed by pre-commit as a pre-commit hook.
+> run_tests is executed by pre-commit as a pre-commit hook. [More info in](CONTRIBUTING.md#pre-commit-hooks) 
 
-Generate coverage reports using the `run_tests_with_coverage.sh` script:
+_Generate coverage reports using the `run_tests_with_coverage.sh` script:_
 
   ```bash
   ./scripts/run_tests_with_coverage.sh
@@ -49,7 +62,7 @@ Or, run manually:
 
   ```bash
   # Run all tests
-  python -m pytest -v --no-cov
+  PYTHONPATH=./src python -m pytest -v --no-cov
 
   # Run unit tests only
   python -m pytest tests/unit -v --no-cov
@@ -65,11 +78,11 @@ Or, run manually:
 
 - **Unit Tests**: Use mock objects and in-memory repositories
 - **Integration Tests**: Use in-memory repositories for isolation
-- **E2E Tests**: Will use test databases or containerized services
+~~- **E2E Tests**: Will use test databases or containerized services~~ (future)
 
 ## Clean Architecture Testing Approach
 
-Our testing follows Clean Architecture principles:
+Our (ideal) testing follows Clean Architecture principles:
 
 1. **Entities Tests**: Verify that our core models work correctly
 2. **Use Case Tests**: Ensure business rules are correctly implemented

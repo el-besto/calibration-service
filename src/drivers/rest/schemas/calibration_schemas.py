@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import UTC, datetime
 from uuid import UUID
 
 from pydantic import BaseModel, Field, field_validator
@@ -20,7 +20,7 @@ class CalibrationCreateInput(BaseModel):
         """Convert input schema to Calibration entity."""
         return Calibration(
             measurement=self.measurement,
-            timestamp=self.timestamp,
+            timestamp=self.timestamp or datetime.now(UTC),
             username=self.username,
             tags=[],  # Tags will be added separately
         )
@@ -29,11 +29,11 @@ class CalibrationCreateInput(BaseModel):
 class CalibrationReadResponse(BaseModel):
     """Response schema for reading a single calibration."""
 
-    id: UUID
+    calibration_id: UUID
     value: float
-    type: CalibrationType
+    calibration_type: CalibrationType
     timestamp: datetime
-    username: str
+    username: str = Field(examples=["alice"])
     tags: list[str]
 
     model_config = {"from_attributes": True}
@@ -59,9 +59,16 @@ class CalibrationTagUpdateInput(BaseModel):
 class CalibrationCreateRequest(BaseModel):
     """Request schema for creating a new calibration."""
 
-    calibration_type: str
-    value: float
-    timestamp: str = Field(..., description="Timestamp in ISO 8601 format")
+    calibration_type: str = Field(
+        description="Type of calibration to create.", examples=["gain"]
+    )
+    value: float = Field(examples=["0.7"])
+    timestamp: str | None = Field(
+        default=None,
+        description="Timestamp in ISO 8601 format",
+        examples=["2023-10-22T10:30:00+00:00"],
+    )
+
     username: str
 
 
@@ -83,10 +90,13 @@ class CalibrationListResponse(BaseModel):
 class CalibrationResponse(BaseModel):
     """Response schema for a single calibration for tag retrieval."""
 
-    calibration_id: UUID = Field(..., alias="id")
-    calibration_type: CalibrationType = Field(..., alias="type")
+    calibration_id: UUID
+    calibration_type: CalibrationType
+    username: str
+    tags: list[str]
     value: float
-    timestamp: Iso8601Timestamp  # Use Iso8601Timestamp for output
+    timestamp: Iso8601Timestamp = Field(examples=["2023-10-22T10:30:00+00:00"])
+
     username: str
 
     model_config = {

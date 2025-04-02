@@ -116,7 +116,7 @@ jobs:
         run: |
           echo "Waiting for application to start..."
           for i in {1..10}; do
-            if curl --fail http://localhost:8000; then
+            if curl --fail http://localhost:8777; then
               echo "Application is running!"
               exit 0
             fi
@@ -129,7 +129,7 @@ jobs:
       - name: Test Application Health
         run: |
           docker logs $container_id
-          curl --fail http://localhost:8000
+          curl --fail http://localhost:8777
 
       - name: Stop Running Container
         run: |

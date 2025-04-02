@@ -10,7 +10,6 @@ The project uses layered environment files for configuration:
 1. `.env` - Base defaults (in git)
 2. `.env.local` - Local overrides (git-ignored)
 3. `.env.{ENV}` - Environment specific (in git)
-4. `.env.{ENV}.local` - Environment specific local overrides (git-ignored)
 
 Environment files are loaded in the order above, with later files overriding earlier ones. The `{ENV}` placeholder is
 replaced with the value of `PYTHON_ENV` (defaults to "development").
@@ -21,61 +20,7 @@ Example: To run in test environment:
 PYTHON_ENV=test uv run db_init  # Will use .env → .env.local → .env.test → .env.test.local
 ```
 
-## Pre-commit Hooks
-
-The project uses pre-commit hooks to ensure code quality. These are configured in `.pre-commit-config.yaml`.
-
-### Installed Hooks
-
-| Hook                      | Description                                                                  | When it Runs      |
-|---------------------------|------------------------------------------------------------------------------|-------------------|
-| `conventional-pre-commit` | Enforces [Conventional Commits](https://www.conventionalcommits.org/) format | On commit message |
-| `run_tests`               | Runs project tests                                                           | Before commit     |
-| `trailing-whitespace`     | Removes trailing whitespace                                                  | Before commit     |
-| `end-of-file-fixer`       | Ensures files end with newline                                               | Before commit     |
-| `check-toml`              | Validates TOML files                                                         | Before commit     |
-| `check-yaml`              | Validates YAML files                                                         | Before commit     |
-| `check-added-large-files` | Prevents large file commits                                                  | Before commit     |
-| `ruff`                    | Lints Python code                                                            | Before commit     |
-| `ruff-format`             | Formats Python code                                                          | Before commit     |
-| `pyright`                 | Type checks Python code                                                      | Before commit     |
-| `uv-lock`                 | Updates dependency lock file                                                 | Before commit     |
-
-### Using Pre-commit
-
-```bash
-# Install the hooks
-pre-commit install --install-hooks
-
-# Run all hooks manually. Note: errors in alembic directory should be ignored.
-pre-commit run --all-files
-
-# Run specific hook
-pre-commit run ruff --all-files
-```
-
-### Commit Message Format
-
-We use conventional commits with the following types:
-
-- `feat`: New feature
-- `fix`: Bug fix
-- `refactor`: Code change that neither fixes a bug nor adds a feature
-- `test`: Adding missing tests or correcting existing tests
-- `style`: Changes that do not affect the meaning of the code
-- `chore`: Other changes that don't modify src or test files
-- `build`: Changes that affect the build system or external dependencies
-- `ci`: Changes to CI configuration files and scripts
-- `docs`: Documentation only changes
-- `wip`: Work in progress
-
-Example:
-
-```bash
-git commit -m "feat: add user authentication"
-```
-
-## Available Commands
+## Available Project Commands
 
 All commands are run using `uv run <command>`. Here's a complete list:
 
@@ -97,6 +42,8 @@ All commands are run using `uv run <command>`. Here's a complete list:
 | `cp_ulid`    | Copy ULID to clipboard                       | Creating unique IDs          |
 | `cp_uuid`    | Copy UUID to clipboard                       | Creating unique IDs          |
 
+__see: `pyproject.toml`'s `[project.scripts]` for details. All are proxied through the `scripts/bash_runner.py` module.
+
 ## Common Development Workflows
 
 ### 1. Daily Development
@@ -116,7 +63,7 @@ uv run dev
 
 ### 2. Making Changes
 
-When modifying code:
+When modifying code periodically run:
 
 ```bash
 # Format and lint code, check types, run tests
@@ -125,18 +72,8 @@ uv run check
 
 ### 3. Database Changes
 
-When modifying models:
+_[see DATABASE.md](DATABASE.md)_
 
-```bash
-# Create a new migration
-uv run db_create "Description of your changes"
-
-# Apply the migration
-uv run db_migrate
-
-# Run tests to ensure everything works
-uv run test
-```
 
 ### 4. Pre-commit Checklist
 
@@ -153,18 +90,7 @@ git commit -m "feat: your feature description"
 
 ### 5. Running Tests
 
-Different test scenarios:
-
-```bash
-# Run all tests
-uv run test
-
-# Run with coverage
-uv run test_cov
-
-# Run in test environment
-PYTHON_ENV=test uv run test
-```
+[see TESTS.md](TESTS.md#running-tests)
 
 ## Best Practices
 

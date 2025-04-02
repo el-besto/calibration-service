@@ -1,9 +1,9 @@
 from dataclasses import dataclass
+from datetime import UTC, datetime
 from uuid import UUID, uuid4
 
 from src.application.repositories.calibration_repository import CalibrationRepository
 from src.entities.exceptions import (
-    CalibrationConflictError,
     DatabaseOperationError,
     InputParseError,
 )
@@ -16,7 +16,7 @@ from src.entities.value_objects.iso_8601_timestamp import Iso8601Timestamp
 class AddCalibrationInput:
     calibration_type: str
     value: float
-    timestamp_str: str  # Input as string
+    timestamp_str: str | None  # Changed type hint to optional
     username: str
     # Optionally allow providing an ID, otherwise generate one
     id: UUID | None = None
@@ -56,7 +56,15 @@ class AddCalibrationUseCase:
                 value=input_data.value,
                 type=CalibrationType(input_data.calibration_type),
             )
-            timestamp = Iso8601Timestamp(input_data.timestamp_str)
+            # Handle optional timestamp
+            if input_data.timestamp_str is None:
+                timestamp_to_parse = datetime.now(UTC).isoformat()  # Default to now
+            else:
+                timestamp_to_parse = input_data.timestamp_str  # Use provided value
+
+            timestamp = Iso8601Timestamp(
+                timestamp_to_parse
+            )  # Parse the determined string
         except (ValueError, TypeError) as e:
             # Catch errors from Enum creation or Iso8601Timestamp validation
             raise InputParseError(f"Invalid input data: {e}") from e
@@ -70,16 +78,15 @@ class AddCalibrationUseCase:
             tags=[],  # New calibrations have no tags initially
         )
 
-        # Check for existing ID (as before)
-        existing = await self._calibration_repository.get(id=calibration.id)
-        if existing:
-            # Raise DatabaseOperationError consistent with repository behavior
+        # Add the calibration entity to the repository
+        try:
+            added_calibration = await self._calibration_repository.add_calibration(
+                calibration
+            )
+        except Exception as e:
+            # Catch any other exceptions that might occur during the add operation
             raise DatabaseOperationError(
-                message="Calibration already exists",
-            ) from CalibrationConflictError(calibration.id)
+                message="Failed to add calibration to repository",
+            ) from e
 
-        # Add using repository
-        added_calibration = await self._calibration_repository.add_calibration(
-            calibration
-        )
         return AddCalibrationOutput(created_calibration=added_calibration)

@@ -29,22 +29,29 @@ src/
 
 The project provides several commands for database management:
 
+## Database Management
+
+The service uses PostgreSQL for data storage and Alembic for database migrations. Key commands:
+
 ```bash
 # Initialize database and run migrations
 uv run db_init
 
-# Create a new migration after model changes
-uv run db_create "Description of changes"
-
 # Apply pending migrations
 uv run db_migrate
+
+# Create a new migration
+uv run db_create "Description of changes"
+
+# Seed data
+uv run db_seed
 ```
 
 ## Migration Management
 
 ### Creating Migrations
 
-When you modify SQLAlchemy models in `orm_models.py`, create a new migration:
+When you modify SQLAlchemy models in `orm_models/`, create a new migration:
 
 ```bash
 uv run db_create "Add status column to Calibration model"
@@ -67,9 +74,6 @@ uv run db_migrate
 
 # Test environment
 PYTHON_ENV=test uv run db_migrate
-
-# Production environment
-PYTHON_ENV=production uv run db_migrate
 ```
 
 ### Advanced Operations
@@ -78,13 +82,13 @@ For advanced cases, you can use direct Alembic commands:
 
 ```bash
 # Roll back one migration
-PYTHONPATH=./src alembic downgrade -1
+PYTHONPATH=./src uv run alembic downgrade -1
 
 # View migration history
-PYTHONPATH=./src alembic history --verbose
+PYTHONPATH=./src uv run alembic history --verbose
 
 # Roll back to specific version
-PYTHONPATH=./src alembic downgrade <version_id>
+PYTHONPATH=./src uv run alembic downgrade <version_id>
 ```
 
 ## Best Practices
@@ -131,20 +135,17 @@ Example configurations:
 
 ```bash
 # .env (base defaults)
-DATABASE_URL=postgresql+asyncpg://dev-user:password@localhost:5432/dev_db
+DATABASE_URL=postgresql+asyncpg://dev-user:password@localhost:5777/dev_db
 
 # .env.test
-DATABASE_URL=postgresql+asyncpg://test-user:password@localhost:5432/test_db
-
-# .env.production
-DATABASE_URL=postgresql+asyncpg://app-user:password@db.example.com:5432/prod_db
+DATABASE_URL=postgresql+asyncpg://test-user:password@localhost:5778/test_db
 ```
 
 ## Troubleshooting
 
 ### 1. Migration Not Detected
 
-- Ensure model is imported in `orm_models.py`
+- Ensure model is imported in `orm_models/__init__.py`
 - Verify model inherits from `Base`
 - Check for circular imports
 - Run with `--verbose` flag for more details
