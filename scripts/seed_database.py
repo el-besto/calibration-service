@@ -17,21 +17,20 @@ from sqlalchemy.sql import select
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
-# Import necessary project components
 from src.config.database import get_db_settings  # noqa: E402
 from src.entities.value_objects.calibration_type import CalibrationType  # noqa: E402
-from src.infrastructure.orm_models import (
+from src.infrastructure.orm_models import (  # noqa: E402
     CalibrationORM,
-    TagORM,
     CalibrationTagAssociationORM,
-)  # noqa: E402
+    TagORM,
+)
 
 # Configure logger for the script
 logger.remove()  # Remove default handler
 logger.add(sys.stderr, level="INFO")
 
 
-async def seed_data(db_url: str, data_file: Path, clear_existing: bool = True):
+async def seed_data(db_url: str, data_file: Path, clear_existing: bool = True):  # noqa: PLR0912, PLR0915
     """Seeds the database with calibration data."""
     logger.info(
         f"Starting database seeding process using URL: {db_url[: db_url.find('@')] + '@...' if '@' in db_url else db_url}"
@@ -125,18 +124,20 @@ async def seed_data(db_url: str, data_file: Path, clear_existing: bool = True):
             # --- Association Seeding ---
             logger.info("Creating tag associations for calibrations...")
             associations_to_add = []
-            tag_list = list(tag_orm_objects.values()) # Get list of TagORM objects
-            base_association_time = datetime.now(UTC) # Get base time before loop
+            tag_list = list(tag_orm_objects.values())  # Get list of TagORM objects
+            base_association_time = datetime.now(UTC)  # Get base time before loop
 
             if not tag_list:
                 logger.warning("No tags available to create associations.")
                 return
 
-            association_counter = 0 # Initialize counter for archiving
+            association_counter = 0  # Initialize counter for archiving
             for i, cal_orm in enumerate(orm_objects):
                 # Calculate association time: subtract 0, 1, or 2 minutes cyclically
                 minute_offset = i % 3
-                association_time = base_association_time - timedelta(minutes=minute_offset)
+                association_time = base_association_time - timedelta(
+                    minutes=minute_offset
+                )
 
                 # Determine how many tags to assign (1, 2, or 3 cyclically)
                 num_tags_to_assign = (i % 3) + 1
@@ -148,12 +149,14 @@ async def seed_data(db_url: str, data_file: Path, clear_existing: bool = True):
 
                 # Create an association for each tag to be assigned
                 for tag_to_assign in tags_to_assign_this_round:
-                    association_counter += 1 # Increment counter
+                    association_counter += 1  # Increment counter
                     archive_time = None
                     log_msg_suffix = ""
                     # Archive every third association
                     if association_counter % 3 == 0:
-                        archive_time = association_time # Set archived_at to the creation time
+                        archive_time = (
+                            association_time  # Set archived_at to the creation time
+                        )
                         log_msg_suffix = " (ARCHIVED)"
 
                     logger.debug(f"  - Tag: '{tag_to_assign.name}'{log_msg_suffix}")
@@ -161,15 +164,17 @@ async def seed_data(db_url: str, data_file: Path, clear_existing: bool = True):
                         id=uuid4(),
                         calibration_id=cal_orm.id,
                         tag_id=tag_to_assign.id,
-                        created_at=association_time, # Use same time for all tags on this cal
-                        archived_at=archive_time # Set if applicable
+                        created_at=association_time,  # Use same time for all tags on this cal
+                        archived_at=archive_time,  # Set if applicable
                     )
                     associations_to_add.append(assoc)
 
             if associations_to_add:
                 session.add_all(associations_to_add)
                 await session.commit()
-                logger.success(f"Successfully created {len(associations_to_add)} tag associations.")
+                logger.success(
+                    f"Successfully created {len(associations_to_add)} tag associations."
+                )
             else:
                 logger.warning("No tag associations created.")
 

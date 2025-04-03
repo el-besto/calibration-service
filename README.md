@@ -10,8 +10,8 @@
 
 ### A) Online Deployment
 
-- [Live Site][live-site] - deployed application
-- [Live Docs][live-docs] - GitHub pages hosted site
+- [Live Docs][live-docs] - GitHub pages hosted docs site making reading these docs a bit easier
+- ~~[Live Site][live-site] - deployed application~~ # TODO: (future)
 
 ### (B) Offline Deployment Options
 
@@ -80,13 +80,9 @@ With the project up and running use docker cli to execute the e2e tests in a dif
 
 ## Unit
 
-   ```
+   ```bash
    docker compose exec web uv run test
    ```
-
-```
-docker compose exec web uv run pytest tests/integration/repositories
-```
 
 - [test_api_use_cases_e2e.py](tests/e2e/test_api_use_cases_e2e.py) take home assignment uc1-4 tests
 - [test_tag_archiving_e2e.py](tests/e2e/test_tag_archiving_e2e.py) take home assignment uc5
@@ -98,16 +94,13 @@ docker compose exec web uv run pytest tests/integration/repositories
 ## Next Steps
 
 - **Users:** a `users` table to replace the _"username"_ on a `CalibrationAssociation`, and allow for something to bring
-  an
-  trackable Actor into the system
+  a trackable Actor into the system
 - **ISessions:** bring Session up into the Entity layer and removing the third-party reliance on SqlAlchemy's
   `AsyncSession`
 - **IAuthentication Service:** that encapsulates `sign_up`, `sign_in`, and `sign_out` use cases and helps demonstrate
-  how
-  easy swapping out one oidc provider for another could be
+  how easy swapping out one oidc provider for another could be
 - **Instrumentation/Monitoring:** wrappers to monitor and benchmark each system interaction as it goes through the
-  boundaries of the
-  Clean Architecture surrounds all
+  boundaries of the Clean Architecture surrounds all
 
 ## Inspiration
 

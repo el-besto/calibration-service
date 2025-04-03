@@ -103,7 +103,7 @@ _For detailed information on how to run tests on localhost, see [./TESTS.md](TES
 4. If all tests pass, the workflow succeeds
 5. Test reports and coverage information are available for review
 
-### 5. Ruff Workflow (`deploy_release.yaml`)
+### 5. Fly.io Workflow (`deploy_release.yaml`)
 
 Deploys container to [https://calibration-service.fly.dev](https://calibration-service.fly.dev)
 

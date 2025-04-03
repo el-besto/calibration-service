@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import TYPE_CHECKING
 
 from loguru import logger
 
@@ -10,9 +11,16 @@ from src.application.use_cases.exceptions import (
 from src.application.use_cases.tags.get_calibrations_by_tag import (
     GetCalibrationsByTagUseCase,
 )
-from src.drivers.rest.schemas.calibration_schemas import CalibrationListResponse, CalibrationReadResponse
+from src.drivers.rest.schemas.calibration_schemas import (
+    CalibrationListResponse,
+)
 from src.entities.exceptions import DatabaseOperationError, NotFoundError
 from src.interface_adapters.presenters.calibration_presenter import CalibrationPresenter
+
+if TYPE_CHECKING:
+    from src.drivers.rest.schemas.calibration_schemas import (
+        CalibrationReadResponse,
+    )
 
 
 class GetCalibrationsByTagController:
@@ -33,8 +41,8 @@ class GetCalibrationsByTagController:
             output_dto = await self._get_calibrations_by_tag_use_case.execute(input_dto)
 
             # Use CalibrationPresenter to format the list
-            formatted_list: list[CalibrationReadResponse] = CalibrationPresenter.present_calibration_list(
-                output_dto.calibrations
+            formatted_list: list[CalibrationReadResponse] = (
+                CalibrationPresenter.present_calibration_list(output_dto.calibrations)
             )
             # Wrap the formatted list in the expected response model
             return CalibrationListResponse(calibrations=formatted_list)

@@ -113,13 +113,10 @@ async def get_calibrations_by_tag_endpoint(
 ) -> CalibrationListResponse:
     """API endpoint to retrieve all calibrations associated with a specific tag."""
     try:
-        # The controller method expects timestamp and username, pass defaults for now
-        # TODO: Consider adding optional query params for timestamp/username here?
-        result = await controller.get_calibrations_by_tag(
+        return await controller.get_calibrations_by_tag(
             tag_name, timestamp=datetime.now(UTC), username=""
         )
-        # Controller now returns the correct CalibrationListResponse object
-        return result
+
     except TagNotFoundError as e:
         logger.warning(f"Tag not found for listing calibrations: {e}")
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e)) from e

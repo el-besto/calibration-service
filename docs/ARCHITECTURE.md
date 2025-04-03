@@ -1,14 +1,10 @@
 # Architecture
 
-### Grounding & Inspiration
+## Grounding & Inspiration
 
 This project uses Clean Architecture patterns. Hereafter "CA" will be used for "Clean Architecture".
 
 - Background article by Bob Martin https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
-- Diagrams
-    - [The CA Diagram (sphere) - by Uncle Bob](https://blog.cleancoder.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg) -
-      by Uncle Bob
-    - [The CA Diagram (simplified) - by nikolovlazar](https://github.com/nikolovlazar/nextjs-clean-architecture/blob/main/assets/clean-architecture-diagram.jpg?raw=true)
 - Inspiration from existing CA implementations
     - [CA with Python](https://medium.com/@shaliamekh/clean-architecture-with-python-d62712fd8d4f) - by R. Shaliamekh.
         - [clean-architecture-fastapi - by shaliamekh](https://github.com/shaliamekh/clean-architecture-fastapi/tree/main) -
@@ -24,7 +20,24 @@ This project uses Clean Architecture patterns. Hereafter "CA" will be used for "
     - [Screaming Architecture](https://blog.cleancoder.com/uncle-bob/2011/09/30/Screaming-Architecture.html) - by Uncle
       Bob (the same guy behind Clean Architecture)
 
-### CA in brief
+## Diagrams
+
+- [The CA Diagram (sphere) - by Uncle Bob](https://blog.cleancoder.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg) -
+  by Uncle Bob
+- [The CA Diagram (simplified) - by nikolovlazar](https://github.com/nikolovlazar/nextjs-clean-architecture/blob/main/assets/clean-architecture-diagram.jpg?raw=true)
+
+### Original
+
+<img src="https://blog.cleancoder.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg" alt="ERD" width="500">
+
+### "Simplified"
+
+<img src="https://github.com/nikolovlazar/nextjs-clean-architecture/blob/main/assets/clean-architecture-diagram.jpg?raw=true" alt="ERD" width="500">
+
+## Clean Architecture in Brief
+
+> Great summary of how to approach these layers in-practice with the project.
+> _Note: it's **heavily** borrowed from nikolovlazar... thank you!_
 
 Clean Architecture is a _set of rules_ that help us structure our applications
 in such way that they're easier to maintain and test, and their codebases are
@@ -210,4 +223,155 @@ src/
     │   │   └── postgres_repository.py # implements postgres
     │   └── orm_models.py       # sqlalchemy-specific orm <-> system entity mapper
     └── services/
+```
+
+## Big Picture (w/o configs)
+
+```text
+├── README.md
+├── docs
+│   ├── ARCHITECTURE.md
+│   ├── CONTRIBUTING.md
+│   ├── DATABASE.md
+│   ├── DEVELOPER.md
+│   ├── PROJECT.md
+│   ├── TESTS.md
+│   └── WORKFLOWS.md
+├── pyproject.toml
+├── scripts
+│   ├── bash_runner.py
+│   ├── make_tree.py
+│   ├── run_db.sh
+│   ├── run_tests.sh
+│   ├── run_tests_with_coverage.sh
+│   ├── sample_data
+│   │   └── sample_calibrations.json
+│   └── seed_database.py
+├── src
+│   ├── application
+│   │   ├── dtos
+│   │   │   ├── get_calibrations_by_tag_dtos.py
+│   │   │   └── get_tags_for_calibration_dtos.py
+│   │   ├── repositories
+│   │   │   ├── calibration_repository.py
+│   │   │   └── tag_repository.py
+│   │   ├── services
+│   │   └── use_cases
+│   │       ├── calibrations
+│   │       │   ├── add_calibration_tags.py
+│   │       │   ├── add_calibration_use_case.py
+│   │       │   ├── get_tags_for_calibration.py
+│   │       │   └── list_calibrations.py
+│   │       ├── exceptions.py
+│   │       └── tags
+│   │           ├── add_bulk_tags_to_calibration.py
+│   │           ├── add_tag_to_calibration.py
+│   │           ├── create_tag.py
+│   │           ├── get_calibrations_by_tag.py
+│   │           ├── list_tags.py
+│   │           └── remove_tag_from_calibration.py
+│   ├── config
+│   │   ├── database.py
+│   │   └── logger.py
+│   ├── drivers
+│   │   └── rest
+│   │       ├── dependencies.py
+│   │       ├── exception_handlers.py
+│   │       ├── main.py
+│   │       ├── routers
+│   │       │   ├── calibration_router.py
+│   │       │   ├── health_router.py
+│   │       │   └── tag_router.py
+│   │       └── schemas
+│   │           ├── calibration_schemas.py
+│   │           └── tag_schemas.py
+│   ├── entities
+│   │   ├── exceptions.py
+│   │   ├── models
+│   │   │   ├── calibration.py
+│   │   │   ├── calibration_tag.py
+│   │   │   ├── calibration_tag_association.py
+│   │   │   └── tag.py
+│   │   └── value_objects
+│   │       ├── calibration_type.py
+│   │       └── iso_8601_timestamp.py
+│   ├── infrastructure
+│   │   ├── orm_models
+│   │   │   ├── base.py
+│   │   │   ├── calibration.py
+│   │   │   └── tag.py
+│   │   └── repositories
+│   │       ├── calibration_repository
+│   │       │   ├── in_memory_repository.py
+│   │       │   ├── mongodb_repository.py
+│   │       │   └── postgres_repository.py
+│   │       └── tag_repository
+│   │           ├── mock_repository.py
+│   │           └── postgres_repository.py
+│   ├── interface_adapters
+│   │   ├── controllers
+│   │   │   ├── calibrations
+│   │   │   │   ├── add_calibration_controller.py
+│   │   │   │   ├── get_tags_for_calibration_controller.py
+│   │   │   │   └── list_calibrations_controller.py
+│   │   │   └── tags
+│   │   │       ├── add_bulk_tags_to_calibration_controller.py
+│   │   │       ├── add_tag_to_calibration_controller.py
+│   │   │       ├── create_tag_controller.py
+│   │   │       ├── get_calibrations_by_tag_controller.py
+│   │   │       ├── list_tags_controller.py
+│   │   │       └── remove_tag_from_calibration_controller.py
+│   │   └── presenters
+│   │       ├── calibration_presenter.py
+│   │       └── tag_presenter.py
+│   └── main.py
+└── tests
+    ├── e2e
+    │   ├── test_api_use_cases_e2e.py
+    │   └── test_tag_archiving_e2e.py
+    ├── integration
+    │   ├── drivers
+    │   │   └── rest
+    │   │       ├── routers
+    │   │       │   └── test_calibration_router.py
+    │   │       ├── test_api_use_cases.py
+    │   │       ├── test_calibration_add.py
+    │   │       ├── test_calibration_add_tags.py
+    │   │       ├── test_calibration_api.py
+    │   │       └── test_tagging_api.py
+    │   └── repositories
+    │       └── test_mongodb_calibration_repository.py
+    ├── unit
+    │   ├── application
+    │   │   └── use_cases
+    │   │       ├── calibrations
+    │   │       │   ├── add_calibration_tags_use_case_test.py
+    │   │       │   ├── add_calibration_use_case_test.py
+    │   │       │   ├── test_get_tags_for_calibration.py
+    │   │       │   └── test_list_calibrations.py
+    │   │       └── tags
+    │   │           ├── test_add_bulk_tags_to_calibration.py
+    │   │           ├── test_add_tag_to_calibration.py
+    │   │           ├── test_create_tag.py
+    │   │           ├── test_get_calibrations_by_tag.py
+    │   │           ├── test_list_tags.py
+    │   │           └── test_remove_tag_from_calibration.py
+    │   ├── infrastructure
+    │   │   └── repositories
+    │   │       └── test_calibration_repository.py
+    │   └── interface_adapters
+    │       └── controllers
+    │           ├── calibrations
+    │           │   ├── test_add_calibration_controller.py
+    │           │   ├── test_get_tags_for_calibration_controller.py
+    │           │   └── test_list_calibrations_controller.py
+    │           └── tags
+    │               ├── test_add_bulk_tags_to_calibration_controller.py
+    │               ├── test_add_tag_to_calibration_controller.py
+    │               ├── test_create_tag_controller.py
+    │               ├── test_get_calibrations_by_tag_controller.py
+    │               ├── test_list_tags_controller.py
+    │               └── test_remove_tag_from_calibration_controller.py
+    └── utils
+        └── entity_factories.py
 ```

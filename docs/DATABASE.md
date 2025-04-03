@@ -13,10 +13,10 @@ The project uses:
 
 ## Directory Structure
 
-```
+```text
 src/
 ├── infrastructure/
-│   └── orm_models.py    # SQLAlchemy models
+│   └── orm_models/     # SQLAlchemy models
 ├── config/
 │   └── database.py      # Database configuration
 └── alembic/
