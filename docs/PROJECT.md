@@ -43,7 +43,7 @@ from calibrations, and the tagging history is preserved.
 
 ```json
 {
-  "calibration_id": "integer"
+  "calibration_id": "uuid"
 }
 ```
 
@@ -66,7 +66,7 @@ from calibrations, and the tagging history is preserved.
 ```json
 [
   {
-    "calibration_id": "integer",
+    "calibration_id": "uuid",
     "calibration_type": "string",
     "value": "float",
     "timestamp": "string (ISO 8601)",

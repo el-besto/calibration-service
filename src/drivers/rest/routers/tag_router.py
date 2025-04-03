@@ -81,9 +81,7 @@ async def create_tag_endpoint(
 
 
 @router.get(
-    "",
-    response_model=TagListResponse,
-    summary="List all tags",
+    "", response_model=TagListResponse, summary="List all tags", include_in_schema=False
 )
 async def list_tags_endpoint(
     controller: ListTagsController = Depends(get_list_tags_controller),
@@ -114,6 +112,7 @@ async def list_tags_endpoint(
     status_code=status.HTTP_200_OK,
     summary="Bulk associate tags with a calibration",
     tags=["Tag Associations"],
+    include_in_schema=False,
 )
 async def bulk_add_tags_to_calibration_endpoint(
     calibration_id: UUID,
@@ -154,6 +153,7 @@ async def bulk_add_tags_to_calibration_endpoint(
     response_model=list[CalibrationReadResponse],
     summary="Retrieve calibrations by tag at a specific time",
     tags=["Tag Associations"],
+    include_in_schema=False,
 )
 async def get_calibrations_by_tag_endpoint(
     tag_name: str,
