@@ -160,7 +160,7 @@ docker compose ps
 uv run db_init
 
 # Reset database (development only)
-docker compose down -v postgres
+docker compose down -v --rmi local
 uv run db_init
 ```
 

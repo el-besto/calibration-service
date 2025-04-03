@@ -6,6 +6,8 @@ This document outlines the testing strategy for the Calibration Service, followi
 
 The test suite is organized into the following categories:
 
+> Note: ideally `tests/unit` should mirror the `src` folder
+
 - **Unit Tests**: Testing individual components in isolation
     - `tests/unit/entities`: Tests for entity models and validation
     - `tests/unit/application`: Tests for use cases and business logic

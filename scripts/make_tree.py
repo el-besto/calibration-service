@@ -7,7 +7,6 @@ EXCLUDED_ITEMS = {
     ".ruff_cache",
     ".pytest_cache",
     ".coverageDockerfile",
-    "Makefile",
     "cspell",
     "docker-compose",
     "run.sh",

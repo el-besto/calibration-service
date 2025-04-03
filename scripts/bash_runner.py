@@ -255,6 +255,12 @@ def run_setup() -> None:
     run_db_seed()  # Then run seed
 
 
+# Remove commands
+def run_eject() -> None:
+    """Fully remove all traces of this docker compose project."""
+    _run_command("docker compose down -v --rmi local")
+
+
 # Utility commands
 def _copy_output(name: str, output: str):
     print(output)

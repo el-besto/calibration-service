@@ -51,6 +51,8 @@ docs = [
 ]
 
 [project.scripts]
+## eject -> fully remove this docker compose project
+eject = "scripts.bash_runner:run_eject"
 ## dev workflow scripts
 dev = "scripts.bash_runner:run_dev"
 format = "scripts.bash_runner:run_format"

@@ -8,7 +8,7 @@ import pytest
 from config.logger import log_test_step
 
 # --- Configuration ---
-BASE_URL = "http://localhost:8000"
+BASE_URL = "http://localhost:8777"
 # How long to wait between adding and removing a tag (adjust if needed)
 WAIT_SECONDS = 2
 

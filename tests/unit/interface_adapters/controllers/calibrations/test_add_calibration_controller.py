@@ -57,7 +57,7 @@ def sample_calibration(valid_request: CalibrationCreateRequest) -> Calibration:
             value=valid_request.value,
             type=CalibrationType(valid_request.calibration_type),
         ),
-        timestamp=Iso8601Timestamp(valid_request.timestamp),
+        timestamp=Iso8601Timestamp(valid_request.timestamp),  # pyright: ignore [reportArgumentType]
         username=valid_request.username,
         tags=[],  # Default to empty tags for this sample
     )

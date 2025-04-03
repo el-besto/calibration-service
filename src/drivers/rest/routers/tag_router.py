@@ -7,14 +7,12 @@ from src.application.use_cases.exceptions import TagNotFoundError
 from src.drivers.rest.dependencies import (
     get_create_tag_controller,
     get_get_calibrations_by_tag_controller,
-    get_list_tags_controller,
 )
 from src.drivers.rest.schemas.calibration_schemas import (
     CalibrationListResponse,
 )
 from src.drivers.rest.schemas.tag_schemas import (
     TagCreateRequest,
-    TagListResponse,
     TagResponse,
 )
 from src.entities.exceptions import (
@@ -26,9 +24,6 @@ from src.interface_adapters.controllers.tags.create_tag_controller import (
 )
 from src.interface_adapters.controllers.tags.get_calibrations_by_tag_controller import (
     GetCalibrationsByTagController,
-)
-from src.interface_adapters.controllers.tags.list_tags_controller import (
-    ListTagsController,
 )
 
 # --- Router Definition ---
@@ -70,29 +65,6 @@ async def create_tag_endpoint(
         logger.exception(
             f"Unexpected error creating tag: {e}"
         )  # Use exception for stacktrace
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="An unexpected error occurred.",
-        ) from e
-
-
-@router.get(
-    "", response_model=TagListResponse, summary="List all tags", include_in_schema=False
-)
-async def list_tags_endpoint(
-    controller: ListTagsController = Depends(get_list_tags_controller),
-) -> TagListResponse:
-    """API endpoint to list all existing tags."""
-    try:
-        return await controller.list_all_tags()
-    except DatabaseOperationError as e:
-        logger.error(f"DB error listing tags: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Database error listing tags.",
-        ) from e
-    except Exception as e:
-        logger.exception(f"Unexpected error listing tags: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="An unexpected error occurred.",
