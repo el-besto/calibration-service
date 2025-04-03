@@ -1,5 +1,5 @@
-from datetime import UTC, datetime
 import uuid
+from datetime import UTC, datetime
 from unittest.mock import AsyncMock
 from uuid import UUID, uuid4
 
@@ -28,7 +28,9 @@ from src.application.use_cases.calibrations.list_calibrations import (
 from src.application.use_cases.tags.add_tag_to_calibration import (
     AddTagToCalibrationInput,
 )
-from src.application.use_cases.tags.get_calibrations_by_tag import GetCalibrationsByTagInput
+from src.application.use_cases.tags.get_calibrations_by_tag import (
+    GetCalibrationsByTagInput,
+)
 from src.application.use_cases.tags.remove_tag_from_calibration import (
     RemoveTagFromCalibrationInput,
 )
@@ -50,22 +52,26 @@ from src.entities.value_objects.iso_8601_timestamp import Iso8601Timestamp
 # Mark all tests as async
 pytestmark = pytest.mark.asyncio
 
+
 # --- Mock Repository for Tag Tests --- Needed by controllers
 class MockTagRepo:
     async def get_by_name(self, name: str) -> Tag | None:
         # Simple mock: Return a tag object with a predictable ID based on name
         # This avoids needing global state or complex mocking logic here.
-        print(f"MockTagRepo: get_by_name called for '{name}'")
-        tag_id = uuid.uuid5(uuid.NAMESPACE_DNS, name) # Deterministic ID
+        print(f"MockTagRepo: get_by_name called for '{name}'")  # noqa: T201
+        tag_id = uuid.uuid5(uuid.NAMESPACE_DNS, name)  # Deterministic ID
         return Tag(id=tag_id, name=name, created_at=datetime.now(UTC))
 
     # Add other methods if needed by controllers, returning default values
     async def get_by_id(self, tag_id: UUID) -> Tag | None:
-        return None # Not strictly needed for these tests
+        return None  # Not strictly needed for these tests
+
     async def list_all(self) -> list[Tag]:
-        return [] # Not strictly needed for these tests
+        return []  # Not strictly needed for these tests
+
     async def add(self, tag: Tag) -> Tag:
-        return tag # Not strictly needed for these tests
+        return tag  # Not strictly needed for these tests
+
 
 # --- Fixtures for Mocked Use Cases ---
 
@@ -275,17 +281,13 @@ async def test_uc3b_remove_tag_success(
     mock_repo = MockTagRepo()
     app.dependency_overrides[get_tag_repository] = lambda: mock_repo
 
-    mock_remove_tag_use_case.execute.return_value = (
-        None
-    )
+    mock_remove_tag_use_case.execute.return_value = None
     app.dependency_overrides[get_remove_tag_from_calibration_use_case] = (
         lambda: mock_remove_tag_use_case
     )
 
     # Act
-    response = await async_client.delete(
-        f"/calibrations/{test_cal_id}/tags/{tag_name}"
-    )
+    response = await async_client.delete(f"/calibrations/{test_cal_id}/tags/{tag_name}")
 
     # Assert
     assert response.status_code == 200
@@ -323,9 +325,7 @@ async def test_uc4_get_calibrations_by_tag_success(
     )
 
     # Act
-    response = await async_client.get(
-        f"/tags/{tag_name}/calibrations"
-    )
+    response = await async_client.get(f"/tags/{tag_name}/calibrations")
 
     # Assert
     assert response.status_code == 200
@@ -341,7 +341,7 @@ async def test_uc4_get_calibrations_by_tag_success(
     # Verify use case execute method was awaited and called
     mock_get_calibrations_by_tag_use_case.execute.assert_awaited_once()
     call_args, _ = mock_get_calibrations_by_tag_use_case.execute.call_args
-    input_dto = call_args[0] # Assuming controller passes DTO
+    input_dto = call_args[0]  # Assuming controller passes DTO
     # Uncommented and verified assertions for input DTO
     assert isinstance(input_dto, GetCalibrationsByTagInput)
     assert input_dto.tag_name == tag_name
