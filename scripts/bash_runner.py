@@ -222,7 +222,14 @@ def run_check() -> None:
     print("Running tests...")
     run_test()
 
-    print("All checks completed successfully!")
+    print("All checks completed successfully (w/o e2e)!")
+
+
+def run_check_all() -> None:
+    """Run all checks (pre-commit hooks and tests, and e2e tests)."""
+    run_check()
+    run_test_e2e()
+    print("All checks completed successfully!(w e2e)")
 
 
 # Database management commands

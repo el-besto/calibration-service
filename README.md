@@ -2,9 +2,11 @@
 
 ## Pre-requisites
 
-- **Python** 3.12 or higher
-- **PostgreSQL** or **SQLite** for database management
+- **Python** 3.12 or higher, [link][python]
+- **uv** for python runtime and dependency management, [link][uv]
 - **Docker Desktop** or Docker Compose capable tool (e.g. [podman desktop][podman] or [rancher desktop][rancher])
+- **Node.js** for Pyright pre-commit hook execution, [link][pyright]
+
 
 ## Quick Start
 
@@ -40,7 +42,7 @@ found, `pkill -9 <PID>` to stop_
 3. Go to [localhost:8777/docs](http://localhost:8777/docs) - OpenAPI spec to explore the api
 4. (Optional) Open online documentation
 
-Note: for local deployment see [D](docs/DEVELOPER.md#running-on-localhost-without-docker-compose)
+_Note: for local deployment see [DEVELOPER](docs/DEVELOPER.md#running-on-localhost-without-docker-compose)_
 
 ## Cleanup
 
@@ -63,6 +65,8 @@ Note: for local deployment see [D](docs/DEVELOPER.md#running-on-localhost-withou
 ## End to End
 
 With the project up and running use docker cli to execute the e2e tests in a different terminal
+- [test_api_use_cases_e2e.py](tests/e2e/test_api_use_cases_e2e.py) take home assignment uc1-4 tests
+- [test_tag_archiving_e2e.py](tests/e2e/test_tag_archiving_e2e.py) take home assignment uc5
 
    ```bash
    docker compose exec web uv run test_e2e
@@ -84,14 +88,13 @@ With the project up and running use docker cli to execute the e2e tests in a dif
    docker compose exec web uv run test
    ```
 
-- [test_api_use_cases_e2e.py](tests/e2e/test_api_use_cases_e2e.py) take home assignment uc1-4 tests
-- [test_tag_archiving_e2e.py](tests/e2e/test_tag_archiving_e2e.py) take home assignment uc5
-
 ## ERD
 
 <img src="docs/assets/ERD.png" alt="ERD" width="500">
 
 ## Next Steps
+
+_Where I would want to continue to refine the system._
 
 - **Users:** a `users` table to replace the _"username"_ on a `CalibrationAssociation`, and allow for something to bring
   a trackable Actor into the system
@@ -110,7 +113,7 @@ more intentional, scalable structure. I started by defining the use case and int
 repository based on [shaliamekh][mongo-repo], and later swapped in a PostgreSQL version without touching the core logic.
 That flexibility—being able to change out infrastructure without rewriting business rules—really drove home the value of
 this approach. Clean Architecture made it easy to innovate at the edges while keeping the core rock-solid. If you’re
-curious about the structure, I nerded out a bit more in the ARCHITECTURE section.
+curious about the structure, I nerded out a bit more in the [ARCHITECTURE](docs/ARCHITECTURE.md) section.
 
 ## Developer Experience
 
@@ -141,6 +144,12 @@ clearly and ship confidently.
 
 
 <!-- link helpers below -->
+
+[python]: https://www.python.org/downloads/
+
+[uv]: https://docs.astral.sh/uv/
+
+[pyright]: https://microsoft.github.io/pyright/#/installation
 
 [podman]: https://podman-desktop.io/
 

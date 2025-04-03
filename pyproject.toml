@@ -59,6 +59,7 @@ format = "scripts.bash_runner:run_format"
 lint = "scripts.bash_runner:run_lint"
 typecheck = "scripts.bash_runner:run_typecheck"
 check = "scripts.bash_runner:run_check"
+check_all = "scripts.bash_runner:run_check_all"
 #### testing
 test = "scripts.bash_runner:run_test"
 test_debug = "scripts.bash_runner:run_test_debug"

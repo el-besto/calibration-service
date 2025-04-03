@@ -49,7 +49,7 @@ This workflow focuses specifically on Python testing and runs when Python files 
 This workflow performs static type checking with [Pyright](https://microsoft.github.io/pyright) to ensure type safety
 and catch issues early in development.
 
-Configuration is managed in [pyproject.toml](../pyproject.toml).
+Configuration is managed in [pyproject.toml](https://github.com/el-besto/calibration-service/tree/main/pyproject.toml).
 
 **Jobs:**
 
@@ -67,8 +67,9 @@ This workflow uses the [ruff linter](https://docs.astral.sh/ruff/linter/)
 and [ruff formatter](https://docs.astral.sh/ruff/formatter/)
 to automatically enforce code quality standards.
 
-Ruff is configured via [pyproject.toml](../pyproject.toml) and runs as a CI job to maintain a clean, consistent
-codebase.
+Ruff is configured via [pyproject.toml](https://github.com/el-besto/calibration-service/tree/main/pyproject.toml) and
+runs
+as a CI job to maintain a clean, consistent codebase.
 
 **Jobs:**
 
