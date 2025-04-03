@@ -128,7 +128,7 @@ from calibrations, and the tagging history is preserved.</p>
 <h3 id="1-create-a-new-calibration">1. Create a New Calibration</h3>
 <p><strong>Use Case:</strong> <code>AddCalibrationUseCase</code>  <a href="src/application/use_cases/calibrations/add_calibration_use_case.py">application.use_cases.calibrations.add_calibration.py</a></p>
 <p><strong>Endpoint:</strong> <code>POST /calibrations</code></p>
-<p><strong>Input:</strong></p>
+<p><strong>Input:</strong>:</p>
 <pre><code class="language-json">{
   &quot;calibration_type&quot;: &quot;string&quot;,
   &quot;value&quot;: &quot;float&quot;,
@@ -138,7 +138,7 @@ from calibrations, and the tagging history is preserved.</p>
 </code></pre>
 <p><strong>Output:</strong></p>
 <pre><code class="language-json">{
-  &quot;calibration_id&quot;: &quot;integer&quot;
+  &quot;calibration_id&quot;: &quot;uuid&quot;
 }
 </code></pre>
 <hr />
@@ -154,7 +154,7 @@ from calibrations, and the tagging history is preserved.</p>
 <p><strong>Output:</strong></p>
 <pre><code class="language-json">[
   {
-    &quot;calibration_id&quot;: &quot;integer&quot;,
+    &quot;calibration_id&quot;: &quot;uuid&quot;,
     &quot;calibration_type&quot;: &quot;string&quot;,
     &quot;value&quot;: &quot;float&quot;,
     &quot;timestamp&quot;: &quot;string (ISO 8601)&quot;,
@@ -244,81 +244,12 @@ from calibrations, and the tagging history is preserved.</p>
 </ul>
 <hr />
 <h2 id="sample-calibration-data">Sample Calibration Data</h2>
+<p><strong>See <code>scripts/sample_data</code> for the full object.</strong></p>
 <pre><code class="language-json">[
   {
     &quot;calibration_type&quot;: &quot;offset&quot;,
     &quot;value&quot;: 1.0,
     &quot;username&quot;: &quot;alice&quot;
-  },
-  {
-    &quot;calibration_type&quot;: &quot;gain&quot;,
-    &quot;value&quot;: 1.5,
-    &quot;username&quot;: &quot;bob&quot;
-  },
-  {
-    &quot;calibration_type&quot;: &quot;temperature&quot;,
-    &quot;value&quot;: -0.3,
-    &quot;username&quot;: &quot;charlie&quot;
-  },
-  {
-    &quot;calibration_type&quot;: &quot;offset&quot;,
-    &quot;value&quot;: 0.9,
-    &quot;username&quot;: &quot;alice&quot;
-  },
-  {
-    &quot;calibration_type&quot;: &quot;gain&quot;,
-    &quot;value&quot;: 1.6,
-    &quot;username&quot;: &quot;dana&quot;
-  },
-  {
-    &quot;calibration_type&quot;: &quot;offset&quot;,
-    &quot;value&quot;: 1.2,
-    &quot;username&quot;: &quot;bob&quot;
-  },
-  {
-    &quot;calibration_type&quot;: &quot;gain&quot;,
-    &quot;value&quot;: 1.55,
-    &quot;username&quot;: &quot;alice&quot;
-  },
-  {
-    &quot;calibration_type&quot;: &quot;temperature&quot;,
-    &quot;value&quot;: -0.1,
-    &quot;username&quot;: &quot;charlie&quot;
-  },
-  {
-    &quot;calibration_type&quot;: &quot;pressure&quot;,
-    &quot;value&quot;: 101.3,
-    &quot;username&quot;: &quot;dana&quot;
-  },
-  {
-    &quot;calibration_type&quot;: &quot;offset&quot;,
-    &quot;value&quot;: 1.1,
-    &quot;username&quot;: &quot;alice&quot;
-  },
-  {
-    &quot;calibration_type&quot;: &quot;gain&quot;,
-    &quot;value&quot;: 1.4,
-    &quot;username&quot;: &quot;bob&quot;
-  },
-  {
-    &quot;calibration_type&quot;: &quot;offset&quot;,
-    &quot;value&quot;: 1.3,
-    &quot;username&quot;: &quot;charlie&quot;
-  },
-  {
-    &quot;calibration_type&quot;: &quot;temperature&quot;,
-    &quot;value&quot;: -0.2,
-    &quot;username&quot;: &quot;alice&quot;
-  },
-  {
-    &quot;calibration_type&quot;: &quot;pressure&quot;,
-    &quot;value&quot;: 100.8,
-    &quot;username&quot;: &quot;bob&quot;
-  },
-  {
-    &quot;calibration_type&quot;: &quot;gain&quot;,
-    &quot;value&quot;: 1.6,
-    &quot;username&quot;: &quot;charlie&quot;
   }
 ]
 </code></pre>

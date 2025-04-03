@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>CONTRIBUTING - Calibration Service Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "CONTRIBUTING";
+        var mkdocs_page_input_path = "CONTRIBUTING.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Calibration Service Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../PROJECT/">Project</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ARCHITECTURE/">Architecture</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../DEVELOPER/">Developers</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../TESTS/">Testing</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../WORKFLOWS/">CICD</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Calibration Service Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">CONTRIBUTING</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h2 id="pre-commit-hooks">Pre-commit Hooks</h2>
+<p>The project uses pre-commit hooks to ensure code quality. These are configured in <code>.pre-commit-config.yaml</code>.</p>
+<h3 id="installed-hooks">Installed Hooks</h3>
+<table>
+<thead>
+<tr>
+<th>Hook</th>
+<th>Description</th>
+<th>When it Runs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>conventional-pre-commit</code></td>
+<td>Enforces <a href="https://www.conventionalcommits.org/">Conventional Commits</a> format</td>
+<td>On commit message</td>
+</tr>
+<tr>
+<td><code>run_tests</code></td>
+<td>Runs project tests</td>
+<td>Before commit</td>
+</tr>
+<tr>
+<td><code>trailing-whitespace</code></td>
+<td>Removes trailing whitespace</td>
+<td>Before commit</td>
+</tr>
+<tr>
+<td><code>end-of-file-fixer</code></td>
+<td>Ensures files end with newline</td>
+<td>Before commit</td>
+</tr>
+<tr>
+<td><code>check-toml</code></td>
+<td>Validates TOML files</td>
+<td>Before commit</td>
+</tr>
+<tr>
+<td><code>check-yaml</code></td>
+<td>Validates YAML files</td>
+<td>Before commit</td>
+</tr>
+<tr>
+<td><code>check-added-large-files</code></td>
+<td>Prevents large file commits</td>
+<td>Before commit</td>
+</tr>
+<tr>
+<td><code>ruff</code></td>
+<td>Lints Python code</td>
+<td>Before commit</td>
+</tr>
+<tr>
+<td><code>ruff-format</code></td>
+<td>Formats Python code</td>
+<td>Before commit</td>
+</tr>
+<tr>
+<td><code>pyright</code></td>
+<td>Type checks Python code</td>
+<td>Before commit</td>
+</tr>
+<tr>
+<td><code>uv-lock</code></td>
+<td>Updates dependency lock file</td>
+<td>Before commit</td>
+</tr>
+</tbody>
+</table>
+<h3 id="using-pre-commit">Using Pre-commit</h3>
+<pre><code class="language-bash"># Install the hooks
+pre-commit install --install-hooks
+
+# Run all hooks manually. Note: errors in alembic directory should be ignored.
+pre-commit run --all-files
+
+# Run specific hook
+pre-commit run ruff --all-files
+</code></pre>
+<h3 id="commit-message-format">Commit Message Format</h3>
+<p>We use conventional commits with the following types:</p>
+<ul>
+<li><code>feat</code>: New feature</li>
+<li><code>fix</code>: Bug fix</li>
+<li><code>refactor</code>: Code change that neither fixes a bug nor adds a feature</li>
+<li><code>test</code>: Adding missing tests or correcting existing tests</li>
+<li><code>style</code>: Changes that do not affect the meaning of the code</li>
+<li><code>chore</code>: Other changes that don't modify src or test files</li>
+<li><code>build</code>: Changes that affect the build system or external dependencies</li>
+<li><code>ci</code>: Changes to CI configuration files and scripts</li>
+<li><code>docs</code>: Documentation only changes</li>
+<li><code>wip</code>: Work in progress</li>
+</ul>
+<p>Example:</p>
+<pre><code class="language-bash">git commit -m &quot;feat: add user authentication&quot;
+</code></pre>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

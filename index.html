@@ -98,13 +98,118 @@ from calibrations, and the tagging history is preserved.</p>
 <ul>
 <li><strong>Python</strong> 3.12 or higher, <a href="https://www.python.org/downloads/">link</a></li>
 <li><strong>uv</strong> for python runtime and dependency management, <a href="https://docs.astral.sh/uv/">link</a></li>
+<li><strong>Docker Desktop</strong> or Docker Compose capable tool (e.g. <a href="https://podman-desktop.io/">podman desktop</a> or <a href="https://rancherdesktop.io/">rancher desktop</a>)</li>
 <li><strong>Node.js</strong> for Pyright pre-commit hook execution, <a href="https://microsoft.github.io/pyright/#/installation">link</a></li>
 </ul>
 <hr />
-<h2 id="getting-started">Getting started</h2>
-<p>TODO: (docs): add getting started</p>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="a-online-deployment">A) Online Deployment</h3>
+<ul>
+<li><a href="https://el-besto.github.io/calibration-service/welcome">Live Docs</a> - GitHub pages hosted docs site making reading these docs a bit easier</li>
+<li>~~<a href="https://calibration-service.fly.dev/docs">Live Site</a> - deployed application~~ # TODO: (future)</li>
+</ul>
+<h3 id="b-offline-deployment-options">(B) Offline Deployment Options</h3>
+<h4 id="prepare">Prepare</h4>
+<p><strong>Download source:</strong></p>
+<ul>
+<li>Clone the repository, and go into the project directory <code>calibration-service</code></li>
+</ul>
+<p><strong>Avoid port conflicts:</strong></p>
+<ul>
+<li><code>5777</code> - port of dev db</li>
+<li><code>5778</code> - port of test db</li>
+<li><code>8777</code> - port of FastAPI web driver</li>
+</ul>
+<p><em>Troubleshooting: Verify if a local service is listening by run <code>lsof -i :&lt;port&gt;</code> to see binding. If
+found, <code>pkill -9 &lt;PID&gt;</code> to stop</em></p>
+<h4 id="containerized-deployment">Containerized Deployment</h4>
+<ol>
+<li>Start Docker Desktop</li>
+<li>Run Docker compose: pull images, builds, runs migrations, seeds and starts the container
+   <code>bash
+   docker compose up</code></li>
+<li>Go to <a href="http://localhost:8777/docs">localhost:8777/docs</a> - OpenAPI spec to explore the api</li>
+<li>(Optional) Open online documentation</li>
+</ol>
+<p><em>Note: for local deployment see <a href="DEVELOPER/#running-on-localhost-without-docker-compose">DEVELOPER</a></em></p>
+<h2 id="cleanup">Cleanup</h2>
+<p><code>bash
+   docker compose down -v --rmi local</code></p>
+<h2 id="points-of-interest">Points of Interest</h2>
+<ul>
+<li><a href="http://localhost:8777/docs">OpenApi Specification</a></li>
+<li><a href="https://github.com/el-besto/calibration-service/tree/main/src/infrastructure/repositories/calibration_repository/postgres_repository.py">Calibration Repository (Postgres)</a></li>
+<li><a href="https://github.com/el-besto/calibration-service/tree/main/src/infrastructure/repositories/tag_repository/postgres_repository.py">Tag Repository (Postgres)</a></li>
+<li><a href="https://github.com/el-besto/calibration-service/tree/main/src/drivers/rest/routers/calibration_router.py">Calibration Routes (FastAPI)</a></li>
+<li><a href="https://github.com/el-besto/calibration-service/tree/main/src/drivers/rest/routers/tag_router.py">Tag Routes (FastAPI)</a></li>
+<li><a href="https://github.com/el-besto/calibration-service/tree/main/tests/integration/drivers/rest/test_calibration_api.py">Calibration Api integration tests</a></li>
+<li><a href="https://github.com/el-besto/calibration-service/tree/main/tests/integration/drivers/rest/test_tagging_api.py">Tagging Api integration tests</a></li>
+</ul>
+<h1 id="testing-and-validating-system-functionality">Testing and validating system functionality</h1>
+<h2 id="end-to-end">End to End</h2>
+<p>With the project up and running use docker cli to execute the e2e tests in a different terminal
+- <a href="https://github.com/el-besto/calibration-service/tree/main/tests/e2e/test_api_use_cases_e2e.py">test_api_use_cases_e2e.py</a> take home assignment uc1-4 tests
+- <a href="https://github.com/el-besto/calibration-service/tree/main/tests/e2e/test_tag_archiving_e2e.py">test_tag_archiving_e2e.py</a> take home assignment uc5</p>
+<p><code>bash
+   docker compose exec web uv run test_e2e</code></p>
+<h2 id="component-integration">Component Integration</h2>
+<p><code>bash
+   docker compose exec web uv run pytest tests/integration/drivers/rest</code></p>
+<p><code>bash
+   docker compose exec web uv run pytest tests/integration/repositories</code></p>
+<h2 id="unit">Unit</h2>
+<p><code>bash
+   docker compose exec web uv run test</code></p>
 <hr />
 <h3 id="test-documentation">Test Documentation</h3>
+<p>This repository includes a comprehensive test harness following Clean Architecture principles.
+The testing infrastructure is designed to be expandable and maintainable.</p>
+<p>🧠 <em>For detailed information about the testing approach, see <a href="TESTS/">docs/TESTS.md</a>.</em></p>
+<hr />
+<h2 id="erd">ERD</h2>
+<p><img src="assets/ERD.png" alt="ERD" width="500"></p>
+<h2 id="next-steps">Next Steps</h2>
+<p><em>Where I would want to continue to refine the system.</em></p>
+<ul>
+<li><strong>Users:</strong> a <code>users</code> table to replace the <em>"username"</em> on a <code>CalibrationAssociation</code>, and allow for something to bring
+  a trackable Actor into the system</li>
+<li><strong>ISessions:</strong> bring Session up into the Entity layer and removing the third-party reliance on SqlAlchemy's
+  <code>AsyncSession</code></li>
+<li><strong>IAuthentication Service:</strong> that encapsulates <code>sign_up</code>, <code>sign_in</code>, and <code>sign_out</code> use cases and helps demonstrate
+  how easy swapping out one oidc provider for another could be</li>
+<li><strong>Instrumentation/Monitoring:</strong> wrappers to monitor and benchmark each system interaction as it goes through the
+  boundaries of the Clean Architecture surrounds all</li>
+</ul>
+<h2 id="inspiration">Inspiration</h2>
+<p>I’ve been eager to try Clean Architecture, so I was excited to take this project as a chance to dive in outside of work.
+In day-to-day development, we often have to stay laser-focused on shipping just enough—so it was refreshing to explore a
+more intentional, scalable structure. I started by defining the use case and interfaces, then adapted a MongoDB
+repository based on <a href="https://github.com/shaliamekh/clean-architecture-fastapi/blob/main/src/adapters/repositories/auction_repository/mongodb_repository.py">shaliamekh</a>, and later swapped in a PostgreSQL version without touching the core logic.
+That flexibility—being able to change out infrastructure without rewriting business rules—really drove home the value of
+this approach. Clean Architecture made it easy to innovate at the edges while keeping the core rock-solid. If you’re
+curious about the structure, I nerded out a bit more in the <a href="ARCHITECTURE/">ARCHITECTURE</a> section.</p>
+<h2 id="developer-experience">Developer Experience</h2>
+<p>Coming from a Node.js and TypeScript background, I was initially skeptical about Python—especially around tooling, type
+safety, and developer ergonomics. But this project turned out to be a crash course in how far the Python ecosystem has
+come. Tools like uv and pyproject.toml gave me the dependency management experience I’d been missing, and enabling
+Pyright in PyCharm brought back the type hints, squiggles, and Intellisense I rely on daily. Once dialed in, my Python
+dev environment felt just as powerful—if not more streamlined—than my usual setup.</p>
+<p>On the infrastructure side, working with Terraform reminded me how much I enjoy bridging systems design with application
+code—something I previously explored through AWS CDK. This project showed me that clean architecture, code organization,
+and system-level thinking (along with solid tooling habits) are transferable across languages. And in the age of AI,
+where every developer effectively has a supercomputer at their side, the ability to learn quickly and structure ideas
+well has never been more important. It’s not just about syntax—it’s about creating an environment that helps you think
+clearly and ship confidently.</p>
+<h2 id="additional-documentation">Additional Documentation</h2>
+<ul>
+<li><a href="DEVELOPER/">Developer Guide</a> - Day-to-day development workflows</li>
+<li><a href="DATABASE/">Database Management</a> - Detailed information about database management operations</li>
+<li><a href="ARCHITECTURE/">Architecture Inspiration</a> - System design and software architecture inspiration</li>
+<li><a href="TESTS/">Testing Approach</a> - How to execute project tests and the packages used</li>
+<li><a href="WORKFLOWS/">CI/CD</a> - Description of CI/CD workflows</li>
+</ul>
+<hr />
+<h3 id="test-documentation_1">Test Documentation</h3>
 <p>This repository includes a comprehensive test harness following Clean Architecture principles.
 The testing infrastructure is designed to be expandable and maintainable.</p>
 <p>🧠 <em>For detailed information about the testing approach, see <a href="TESTS/">docs/TESTS.md</a>.</em></p>
@@ -190,5 +295,5 @@ All workflows use <a href="https://docs.astral.sh/uv/"><code>uv</code></a> for f
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2025-04-02 14:18:07.882715+00:00
+Build Date UTC : 2025-04-03 06:03:33.254357+00:00
 -->

@@ -52,17 +52,7 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#environment-configuration">Environment Configuration</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#pre-commit-hooks">Pre-commit Hooks</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#installed-hooks">Installed Hooks</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#using-pre-commit">Using Pre-commit</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#commit-message-format">Commit Message Format</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#available-commands">Available Commands</a>
+    <li class="toctree-l2"><a class="reference internal" href="#available-project-commands">Available Project Commands</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#common-development-workflows">Common Development Workflows</a>
         <ul>
@@ -79,6 +69,8 @@
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#best-practices">Best Practices</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#running-on-localhost-without-docker-compose">Running on localhost without Docker Compose</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a>
     </li>
@@ -125,110 +117,13 @@ the <a href="https://github.com/el-besto/calibration-service/blob/main/README.md
 <li><code>.env</code> - Base defaults (in git)</li>
 <li><code>.env.local</code> - Local overrides (git-ignored)</li>
 <li><code>.env.{ENV}</code> - Environment specific (in git)</li>
-<li><code>.env.{ENV}.local</code> - Environment specific local overrides (git-ignored)</li>
 </ol>
 <p>Environment files are loaded in the order above, with later files overriding earlier ones. The <code>{ENV}</code> placeholder is
 replaced with the value of <code>PYTHON_ENV</code> (defaults to "development").</p>
 <p>Example: To run in test environment:</p>
 <pre><code class="language-bash">PYTHON_ENV=test uv run db_init  # Will use .env → .env.local → .env.test → .env.test.local
 </code></pre>
-<h2 id="pre-commit-hooks">Pre-commit Hooks</h2>
-<p>The project uses pre-commit hooks to ensure code quality. These are configured in <code>.pre-commit-config.yaml</code>.</p>
-<h3 id="installed-hooks">Installed Hooks</h3>
-<table>
-<thead>
-<tr>
-<th>Hook</th>
-<th>Description</th>
-<th>When it Runs</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>conventional-pre-commit</code></td>
-<td>Enforces <a href="https://www.conventionalcommits.org/">Conventional Commits</a> format</td>
-<td>On commit message</td>
-</tr>
-<tr>
-<td><code>run_tests</code></td>
-<td>Runs project tests</td>
-<td>Before commit</td>
-</tr>
-<tr>
-<td><code>trailing-whitespace</code></td>
-<td>Removes trailing whitespace</td>
-<td>Before commit</td>
-</tr>
-<tr>
-<td><code>end-of-file-fixer</code></td>
-<td>Ensures files end with newline</td>
-<td>Before commit</td>
-</tr>
-<tr>
-<td><code>check-toml</code></td>
-<td>Validates TOML files</td>
-<td>Before commit</td>
-</tr>
-<tr>
-<td><code>check-yaml</code></td>
-<td>Validates YAML files</td>
-<td>Before commit</td>
-</tr>
-<tr>
-<td><code>check-added-large-files</code></td>
-<td>Prevents large file commits</td>
-<td>Before commit</td>
-</tr>
-<tr>
-<td><code>ruff</code></td>
-<td>Lints Python code</td>
-<td>Before commit</td>
-</tr>
-<tr>
-<td><code>ruff-format</code></td>
-<td>Formats Python code</td>
-<td>Before commit</td>
-</tr>
-<tr>
-<td><code>pyright</code></td>
-<td>Type checks Python code</td>
-<td>Before commit</td>
-</tr>
-<tr>
-<td><code>uv-lock</code></td>
-<td>Updates dependency lock file</td>
-<td>Before commit</td>
-</tr>
-</tbody>
-</table>
-<h3 id="using-pre-commit">Using Pre-commit</h3>
-<pre><code class="language-bash"># Install the hooks
-pre-commit install --install-hooks
-
-# Run all hooks manually. Note: errors in alembic directory should be ignored.
-pre-commit run --all-files
-
-# Run specific hook
-pre-commit run ruff --all-files
-</code></pre>
-<h3 id="commit-message-format">Commit Message Format</h3>
-<p>We use conventional commits with the following types:</p>
-<ul>
-<li><code>feat</code>: New feature</li>
-<li><code>fix</code>: Bug fix</li>
-<li><code>refactor</code>: Code change that neither fixes a bug nor adds a feature</li>
-<li><code>test</code>: Adding missing tests or correcting existing tests</li>
-<li><code>style</code>: Changes that do not affect the meaning of the code</li>
-<li><code>chore</code>: Other changes that don't modify src or test files</li>
-<li><code>build</code>: Changes that affect the build system or external dependencies</li>
-<li><code>ci</code>: Changes to CI configuration files and scripts</li>
-<li><code>docs</code>: Documentation only changes</li>
-<li><code>wip</code>: Work in progress</li>
-</ul>
-<p>Example:</p>
-<pre><code class="language-bash">git commit -m &quot;feat: add user authentication&quot;
-</code></pre>
-<h2 id="available-commands">Available Commands</h2>
+<h2 id="available-project-commands">Available Project Commands</h2>
 <p>All commands are run using <code>uv run &lt;command&gt;</code>. Here's a complete list:</p>
 <table>
 <thead>
@@ -316,6 +211,7 @@ pre-commit run ruff --all-files
 </tr>
 </tbody>
 </table>
+<p>__see: <code>pyproject.toml</code>'s <code>[project.scripts]</code> for details. All are proxied through the <code>scripts/bash_runner.py</code> module.</p>
 <h2 id="common-development-workflows">Common Development Workflows</h2>
 <h3 id="1-daily-development">1. Daily Development</h3>
 <p>Start your day with:</p>
@@ -329,21 +225,12 @@ uv run db_migrate
 uv run dev
 </code></pre>
 <h3 id="2-making-changes">2. Making Changes</h3>
-<p>When modifying code:</p>
+<p>When modifying code periodically run:</p>
 <pre><code class="language-bash"># Format and lint code, check types, run tests
 uv run check
 </code></pre>
 <h3 id="3-database-changes">3. Database Changes</h3>
-<p>When modifying models:</p>
-<pre><code class="language-bash"># Create a new migration
-uv run db_create &quot;Description of your changes&quot;
-
-# Apply the migration
-uv run db_migrate
-
-# Run tests to ensure everything works
-uv run test
-</code></pre>
+<p><em><a href="../DATABASE/">see DATABASE.md</a></em></p>
 <h3 id="4-pre-commit-checklist">4. Pre-commit Checklist</h3>
 <p>The pre-commit hooks will run automatically, but you can also run them manually:</p>
 <pre><code class="language-bash"># Run all pre-commit hooks
@@ -354,16 +241,7 @@ git add .
 git commit -m &quot;feat: your feature description&quot;
 </code></pre>
 <h3 id="5-running-tests">5. Running Tests</h3>
-<p>Different test scenarios:</p>
-<pre><code class="language-bash"># Run all tests
-uv run test
-
-# Run with coverage
-uv run test_cov
-
-# Run in test environment
-PYTHON_ENV=test uv run test
-</code></pre>
+<p><a href="../TESTS/#running-tests">see TESTS.md</a></p>
 <h2 id="best-practices">Best Practices</h2>
 <ol>
 <li>
@@ -399,6 +277,25 @@ PYTHON_ENV=test uv run test
 </ul>
 </li>
 </ol>
+<h2 id="running-on-localhost-without-docker-compose">Running on localhost without Docker Compose</h2>
+<p><strong>Install python runtime and package manager <a href="https://docs.astral.sh/uv/getting-started/installation/#homebrew">uv</a></strong></p>
+<p><code>brew install uv</code></p>
+<p><strong>Verify executable is found in <code>$PATH</code></strong></p>
+<p><code>bash
+   which uv</code></p>
+<p><em>Troubleshooting: open a new terminal if a directory is not sent to stdout</em></p>
+<p><strong>Start db container, initialize database, and run migrations</strong></p>
+<p><code>bash
+   uv run setup</code></p>
+<p><strong>(optional) Seed db:</strong></p>
+<p><code>bash
+   uv run db_seed</code></p>
+<p><em>Troubleshooting: run alembic directly using uv</em></p>
+<p><code>bash
+   PYTHONPATH=${PYTHONPATH:-./src} uv run alembic upgrade head</code></p>
+<p><strong>Start the development server:</strong></p>
+<p><code>bash
+   uv run fastapi dev src/drivers/rest/main.py</code></p>
 <h2 id="troubleshooting">Troubleshooting</h2>
 <p>Common issues and solutions:</p>
 <ol>

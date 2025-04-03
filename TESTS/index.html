@@ -98,6 +98,9 @@
 <p>This document outlines the testing strategy for the Calibration Service, following Clean Architecture principles.</p>
 <h2 id="test-structure">Test Structure</h2>
 <p>The test suite is organized into the following categories:</p>
+<blockquote>
+<p>Note: ideally <code>tests/unit</code> should mirror the <code>src</code> folder</p>
+</blockquote>
 <ul>
 <li>
 <p><strong>Unit Tests</strong>: Testing individual components in isolation</p>
@@ -118,7 +121,7 @@
 <li>
 <p><strong>End-to-End Tests</strong>: Testing the entire system (future implementation)</p>
 <ul>
-<li><code>tests/e2e</code>: Full system tests with external dependencies</li>
+<li><code>tests/e2e</code>: Full system tests with external dependencies (e.g. live db)</li>
 </ul>
 </li>
 </ul>
@@ -131,20 +134,31 @@
 <li><strong>pytest-cov</strong>: Code coverage reporting</li>
 </ul>
 <h2 id="running-tests">Running Tests</h2>
-<p>Tests can be run using the <code>run_tests.sh</code> script:</p>
+<p><strong>See: <a href="">README</a> for core tests for this project.</strong></p>
+<p>Different test scenarios:</p>
+<pre><code class="language-bash"># Run all tests
+uv run test
+
+# Run with coverage
+uv run test_cov
+
+# Run in test environment
+PYTHON_ENV=test uv run test
+</code></pre>
+<p>Tests can also be run using the <code>run_tests.sh</code> script:</p>
 <p><code>bash
   ./scripts/run_tests.sh</code></p>
 <blockquote>
 <p>[!NOTE]
-run_tests is executed by pre-commit as a pre-commit hook.</p>
+run_tests is executed by pre-commit as a pre-commit hook. <a href="../CONTRIBUTING/#pre-commit-hooks">More info in</a></p>
 </blockquote>
-<p>Generate coverage reports using the <code>run_tests_with_coverage.sh</code> script:</p>
+<p><em>Generate coverage reports using the <code>run_tests_with_coverage.sh</code> script:</em></p>
 <p><code>bash
   ./scripts/run_tests_with_coverage.sh</code></p>
 <p>Or, run manually:</p>
 <p>```bash
   # Run all tests
-  python -m pytest -v --no-cov</p>
+  PYTHONPATH=./src python -m pytest -v --no-cov</p>
 <p># Run unit tests only
   python -m pytest tests/unit -v --no-cov</p>
 <p># Run integration tests only
@@ -155,11 +169,11 @@ run_tests is executed by pre-commit as a pre-commit hook.</p>
 <h2 id="test-data">Test Data</h2>
 <ul>
 <li><strong>Unit Tests</strong>: Use mock objects and in-memory repositories</li>
-<li><strong>Integration Tests</strong>: Use in-memory repositories for isolation</li>
-<li><strong>E2E Tests</strong>: Will use test databases or containerized services</li>
+<li><strong>Integration Tests</strong>: Use in-memory repositories for isolation
+~~- <strong>E2E Tests</strong>: Will use test databases or containerized services~~ (future)</li>
 </ul>
 <h2 id="clean-architecture-testing-approach">Clean Architecture Testing Approach</h2>
-<p>Our testing follows Clean Architecture principles:</p>
+<p>Our (ideal) testing follows Clean Architecture principles:</p>
 <ol>
 <li><strong>Entities Tests</strong>: Verify that our core models work correctly</li>
 <li><strong>Use Case Tests</strong>: Ensure business rules are correctly implemented</li>

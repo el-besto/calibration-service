@@ -78,7 +78,7 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#cicd-pipeline-flow">CI/CD Pipeline Flow</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#5-ruff-workflow-deploy_releaseyaml">5. Ruff Workflow (deploy_release.yaml)</a>
+    <li class="toctree-l3"><a class="reference internal" href="#5-flyio-workflow-deploy_releaseyaml">5. Fly.io Workflow (deploy_release.yaml)</a>
     </li>
         </ul>
     </li>
@@ -149,7 +149,7 @@ creation, providing fast and reliable dependency resolution.</p>
 <h3 id="3-pyright-workflow-pyrightyaml">3. Pyright Workflow (<code>pyright.yaml</code>)</h3>
 <p>This workflow performs static type checking with <a href="https://microsoft.github.io/pyright">Pyright</a> to ensure type safety
 and catch issues early in development.</p>
-<p>Configuration is managed in <a href="../pyproject.toml">pyproject.toml</a>.</p>
+<p>Configuration is managed in <a href="https://github.com/el-besto/calibration-service/tree/main/pyproject.toml">pyproject.toml</a>.</p>
 <p><strong>Jobs:</strong></p>
 <ul>
 <li><strong>typecheck</strong>: Sets up Python environment with uv, then runs Pyright to check types across the codebase</li>
@@ -164,8 +164,9 @@ and catch issues early in development.</p>
 <p>This workflow uses the <a href="https://docs.astral.sh/ruff/linter/">ruff linter</a>
 and <a href="https://docs.astral.sh/ruff/formatter/">ruff formatter</a>
 to automatically enforce code quality standards.</p>
-<p>Ruff is configured via <a href="../pyproject.toml">pyproject.toml</a> and runs as a CI job to maintain a clean, consistent
-codebase.</p>
+<p>Ruff is configured via <a href="https://github.com/el-besto/calibration-service/tree/main/pyproject.toml">pyproject.toml</a> and
+runs
+as a CI job to maintain a clean, consistent codebase.</p>
 <p><strong>Jobs:</strong></p>
 <ul>
 <li><strong>ruff</strong>: Runs static analysis to enforce formatting, code style, and detect common issues</li>
@@ -196,7 +197,7 @@ downloaded from the workflow run page.</p>
 <li>If all tests pass, the workflow succeeds</li>
 <li>Test reports and coverage information are available for review</li>
 </ol>
-<h3 id="5-ruff-workflow-deploy_releaseyaml">5. Ruff Workflow (<code>deploy_release.yaml</code>)</h3>
+<h3 id="5-flyio-workflow-deploy_releaseyaml">5. Fly.io Workflow (<code>deploy_release.yaml</code>)</h3>
 <p>Deploys container to <a href="https://calibration-service.fly.dev">https://calibration-service.fly.dev</a></p>
 <h2 id="future-enhancements">Future Enhancements</h2>
 <p>Planned enhancements to the CI/CD pipeline include:</p>

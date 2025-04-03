@@ -93,9 +93,9 @@
 <li>Automatic migration generation from SQLAlchemy models</li>
 </ul>
 <h2 id="directory-structure">Directory Structure</h2>
-<pre><code>src/
+<pre><code class="language-text">src/
 ├── infrastructure/
-│   └── orm_models.py    # SQLAlchemy models
+│   └── orm_models/     # SQLAlchemy models
 ├── config/
 │   └── database.py      # Database configuration
 └── alembic/
@@ -105,18 +105,23 @@
 </code></pre>
 <h2 id="common-operations">Common Operations</h2>
 <p>The project provides several commands for database management:</p>
+<h2 id="database-management_1">Database Management</h2>
+<p>The service uses PostgreSQL for data storage and Alembic for database migrations. Key commands:</p>
 <pre><code class="language-bash"># Initialize database and run migrations
 uv run db_init
 
-# Create a new migration after model changes
-uv run db_create &quot;Description of changes&quot;
-
 # Apply pending migrations
 uv run db_migrate
+
+# Create a new migration
+uv run db_create &quot;Description of changes&quot;
+
+# Seed data
+uv run db_seed
 </code></pre>
 <h2 id="migration-management">Migration Management</h2>
 <h3 id="creating-migrations">Creating Migrations</h3>
-<p>When you modify SQLAlchemy models in <code>orm_models.py</code>, create a new migration:</p>
+<p>When you modify SQLAlchemy models in <code>orm_models/</code>, create a new migration:</p>
 <pre><code class="language-bash">uv run db_create &quot;Add status column to Calibration model&quot;
 </code></pre>
 <p>Always:</p>
@@ -133,20 +138,17 @@ uv run db_migrate
 
 # Test environment
 PYTHON_ENV=test uv run db_migrate
-
-# Production environment
-PYTHON_ENV=production uv run db_migrate
 </code></pre>
 <h3 id="advanced-operations">Advanced Operations</h3>
 <p>For advanced cases, you can use direct Alembic commands:</p>
 <pre><code class="language-bash"># Roll back one migration
-PYTHONPATH=./src alembic downgrade -1
+PYTHONPATH=./src uv run alembic downgrade -1
 
 # View migration history
-PYTHONPATH=./src alembic history --verbose
+PYTHONPATH=./src uv run alembic history --verbose
 
 # Roll back to specific version
-PYTHONPATH=./src alembic downgrade &lt;version_id&gt;
+PYTHONPATH=./src uv run alembic downgrade &lt;version_id&gt;
 </code></pre>
 <h2 id="best-practices">Best Practices</h2>
 <h3 id="1-migration-management">1. Migration Management</h3>
@@ -188,18 +190,15 @@ PYTHONPATH=./src alembic downgrade &lt;version_id&gt;
 </ol>
 <p>Example configurations:</p>
 <pre><code class="language-bash"># .env (base defaults)
-DATABASE_URL=postgresql+asyncpg://dev-user:password@localhost:5432/dev_db
+DATABASE_URL=postgresql+asyncpg://dev-user:password@localhost:5777/dev_db
 
 # .env.test
-DATABASE_URL=postgresql+asyncpg://test-user:password@localhost:5432/test_db
-
-# .env.production
-DATABASE_URL=postgresql+asyncpg://app-user:password@db.example.com:5432/prod_db
+DATABASE_URL=postgresql+asyncpg://test-user:password@localhost:5778/test_db
 </code></pre>
 <h2 id="troubleshooting">Troubleshooting</h2>
 <h3 id="1-migration-not-detected">1. Migration Not Detected</h3>
 <ul>
-<li>Ensure model is imported in <code>orm_models.py</code></li>
+<li>Ensure model is imported in <code>orm_models/__init__.py</code></li>
 <li>Verify model inherits from <code>Base</code></li>
 <li>Check for circular imports</li>
 <li>Run with <code>--verbose</code> flag for more details</li>
@@ -212,7 +211,7 @@ docker compose ps
 uv run db_init
 
 # Reset database (development only)
-docker compose down -v postgres
+docker compose down -v --rmi local
 uv run db_init
 </code></pre>
 <h3 id="3-migration-conflicts">3. Migration Conflicts</h3>
