@@ -60,9 +60,6 @@ from src.interface_adapters.controllers.calibrations.get_tags_for_calibration_co
 from src.interface_adapters.controllers.calibrations.list_calibrations_controller import (
     ListCalibrationsController,
 )
-from src.interface_adapters.controllers.tags.add_bulk_tags_to_calibration_controller import (
-    AddBulkTagsToCalibrationController,
-)
 from src.interface_adapters.controllers.tags.add_tag_to_calibration_controller import (
     AddTagToCalibrationController,
 )
@@ -266,92 +263,95 @@ def get_list_calibrations_use_case(
 
 
 def get_add_calibration_controller(
-    add_calibration_uc: Annotated[
+    add_calibration_use_case: Annotated[
         AddCalibrationUseCase, Depends(get_add_calibration_use_case)
     ],
 ) -> AddCalibrationController:
-    """Provides an instance of AddCalibrationController."""
-    return AddCalibrationController(add_calibration_use_case=add_calibration_uc)
+    """Provides the AddCalibrationController."""
+    return AddCalibrationController(add_calibration_use_case)
 
 
 def get_list_calibrations_controller(
-    list_calibrations_uc: Annotated[
+    list_calibrations_use_case: Annotated[
         ListCalibrationsUseCase, Depends(get_list_calibrations_use_case)
     ],
 ) -> ListCalibrationsController:
-    """Provides an instance of ListCalibrationsController."""
-    return ListCalibrationsController(list_calibrations_use_case=list_calibrations_uc)
+    """Provides the ListCalibrationsController."""
+    return ListCalibrationsController(list_calibrations_use_case)
 
 
 def get_get_tags_for_calibration_controller(
-    get_tags_for_calibration_uc: Annotated[
+    get_tags_use_case: Annotated[
         GetTagsForCalibrationUseCase, Depends(get_get_tags_for_calibration_use_case)
     ],
 ) -> GetTagsForCalibrationController:
-    """Provides an instance of GetTagsForCalibrationController."""
-    return GetTagsForCalibrationController(
-        get_tags_for_calibration_use_case=get_tags_for_calibration_uc
-    )
+    """Provides the GetTagsForCalibrationController."""
+    return GetTagsForCalibrationController(get_tags_use_case)
 
 
 def get_create_tag_controller(
-    create_tag_uc: Annotated[CreateTagUseCase, Depends(get_create_tag_use_case)],
+    create_tag_use_case: Annotated[CreateTagUseCase, Depends(get_create_tag_use_case)],
 ) -> CreateTagController:
-    """Provides an instance of CreateTagController."""
-    return CreateTagController(create_tag_use_case=create_tag_uc)
+    """Provides the CreateTagController."""
+    return CreateTagController(create_tag_use_case)
 
 
 def get_list_tags_controller(
-    list_tags_uc: Annotated[ListTagsUseCase, Depends(get_list_tags_use_case)],
+    list_tags_use_case: Annotated[ListTagsUseCase, Depends(get_list_tags_use_case)],
 ) -> ListTagsController:
-    """Provides an instance of ListTagsController."""
-    return ListTagsController(list_tags_use_case=list_tags_uc)
+    """Provides the ListTagsController."""
+    return ListTagsController(list_tags_use_case)
 
 
 def get_add_tag_to_calibration_controller(
-    add_tag_uc: Annotated[
+    add_tag_use_case: Annotated[
         AddTagToCalibrationUseCase, Depends(get_add_tag_to_calibration_use_case)
     ],
-    create_tag_uc: Annotated[CreateTagUseCase, Depends(get_create_tag_use_case)],
-    tag_repo: Annotated[TagRepository, Depends(get_tag_repository)],
+    create_tag_use_case: Annotated[  # Also depends on create tag UC
+        CreateTagUseCase, Depends(get_create_tag_use_case)
+    ],
+    tag_repository: Annotated[  # And the repo directly
+        TagRepository, Depends(get_tag_repository)
+    ],
 ) -> AddTagToCalibrationController:
-    """Provides an instance of AddTagToCalibrationController."""
+    """Provides the AddTagToCalibrationController."""
     return AddTagToCalibrationController(
-        add_tag_use_case=add_tag_uc,
-        create_tag_use_case=create_tag_uc,
-        tag_repository=tag_repo,
+        add_tag_use_case,
+        create_tag_use_case,
+        tag_repository,
     )
 
 
 def get_remove_tag_from_calibration_controller(
-    remove_tag_uc: Annotated[
+    remove_tag_use_case: Annotated[
         RemoveTagFromCalibrationUseCase,
         Depends(get_remove_tag_from_calibration_use_case),
     ],
-    tag_repo: Annotated[TagRepository, Depends(get_tag_repository)],
+    tag_repository: Annotated[
+        TagRepository, Depends(get_tag_repository)
+    ],  # Also depends on tag repo
 ) -> RemoveTagFromCalibrationController:
-    """Provides an instance of RemoveTagFromCalibrationController."""
-    return RemoveTagFromCalibrationController(
-        remove_tag_use_case=remove_tag_uc, tag_repository=tag_repo
-    )
+    """Provides the RemoveTagFromCalibrationController."""
+    return RemoveTagFromCalibrationController(remove_tag_use_case, tag_repository)
 
 
-def get_add_bulk_tags_to_calibration_controller(
-    add_bulk_tags_uc: Annotated[
-        AddBulkTagsToCalibrationUseCase,
-        Depends(get_add_bulk_tags_to_calibration_use_case),
-    ],
-) -> AddBulkTagsToCalibrationController:
-    """Provides an instance of AddBulkTagsToCalibrationController."""
-    return AddBulkTagsToCalibrationController(add_bulk_tags_use_case=add_bulk_tags_uc)
+# def get_add_bulk_tags_to_calibration_controller(
+#     add_bulk_tags_use_case: Annotated[
+#         AddBulkTagsToCalibrationUseCase,
+#         Depends(get_add_bulk_tags_to_calibration_use_case),
+#     ],
+#     tag_repository: Annotated[TagRepository, Depends(get_tag_repository)],
+# ) -> AddBulkTagsToCalibrationController:
+#     """Provides the AddBulkTagsToCalibrationController."""
+#     # Ensure both arguments are passed here
+#     return AddBulkTagsToCalibrationController(add_bulk_tags_use_case)
 
 
 def get_get_calibrations_by_tag_controller(
-    get_calibrations_by_tag_uc: Annotated[
-        GetCalibrationsByTagUseCase, Depends(get_get_calibrations_by_tag_use_case)
+    get_calibrations_by_tag_use_case: Annotated[
+        GetCalibrationsByTagUseCase,
+        Depends(get_get_calibrations_by_tag_use_case),
     ],
 ) -> GetCalibrationsByTagController:
-    """Provides an instance of GetCalibrationsByTagController."""
-    return GetCalibrationsByTagController(
-        get_calibrations_by_tag_use_case=get_calibrations_by_tag_uc
-    )
+    """Provides the GetCalibrationsByTagController."""
+    return GetCalibrationsByTagController(get_calibrations_by_tag_use_case)

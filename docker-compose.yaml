@@ -8,7 +8,9 @@ services:
              uv run alembic upgrade head &&
              python scripts/seed_database.py &&
              echo 'Starting app...' &&
-             uv run fastapi dev src/drivers/rest/main.py --host '0.0.0.0'"
+             uv run fastapi dev src/drivers/rest/main.py --host '0.0.0.0' &&
+             echo 'Open browser to http://localhost:8777'
+      "
 
     environment:
       PYTHONPATH: .
@@ -41,7 +43,7 @@ services:
         - action: rebuild
           path: ./uv.lock
 
-#  source: https://medium.com/@tclaitken/setting-up-a-fastapi-app-with-async-sqlalchemy-2-0-pydantic-v2-e6c540be4308
+  #  source: https://medium.com/@tclaitken/setting-up-a-fastapi-app-with-async-sqlalchemy-2-0-pydantic-v2-e6c540be4308
   postgres:
     image: postgres:16-alpine
     container_name: calibration_db
@@ -57,7 +59,7 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data:cached
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER:-dev-user} -d $${POSTGRES_DB:-dev_db} -q"]
+      test: [ "CMD-SHELL", "pg_isready -U $${POSTGRES_USER:-dev-user} -d $${POSTGRES_DB:-dev_db} -q" ]
       interval: 5s
       timeout: 5s
       retries: 5

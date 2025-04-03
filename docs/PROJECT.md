@@ -28,7 +28,7 @@ from calibrations, and the tagging history is preserved.
 
 **Endpoint:** `POST /calibrations`
 
-**Input:**
+**Input:**:
 
 ```json
 {
@@ -43,7 +43,7 @@ from calibrations, and the tagging history is preserved.
 
 ```json
 {
-  "calibration_id": "integer"
+  "calibration_id": "uuid"
 }
 ```
 
@@ -66,7 +66,7 @@ from calibrations, and the tagging history is preserved.
 ```json
 [
   {
-    "calibration_id": "integer",
+    "calibration_id": "uuid",
     "calibration_type": "string",
     "value": "float",
     "timestamp": "string (ISO 8601)",
@@ -181,82 +181,14 @@ from calibrations, and the tagging history is preserved.
 
 ## Sample Calibration Data
 
+__See `scripts/sample_data` for the full object.__
+
 ```json
 [
   {
     "calibration_type": "offset",
     "value": 1.0,
     "username": "alice"
-  },
-  {
-    "calibration_type": "gain",
-    "value": 1.5,
-    "username": "bob"
-  },
-  {
-    "calibration_type": "temperature",
-    "value": -0.3,
-    "username": "charlie"
-  },
-  {
-    "calibration_type": "offset",
-    "value": 0.9,
-    "username": "alice"
-  },
-  {
-    "calibration_type": "gain",
-    "value": 1.6,
-    "username": "dana"
-  },
-  {
-    "calibration_type": "offset",
-    "value": 1.2,
-    "username": "bob"
-  },
-  {
-    "calibration_type": "gain",
-    "value": 1.55,
-    "username": "alice"
-  },
-  {
-    "calibration_type": "temperature",
-    "value": -0.1,
-    "username": "charlie"
-  },
-  {
-    "calibration_type": "pressure",
-    "value": 101.3,
-    "username": "dana"
-  },
-  {
-    "calibration_type": "offset",
-    "value": 1.1,
-    "username": "alice"
-  },
-  {
-    "calibration_type": "gain",
-    "value": 1.4,
-    "username": "bob"
-  },
-  {
-    "calibration_type": "offset",
-    "value": 1.3,
-    "username": "charlie"
-  },
-  {
-    "calibration_type": "temperature",
-    "value": -0.2,
-    "username": "alice"
-  },
-  {
-    "calibration_type": "pressure",
-    "value": 100.8,
-    "username": "bob"
-  },
-  {
-    "calibration_type": "gain",
-    "value": 1.6,
-    "username": "charlie"
   }
 ]
 ```

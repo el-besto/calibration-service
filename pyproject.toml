@@ -51,15 +51,21 @@ docs = [
 ]
 
 [project.scripts]
+## eject -> fully remove this docker compose project
+eject = "scripts.bash_runner:run_eject"
 ## dev workflow scripts
 dev = "scripts.bash_runner:run_dev"
 format = "scripts.bash_runner:run_format"
 lint = "scripts.bash_runner:run_lint"
+typecheck = "scripts.bash_runner:run_typecheck"
+check = "scripts.bash_runner:run_check"
+check_all = "scripts.bash_runner:run_check_all"
+#### testing
 test = "scripts.bash_runner:run_test"
 test_debug = "scripts.bash_runner:run_test_debug"
 test_cov = "scripts.bash_runner:run_test_cov"
-typecheck = "scripts.bash_runner:run_typecheck"
-check = "scripts.bash_runner:run_check"
+test_api = "scripts.bash_runner:run_test_api"
+test_e2e = "scripts.bash_runner:run_test_e2e"
 ## database management scripts
 db_init = "scripts.bash_runner:run_db_init"
 db_migrate = "scripts.bash_runner:run_db_migrate"
@@ -67,14 +73,14 @@ db_create = "scripts.bash_runner:run_db_create_migration"
 db_seed = "scripts.bash_runner:run_db_seed"
 ## setup scripts
 setup = "scripts.bash_runner:run_setup"
+## documentation generation
+docs_build = "scripts.bash_runner:docs_build"
+docs_serve = "scripts.bash_runner:docs_serve"
+docs_deploy = "scripts.bash_runner:docs_deploy"
 ## dev util scripts
 cp_iso = "scripts.bash_runner:copy_iso"
 cp_ulid = "scripts.bash_runner:copy_ulid"
 cp_uuid = "scripts.bash_runner:copy_uuid"
-## documentation
-docs_build = "scripts.bash_runner:docs_build"
-docs_serve = "scripts.bash_runner:docs_serve"
-docs_deploy = "scripts.bash_runner:docs_deploy"
 
 [build-system]
 requires = ["hatchling"]

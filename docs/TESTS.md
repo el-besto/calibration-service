@@ -6,6 +6,8 @@ This document outlines the testing strategy for the Calibration Service, followi
 
 The test suite is organized into the following categories:
 
+> Note: ideally `tests/unit` should mirror the `src` folder
+
 - **Unit Tests**: Testing individual components in isolation
     - `tests/unit/entities`: Tests for entity models and validation
     - `tests/unit/application`: Tests for use cases and business logic
@@ -17,7 +19,7 @@ The test suite is organized into the following categories:
     - `tests/integration`: API endpoint testing with in-memory repositories
 
 - **End-to-End Tests**: Testing the entire system (future implementation)
-    - `tests/e2e`: Full system tests with external dependencies
+    - `tests/e2e`: Full system tests with external dependencies (e.g. live db)
 
 ## Test Dependencies
 
@@ -29,6 +31,8 @@ The test suite uses the following dependencies:
 - **pytest-cov**: Code coverage reporting
 
 ## Running Tests
+
+**See: [README]() for core tests for this project.**
 
 Different test scenarios:
 
@@ -50,7 +54,7 @@ Tests can also be run using the `run_tests.sh` script:
   ```
 
 > [!NOTE]
-> run_tests is executed by pre-commit as a pre-commit hook. [More info in](CONTRIBUTING.md#pre-commit-hooks) 
+> run_tests is executed by pre-commit as a pre-commit hook. [More info in](CONTRIBUTING.md#pre-commit-hooks)
 
 _Generate coverage reports using the `run_tests_with_coverage.sh` script:_
 

@@ -196,6 +196,16 @@ def run_test_cov() -> None:
     _run_script("run_tests.sh", "test-cov")
 
 
+def run_test_api() -> None:
+    """Run tests using the run_tests.sh script."""
+    _run_script("run_tests.sh", "test_api")
+
+
+def run_test_e2e() -> None:
+    """Run tests using the run_tests.sh script."""
+    _run_script("run_tests.sh", "test_e2e")
+
+
 def run_test_debug() -> None:
     """Run tests directly with pytest, enabling debug logging and output."""
     extra_args = sys.argv[2:]
@@ -212,7 +222,14 @@ def run_check() -> None:
     print("Running tests...")
     run_test()
 
-    print("All checks completed successfully!")
+    print("All checks completed successfully (w/o e2e)!")
+
+
+def run_check_all() -> None:
+    """Run all checks (pre-commit hooks and tests, and e2e tests)."""
+    run_check()
+    run_test_e2e()
+    print("All checks completed successfully!(w e2e)")
 
 
 # Database management commands
@@ -243,6 +260,12 @@ def run_setup() -> None:
     run_db_init()  # Initialize database first
     run_test()  # Then run tests
     run_db_seed()  # Then run seed
+
+
+# Remove commands
+def run_eject() -> None:
+    """Fully remove all traces of this docker compose project."""
+    _run_command("docker compose down -v --rmi local")
 
 
 # Utility commands

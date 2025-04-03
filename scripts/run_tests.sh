@@ -53,6 +53,18 @@ case "$1" in
         echo "Running integration tests..."
         python -m pytest tests/integration -v --no-cov
         ;;
+    "test_integration")
+        echo "Running integration tests..."
+        python -m pytest tests/integration -v --no-cov
+        ;;
+    "test_api")
+        echo "Running api component integration tests..."
+        python -m pytest tests/integration/drivers -v --no-cov
+        ;;
+    "test_e2e")
+      echo "Running e2e tests to validate the system..."
+      python -m pytest tests/integration/drivers -v --no-cov
+      ;;
     "setup")
         # Full setup: initialize DB and run tests
         init_database

@@ -13,10 +13,10 @@ The project uses:
 
 ## Directory Structure
 
-```
+```text
 src/
 ├── infrastructure/
-│   └── orm_models.py    # SQLAlchemy models
+│   └── orm_models/     # SQLAlchemy models
 ├── config/
 │   └── database.py      # Database configuration
 └── alembic/
@@ -160,7 +160,7 @@ docker compose ps
 uv run db_init
 
 # Reset database (development only)
-docker compose down -v postgres
+docker compose down -v --rmi local
 uv run db_init
 ```
 

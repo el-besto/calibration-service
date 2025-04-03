@@ -114,6 +114,47 @@ git commit -m "feat: your feature description"
     - Update tests when changing features
     - Use appropriate test environment
 
+## Running on localhost without Docker Compose
+
+**Install python runtime and package manager [uv](https://docs.astral.sh/uv/getting-started/installation/#homebrew)**
+
+   ```
+   brew install uv
+   ```
+
+**Verify executable is found in `$PATH`**
+
+   ```bash
+   which uv
+   ```
+
+_Troubleshooting: open a new terminal if a directory is not sent to stdout_
+
+**Start db container, initialize database, and run migrations**
+
+   ```bash
+   uv run setup
+   ```
+
+**(optional) Seed db:**
+
+   ```bash
+   uv run db_seed
+   ```
+
+_Troubleshooting: run alembic directly using uv_
+
+   ```bash
+   PYTHONPATH=${PYTHONPATH:-./src} uv run alembic upgrade head
+   ```
+
+**Start the development server:**
+
+   ```bash
+   uv run fastapi dev src/drivers/rest/main.py
+   ```
+
+
 ## Troubleshooting
 
 Common issues and solutions:

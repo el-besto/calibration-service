@@ -50,7 +50,7 @@ router = APIRouter(prefix="/calibrations", tags=["Calibrations"])
     "",  # Maps to POST /calibrations
     response_model=CalibrationCreateResponse,
     status_code=status.HTTP_201_CREATED,
-    summary="Create a new calibration",
+    summary="1. Create a new calibration",
 )
 async def create_calibration_endpoint(
     request: CalibrationCreateRequest,
@@ -90,7 +90,7 @@ async def create_calibration_endpoint(
 @router.get(
     "",
     response_model=CalibrationListResponse,
-    summary="List calibrations by optional filters",
+    summary="2. List calibrations by filter and 4. Retrieve Calibrations by Tag",
 )
 async def list_calibrations_endpoint(
     controller: Annotated[
@@ -137,8 +137,7 @@ async def list_calibrations_endpoint(
 @router.get(
     "/{calibration_id}/tags",
     response_model=list[str],
-    summary="List tags associated with a calibration at a specific time",
-    tags=["Tag Associations"],
+    summary="5. Query Tags Associated with a Calibration at a specific time",
 )
 async def get_tags_for_calibration_endpoint(
     calibration_id: UUID,
@@ -185,8 +184,7 @@ async def get_tags_for_calibration_endpoint(
     "/{calibration_id}/tags",
     response_model=TagOperationResponse,
     status_code=status.HTTP_200_OK,
-    summary="Associate a tag with a calibration by name",
-    tags=["Tag Associations"],
+    summary="3a. Add a tag to a Calibration by name",
 )
 async def add_tag_to_calibration_endpoint(
     calibration_id: UUID,
@@ -219,10 +217,9 @@ async def add_tag_to_calibration_endpoint(
     "/{calibration_id}/tags/{tag_name}",
     response_model=TagOperationResponse,
     status_code=status.HTTP_200_OK,
-    summary="Disassociate a tag from a calibration by name",
-    tags=["Tag Associations"],
+    summary="3b. remove a tag",
 )
-async def remove_tag_from_calibration_endpoint(
+async def remove_tag_from_calibration_path_endpoint(
     calibration_id: UUID,
     tag_name: str,
     controller: RemoveTagFromCalibrationController = Depends(
