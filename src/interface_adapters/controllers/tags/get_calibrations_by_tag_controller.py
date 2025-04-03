@@ -10,7 +10,7 @@ from src.application.use_cases.exceptions import (
 from src.application.use_cases.tags.get_calibrations_by_tag import (
     GetCalibrationsByTagUseCase,
 )
-from src.drivers.rest.schemas.calibration_schemas import CalibrationReadResponse
+from src.drivers.rest.schemas.calibration_schemas import CalibrationListResponse, CalibrationReadResponse
 from src.entities.exceptions import DatabaseOperationError, NotFoundError
 from src.interface_adapters.presenters.calibration_presenter import CalibrationPresenter
 
@@ -24,7 +24,7 @@ class GetCalibrationsByTagController:
         tag_name: str,
         timestamp: datetime,
         username: str | None,
-    ) -> list[CalibrationReadResponse]:
+    ) -> CalibrationListResponse:
         """Handles request to get calibrations associated with a tag at a specific time."""
         try:
             input_dto = GetCalibrationsByTagInput(
@@ -32,10 +32,12 @@ class GetCalibrationsByTagController:
             )
             output_dto = await self._get_calibrations_by_tag_use_case.execute(input_dto)
 
-            # Use CalibrationPresenter as the output is a list of calibrations
-            return CalibrationPresenter.present_calibration_list(
+            # Use CalibrationPresenter to format the list
+            formatted_list: list[CalibrationReadResponse] = CalibrationPresenter.present_calibration_list(
                 output_dto.calibrations
             )
+            # Wrap the formatted list in the expected response model
+            return CalibrationListResponse(calibrations=formatted_list)
 
         except TagNotFoundError as e:
             logger.warning(

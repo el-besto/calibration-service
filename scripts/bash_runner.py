@@ -196,6 +196,16 @@ def run_test_cov() -> None:
     _run_script("run_tests.sh", "test-cov")
 
 
+def run_test_api() -> None:
+    """Run tests using the run_tests.sh script."""
+    _run_script("run_tests.sh", "test_api")
+
+
+def run_test_e2e() -> None:
+    """Run tests using the run_tests.sh script."""
+    _run_script("run_tests.sh", "test_e2e")
+
+
 def run_test_debug() -> None:
     """Run tests directly with pytest, enabling debug logging and output."""
     extra_args = sys.argv[2:]

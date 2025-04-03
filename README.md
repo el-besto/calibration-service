@@ -17,7 +17,7 @@
 
 #### Prepare
 
-**Download source_:**
+**Download source:**
 
 - Clone the repository, and go into the project directory `calibration-service`
 
@@ -44,9 +44,9 @@ Note: for local deployment see [D](docs/DEVELOPER.md#running-on-localhost-withou
 
 ## Cleanup
 
-```
-docker compose down -vv
-```
+   ```bash
+   docker compose down -v --rmi local
+   ```
 
 ## Points of Interest
 
@@ -58,30 +58,81 @@ docker compose down -vv
 - [Calibration Api integration tests](tests/integration/drivers/rest/test_calibration_api.py)
 - [Tagging Api integration tests](tests/integration/drivers/rest/test_tagging_api.py)
 
-# Testing the Prompt
+# Testing and validating system functionality
+
+## End to End
+
+With the project up and running use docker cli to execute the e2e tests in a different terminal
+
+   ```bash
+   docker compose exec web uv run test_e2e
+   ```
+
+## Component Integration
+
+   ```bash
+   docker compose exec web uv run pytest tests/integration/drivers/rest
+   ```
+
+   ```bash
+   docker compose exec web uv run pytest tests/integration/repositories
+   ```
+
+## Unit
+
+   ```
+   docker compose exec web uv run test
+   ```
+
 ```
-docker compose exec web uv run test_api
+docker compose exec web uv run pytest tests/integration/repositories
 ```
 
+- [test_api_use_cases_e2e.py](tests/e2e/test_api_use_cases_e2e.py) take home assignment uc1-4 tests
+- [test_tag_archiving_e2e.py](tests/e2e/test_tag_archiving_e2e.py) take home assignment uc5
 
 ## ERD
 
 <img src="docs/assets/ERD.png" alt="ERD" width="500">
 
+## Next Steps
+
+- **Users:** a `users` table to replace the _"username"_ on a `CalibrationAssociation`, and allow for something to bring
+  an
+  trackable Actor into the system
+- **ISessions:** bring Session up into the Entity layer and removing the third-party reliance on SqlAlchemy's
+  `AsyncSession`
+- **IAuthentication Service:** that encapsulates `sign_up`, `sign_in`, and `sign_out` use cases and helps demonstrate
+  how
+  easy swapping out one oidc provider for another could be
+- **Instrumentation/Monitoring:** wrappers to monitor and benchmark each system interaction as it goes through the
+  boundaries of the
+  Clean Architecture surrounds all
 
 ## Inspiration
 
-ve been eager to try Clean Architecture, so I was excited to take this project as a chance to dive in outside of work.
-In day-to-day development, we often have to focus narrowly on shipping just enough—so it was refreshing to explore a
-more deliberate, scalable structure. I started by defining the use case and interfaces, then adapted a MongoDB
+I’ve been eager to try Clean Architecture, so I was excited to take this project as a chance to dive in outside of work.
+In day-to-day development, we often have to stay laser-focused on shipping just enough—so it was refreshing to explore a
+more intentional, scalable structure. I started by defining the use case and interfaces, then adapted a MongoDB
 repository based on [shaliamekh][mongo-repo], and later swapped in a PostgreSQL version without touching the core logic.
 That flexibility—being able to change out infrastructure without rewriting business rules—really drove home the value of
-this approach. Clean Architecture made it easy to innovate at the edges while keeping the core solid. If you’re curious
-about the structure, I nerded out a bit more in ARCHITECTURE. [ARCHITECTURE](docs/ARCHITECTURE.md)
+this approach. Clean Architecture made it easy to innovate at the edges while keeping the core rock-solid. If you’re
+curious about the structure, I nerded out a bit more in the ARCHITECTURE section.
 
-[mongo-repo]: https://github.com/shaliamekh/clean-architecture-fastapi/blob/main/src/adapters/repositories/auction_repository/mongodb_repository.py
+## Developer Experience
 
-archived
+Coming from a Node.js and TypeScript background, I was initially skeptical about Python—especially around tooling, type
+safety, and developer ergonomics. But this project turned out to be a crash course in how far the Python ecosystem has
+come. Tools like uv and pyproject.toml gave me the dependency management experience I’d been missing, and enabling
+Pyright in PyCharm brought back the type hints, squiggles, and Intellisense I rely on daily. Once dialed in, my Python
+dev environment felt just as powerful—if not more streamlined—than my usual setup.
+
+On the infrastructure side, working with Terraform reminded me how much I enjoy bridging systems design with application
+code—something I previously explored through AWS CDK. This project showed me that clean architecture, code organization,
+and system-level thinking (along with solid tooling habits) are transferable across languages. And in the age of AI,
+where every developer effectively has a supercomputer at their side, the ability to learn quickly and structure ideas
+well has never been more important. It’s not just about syntax—it’s about creating an environment that helps you think
+clearly and ship confidently.
 
 ## Additional Documentation
 
@@ -105,3 +156,5 @@ archived
 [live-docs]: https://el-besto.github.io/calibration-service/welcome
 
 [live-site]: https://calibration-service.fly.dev/docs
+
+[mongo-repo]: https://github.com/shaliamekh/clean-architecture-fastapi/blob/main/src/adapters/repositories/auction_repository/mongodb_repository.py
